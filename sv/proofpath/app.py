@@ -233,6 +233,15 @@ def evaluation_insights(request: Request, evaluation_id: str):
     return ok(build_insights(repo, evaluation_id))
 
 
+@app.get("/api/v1/evaluations/{evaluation_id}/sources/{source_id}")
+def insight_source(request: Request, evaluation_id: str, source_id: str):
+    _owned_evaluation(request, evaluation_id)
+    snapshots = repo._list("comparisons", "evaluation_id=?", (evaluation_id,))
+    if not any(source_id in snapshot.source_version_ids for snapshot in snapshots):
+        raise HTTPException(404, "source not found in this evaluation")
+    return ok(repo.get_source_version(source_id))
+
+
 @app.get("/evaluations/{evaluation_id}", response_class=HTMLResponse)
 def workspace_page(request: Request, evaluation_id: str):
     _owned_evaluation(request, evaluation_id)

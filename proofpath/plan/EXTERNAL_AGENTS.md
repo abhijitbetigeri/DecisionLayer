@@ -1,5 +1,9 @@
 # Additional implementation workstreams
 
+## Final sprint handoff
+
+Decision timeline, owner-assigned next steps, historical evidence links, and Visitor Lab's measured comparison page are implemented. The latest verification passed 91 automated tests and the desktop/mobile Chrome journey. Read [the main implementation update](../README.md#final-two-hour-implementation-update), [status board](README.md#final-two-hour-enhancements), and [final demo script](../demo/FINAL_DEMO.md) before assigning more work. Remaining release tasks are actual video/audio recording, final team/URL asset updates, timed rehearsal, and host deployment verification. Do not rebuild completed features or launch duplicate workstreams.
+
 WS6, WS7, and WS8 were launched through the assistant's available collaboration tools in this
 session. The terminal prompts below remain an alternative for future sessions; do not launch
 duplicate agents for workstreams that are active or complete. Read each workstream's status file

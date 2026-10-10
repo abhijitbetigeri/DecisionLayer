@@ -28,6 +28,8 @@ PROOFPATH_DATA_DIR=/tmp/decision-layer-demo scripts/demo_reset.sh
 
 ## Results
 
+Latest enhancement verification: **91 automated tests passed**. `scripts/browser_acceptance.py` passed in installed Chrome with temporary data and models disabled: US operations becomes Fit, EU remains Needs verification with SSO next step, four live assertions, decision timeline refresh, report creation, competitor source approval, frozen history, desktop/mobile overflow checks, Visitor Lab actual results, and no page JavaScript errors. Added API ownership checks for insights and historical source links. This does not establish production readiness or real-model availability.
+
 `uv run pytest tests/proofpath -q`: **59 passed in 36.33s**. The focused QA suite passed **10 tests**. Initial QA identified a first-request session initialization bug; the coordinator fixed it and the regression passes. Shell syntax checks pass. Permitted localhost curl smoke passed all eight stages: health, create/confirm, idempotency/conflict, four live assertions, demonstrated recovery/report, approved update/frozen history, isolation/operator authorization, and restart persistence without duplicate fixtures. Automated results do not establish unperformed browser, deployed-host, or real-model checks.
 
 ## Scope and limitations

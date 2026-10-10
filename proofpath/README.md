@@ -17,6 +17,25 @@ Created and updated: October 10, 2026. Status: implementation specification for 
 
 **Implementation entry point:** Read the product context below, then follow “Hackathon implementation specification” for scope, contracts, work assignments, and acceptance checks. That specification takes precedence over the broader production architecture for the one-day build.
 
+## Final two-hour implementation update
+
+The final sprint added these implemented features:
+
+| Feature | Implementation | Buyer benefit |
+|---|---|---|
+| Decision timeline | `sv/proofpath/insights.py`, `/api/v1/evaluations/{id}/insights`, and `static/insights.js` | Explains actual changes to decisions, findings, plans, and prices using stored comparison snapshots |
+| Actionable next steps | Deterministic unresolved-hard-requirement actions, owners, and copyable requests | Turns unknown SSO, recovery, or cost evidence into a concrete follow-up; copying does not send anything |
+| Historical evidence links | Evaluation-owned `/api/v1/evaluations/{id}/sources/{source_id}` and authorized run details | Lets buyers inspect the evidence behind earlier decisions without rewriting history |
+| Visitor Lab results | `/visitor-lab`, `/api/v1/visitor-lab/results`, and `sv/proofpath/visitor_lab.py` | Shows recorded baseline-versus-evidence-context correctness, counts, Wilson intervals, errors, and provenance |
+
+Visitor Lab displays the recorded 15/24 baseline and 24/24 evidence-context decisions when the validated summary is available. These are small offline agent measurements, not human conversion lift. Missing, invalid, or stub summaries withhold scores; page views do not trigger paid model sweeps.
+
+Verification at completion: **91 automated tests passed**. Real Chrome acceptance passed both buyer paths at desktop/mobile widths: US operations reaches Fit after a bounded live mock POC; EU remains Needs verification with an SSO evidence request. Timeline refresh, competitor source approval, immutable report history, Visitor Lab rendering, and absence of page JavaScript errors were checked. Source and insights endpoints have session-ownership regression tests.
+
+Reproduce browser checks with `uv run --with playwright python scripts/browser_acceptance.py`; it uses installed Chrome, temporary data, port 8021, and disabled model calls. Follow [the final four-minute demo script](demo/FINAL_DEMO.md). See [acceptance evidence](ACCEPTANCE.md) for the scope of checks.
+
+Remaining release work: record the screen and narration, insert final team names and public URL into assets, rehearse within four minutes, and verify deployment once Docker/host access is available. Real-model availability and production readiness remain separate checks. Preserve the working local journey instead of adding new connectors or broad crawling before submission.
+
 ## Product in one sentence
 
 ProofPath helps enterprise buyers understand a complex SaaS product, validate it against their environment, and compare alternatives through a guided, evidence-backed evaluation.

@@ -25,17 +25,31 @@
     for (const row of rows.slice(-12).reverse()) {
       const item = element("li", undefined, "decision-entry");
       item.append(element("strong", row.title), element("p", row.summary, "small"));
-      for (const change of row.changes || []) {
-        item.append(element("p", `${change.product_name || change.product_id}: ${(change.requirement_key || change.field || "Decision").replaceAll("_", " ")} · ${describe(change.before)} → ${describe(change.after)}`, "small insight-change"));
+      const changes = row.changes || [];
+      const changeDetails = element("details");
+      changeDetails.append(element("summary", `${changes.length} recorded changes across evaluated products`, "small"));
+      for (const change of changes) {
+        const line = element("p", `${change.product_name || change.product_id}: ${(change.requirement_key || change.field || "Decision").replaceAll("_", " ")} · ${describe(change.before)} → ${describe(change.after)}`, "small insight-change");
+        if (change.product_id === "flowbridge" && change.before !== null) item.append(line.cloneNode(true));
+        changeDetails.append(line);
       }
+      item.append(changeDetails);
       const details = element("details"); details.append(element("summary", "Evidence references", "small"));
-      const references = [...(row.source_version_ids || []), ...(row.run_ids || [])];
-      details.append(element("p", references.length ? references.join(" · ") : "Requirement confirmation; no new execution evidence.", "small mono"));
+      const referenceList = element("div", undefined, "small mono");
+      for (const source of row.source_version_ids || []) {
+        const link = element("a", source); link.href = `/api/v1/evaluations/${encodeURIComponent(root.dataset.evaluationId)}/sources/${encodeURIComponent(source)}`;
+        link.target = "_blank"; link.rel = "noopener"; referenceList.append(link, document.createElement("br"));
+      }
+      for (const run of row.run_ids || []) {
+        const link = element("a", `Test run ${run.slice(0, 8)}`); link.href = `/api/v1/runs/${encodeURIComponent(run)}`;
+        link.target = "_blank"; link.rel = "noopener"; referenceList.append(link, document.createElement("br"));
+      }
+      details.append(referenceList);
       item.append(details);
       if (row.created_at) item.append(element("time", new Date(row.created_at).toLocaleString(), "small muted"));
       timeline.append(item);
     }
-    const steps = data.next_steps || [];
+    const steps = (data.next_steps || []).filter(step => !step.product_id || step.product_id === "flowbridge" || step.action === "review_source");
     if (!steps.length) next.append(element("p", "No unresolved actions for the current evaluation. Review the evidence and create a report.", "small"));
     for (const step of steps) {
       const card = element("div", undefined, "next-step");
