@@ -84,6 +84,14 @@ with tempfile.TemporaryDirectory(prefix="decision-layer-browser-") as temp:
                     page.locator("#btn-report").click()
                     page.locator("#report-body a").first.wait_for()
                     eid = page.url.rsplit("/", 1)[1]
+                    request = context.request
+                    before_view = request.get(BASE + f"/api/v1/evaluations/{eid}/workspace").json()["data"]["comparison"]
+                    page.locator('[data-persona-btn="finance"]').click()
+                    assert page.locator("#ws").get_attribute("data-persona") == "finance"
+                    after_view = request.get(BASE + f"/api/v1/evaluations/{eid}/workspace").json()["data"]["comparison"]
+                    assert before_view == after_view
+                    page.locator('[data-persona-btn="technical"]').click()
+                    print("PASS persona switching preserves findings and scores")
                     if preset == "eu_technical":
                         request = context.request
                         ws = request.get(BASE + f"/api/v1/evaluations/{eid}/workspace").json()["data"]
@@ -97,9 +105,20 @@ with tempfile.TemporaryDirectory(prefix="decision-layer-browser-") as temp:
                         assert request.get(BASE + f"/api/v1/reports/{report_id}").json() == frozen
                         capture(page, "approved-evidence-update")
                         print("PASS browser evidence update and frozen report")
+                        page.get_by_role("button", name="Edit requirements", exact=True).click()
+                        page.get_by_role("button", name="Save edits", exact=True).click()
+                        page.get_by_role("button", name="Confirm to re-evaluate", exact=True).wait_for()
+                        assert page.locator("#btn-prove").is_disabled()
+                        assert request.get(BASE + f"/api/v1/reports/{report_id}").json() == frozen
+                        page.get_by_role("button", name="Confirm to re-evaluate", exact=True).click()
+                        page.wait_for_function("!document.getElementById('btn-prove').disabled")
+                        assert request.get(BASE + f"/api/v1/reports/{report_id}").json() == frozen
+                        print("PASS brief edits require reconfirmation and preserve historical reports")
                     for width in (1280, 375):
                         page.set_viewport_size({"width": width, "height": 900})
-                        assert page.evaluate("document.documentElement.scrollWidth <= innerWidth + 1"), f"Workspace overflow at {width}"
+                        for theme in ("light", "dark"):
+                            page.emulate_media(color_scheme=theme)
+                            assert page.evaluate("document.documentElement.scrollWidth <= innerWidth + 1"), f"Workspace overflow at {width}/{theme}"
                     print(f"PASS browser {preset}: live POC, timeline, next steps, report, mobile")
                 page.goto(BASE + "/visitor-lab")
                 page.get_by_role("heading", name="Can agents reach the right buying decision?").wait_for()

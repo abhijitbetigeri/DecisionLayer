@@ -120,8 +120,12 @@ Recording support is now implemented and exercised: add `--record` to capture a 
 | WS3 landing | **done** | taste-skill pre-flight passes; hero renders live showcase data |
 | WS4 workspace | **done** | agent stalled in final checks; coordinator verified in browser |
 | WS5 agent | **done** | live gpt-oss-120b cited needs_verification; telemetry wired |
-| WS6 deploy | artifacts complete; release pending | Container/config/scripts and quota middleware verified; Docker daemon unavailable, InsForge access unknown, no public deployment |
+| WS6 deploy | live Render journey verified | https://decision-layer.onrender.com; health and non-operator buyer smoke passed; packaged Visitor Lab summary fix awaits next deployment |
 | WS7 demo assets | complete | Slides, architecture, 1080p cards, narration/captions, real-results chart generator; recording/team/URL inputs pending |
 | WS8 QA | complete | 10 new QA tests; full suite 59 passed; temporary-data smoke and acceptance mapping supplied |
 | Integration C1-C4 | **all pass** (C3 headless browser: home → workspace → POC → report, 0 console errors, 375px OK). Visitor Lab: homepage 15/24 (62%) vs agent-context 24/24 (100%) | coordinator |
 | Video recording + edit | not started | coordinator + user, after build freeze |
+
+## Latest release verification
+
+93 automated tests passed; Chrome verified persona switching, edit/reconfirm behavior, frozen reports, and light/dark desktop/mobile layouts. The live Render demo passed its non-operator synthetic buyer journey. Package only the validated aggregate Visitor Lab summary in `sv/proofpath/fixtures/visitor_lab_summary.json`; raw logs remain excluded. Loader prefers actual local measurements, uses bundled measurements only when local files are absent, and withholds invalid local results.

@@ -1,0 +1,184 @@
+{
+  "channel": "simulated",
+  "stub_context": false,
+  "experiment": "final",
+  "created_at": "2026-10-10T23:13:48Z",
+  "models": [
+    "openrouter/openai/gpt-oss-120b",
+    "openrouter/qwen/qwen3-235b-a22b-2507",
+    "openrouter/moonshotai/kimi-k2",
+    "openrouter/google/gemma-4-31b-it"
+  ],
+  "invalid_citations_arm_b": 0,
+  "results": {
+    "A": {
+      "correct": 15,
+      "n": 24,
+      "rate": 0.625,
+      "wilson95": [
+        0.427,
+        0.788
+      ],
+      "errors": 3
+    },
+    "A|eu_technical": {
+      "correct": 2,
+      "n": 8,
+      "rate": 0.25,
+      "wilson95": [
+        0.071,
+        0.591
+      ],
+      "errors": 2
+    },
+    "A|openrouter/google/gemma-4-31b-it": {
+      "correct": 4,
+      "n": 6,
+      "rate": 0.667,
+      "wilson95": [
+        0.3,
+        0.903
+      ],
+      "errors": 0
+    },
+    "A|openrouter/moonshotai/kimi-k2": {
+      "correct": 4,
+      "n": 6,
+      "rate": 0.667,
+      "wilson95": [
+        0.3,
+        0.903
+      ],
+      "errors": 2
+    },
+    "A|openrouter/openai/gpt-oss-120b": {
+      "correct": 5,
+      "n": 6,
+      "rate": 0.833,
+      "wilson95": [
+        0.436,
+        0.97
+      ],
+      "errors": 0
+    },
+    "A|openrouter/qwen/qwen3-235b-a22b-2507": {
+      "correct": 2,
+      "n": 6,
+      "rate": 0.333,
+      "wilson95": [
+        0.097,
+        0.7
+      ],
+      "errors": 1
+    },
+    "A|strict_budget": {
+      "correct": 7,
+      "n": 8,
+      "rate": 0.875,
+      "wilson95": [
+        0.529,
+        0.978
+      ],
+      "errors": 1
+    },
+    "A|us_operations": {
+      "correct": 6,
+      "n": 8,
+      "rate": 0.75,
+      "wilson95": [
+        0.409,
+        0.929
+      ],
+      "errors": 0
+    },
+    "B": {
+      "correct": 24,
+      "n": 24,
+      "rate": 1.0,
+      "wilson95": [
+        0.862,
+        1.0
+      ],
+      "errors": 0
+    },
+    "B|eu_technical": {
+      "correct": 8,
+      "n": 8,
+      "rate": 1.0,
+      "wilson95": [
+        0.676,
+        1.0
+      ],
+      "errors": 0
+    },
+    "B|openrouter/google/gemma-4-31b-it": {
+      "correct": 6,
+      "n": 6,
+      "rate": 1.0,
+      "wilson95": [
+        0.61,
+        1.0
+      ],
+      "errors": 0
+    },
+    "B|openrouter/moonshotai/kimi-k2": {
+      "correct": 6,
+      "n": 6,
+      "rate": 1.0,
+      "wilson95": [
+        0.61,
+        1.0
+      ],
+      "errors": 0
+    },
+    "B|openrouter/openai/gpt-oss-120b": {
+      "correct": 6,
+      "n": 6,
+      "rate": 1.0,
+      "wilson95": [
+        0.61,
+        1.0
+      ],
+      "errors": 0
+    },
+    "B|openrouter/qwen/qwen3-235b-a22b-2507": {
+      "correct": 6,
+      "n": 6,
+      "rate": 1.0,
+      "wilson95": [
+        0.61,
+        1.0
+      ],
+      "errors": 0
+    },
+    "B|strict_budget": {
+      "correct": 8,
+      "n": 8,
+      "rate": 1.0,
+      "wilson95": [
+        0.676,
+        1.0
+      ],
+      "errors": 0
+    },
+    "B|us_operations": {
+      "correct": 8,
+      "n": 8,
+      "rate": 1.0,
+      "wilson95": [
+        0.676,
+        1.0
+      ],
+      "errors": 0
+    }
+  },
+  "arms": {
+    "A": "FlowBridge homepage as fetched text (GET /, no JS)",
+    "B": "GET /api/v1/evaluations/{id}/agent-context"
+  },
+  "presets": [
+    "eu_technical",
+    "us_operations",
+    "strict_budget"
+  ]
+}

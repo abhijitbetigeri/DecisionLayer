@@ -15,18 +15,20 @@ PROOFPATH_DATA_DIR=/tmp/decision-layer-demo scripts/demo_reset.sh
 
 - [x] Fresh startup seeds once; restart preserves evaluations/history: `scripts/smoke.sh` restart plus source-version count check.
 - [x] Three presets match expected decisions, SSO stays unknown: `test_c1_eu_journey`, `test_us_operations_reaches_fit`, `test_c2_pending_approve_preserves_report`, `test_expected_decisions.py`.
-- [ ] Brief edits require confirmation and invalidate current conclusions without rewriting reports: `test_unconfirmed_brief_cannot_run`; edit an existing brief manually, verify stale banner and re-confirmation, compare old report JSON.
-- [ ] Persona switching preserves facts, scores, references: `test_reports.py::test_persona_switch_is_presentation_only`; browser walkthrough in both views.
+- [x] Brief edits require confirmation and invalidate current conclusions without rewriting reports: `test_unconfirmed_brief_cannot_run`; edit an existing brief manually, verify stale banner and re-confirmation, compare old report JSON.
+- [x] Persona switching preserves facts, scores, references: `test_reports.py::test_persona_switch_is_presentation_only`; browser walkthrough in both views.
 - [x] Live POC records actual attempts, bounded retry, idempotency, artifacts: `test_c1_eu_journey`, `test_poc.py`, `scripts/smoke.sh`.
 - [x] Duplicate runs execute once; cancellations, failures, expiry clean resources: `test_run_idempotency_and_active_conflict`, `test_poc.py` lifecycle tests.
 - [x] Pending evidence cannot become truth; approval updates and rejection preserves: `test_c2_pending_approve_preserves_report`, `test_c2_rejection_preserves_approved_evidence`.
-- [ ] Reports retain source versions/results; unknown coverage and zero division handled (report immutability passed; dedicated zero-coverage edge verification still needed): `test_c2_pending_approve_preserves_report`, `test_reports.py`, decision/comparison unit tests.
+- [x] Reports retain source versions/results; unknown coverage and zero division handled (report immutability and dedicated zero-denominator tests passed): `test_c2_pending_approve_preserves_report`, `test_reports.py`, decision/comparison unit tests.
 - [x] Human/agent evidence and IDs agree; fake model citations rejected: `test_c3_agent_uses_workspace_ids_and_rule_based_fallback`, `test_agent.py` citation validation tests.
 - [x] Cross-session evaluation/report/run/artifact reads blocked; operator authorization required: `test_second_session_cannot_read_owned_objects`, `test_operator_routes_require_authorization`, `test_foreign_brief_cannot_be_confirmed_or_run`.
-- [ ] Coframe absent works; live/sim/replay counters separate: full journey with no Coframe configuration, telemetry tests and manual Visitor Lab inspection.
-- [ ] Browser homepage through report works with visible failures and no essential console errors: manual four-minute walkthrough at 1280px/375px in light/dark themes. **Not yet performed.**
+- [x] Coframe absent works; live/sim/replay counters separate: full journey with no Coframe configuration, telemetry tests and manual Visitor Lab inspection.
+- [x] Browser homepage through report works with visible failures and no essential console errors: manual four-minute walkthrough at 1280px/375px in light/dark themes. **Automated Chrome journey passed at 1280px/375px, light/dark; no page JavaScript errors.**
 
 ## Results
+
+Latest release check: **93 automated tests passed**. Chrome additionally verified persona invariance, brief-edit reconfirmation, preserved reports, and desktop/mobile layouts under light/dark preferences. Live Render smoke passed create/confirm, four real mock assertions, report generation, idempotency, and session isolation. Operator source updates and restart checks were not performed against the live host. Visitor Lab aggregate packaging was fixed locally because the deployed image excludes raw `runs/`; live results await redeployment.
 
 Latest enhancement verification: **91 automated tests passed**. `scripts/browser_acceptance.py` passed in installed Chrome with temporary data and models disabled: US operations becomes Fit, EU remains Needs verification with SSO next step, four live assertions, decision timeline refresh, report creation, competitor source approval, frozen history, desktop/mobile overflow checks, Visitor Lab actual results, and no page JavaScript errors. Added API ownership checks for insights and historical source links. This does not establish production readiness or real-model availability.
 

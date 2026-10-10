@@ -23,6 +23,20 @@ def test_missing_results_are_honest(tmp_path):
     assert load_results(tmp_path / 'absent')['state'] == 'unavailable'
 
 
+def test_container_without_runs_uses_packaged_measurement(tmp_path, monkeypatch):
+    from sv.proofpath import visitor_lab
+    monkeypatch.setattr(visitor_lab, 'SUMMARY_PATH', tmp_path / 'absent')
+    result = visitor_lab.load_results()
+    assert result['state'] == 'ready'
+    assert [(arm['correct'], arm['n']) for arm in result['arms']] == [(15, 24), (24, 24)]
+
+
+def test_invalid_local_summary_does_not_fall_back_to_older_scores(tmp_path, monkeypatch):
+    from sv.proofpath import visitor_lab
+    monkeypatch.setattr(visitor_lab, 'SUMMARY_PATH', write(tmp_path, {'invalid': True}))
+    assert visitor_lab.load_results()['state'] == 'invalid'
+
+
 def test_counts_drive_scores_not_untrusted_rate(tmp_path):
     result = load_results(write(tmp_path, summary()))
     assert result['state'] == 'ready'

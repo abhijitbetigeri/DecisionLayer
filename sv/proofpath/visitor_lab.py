@@ -5,6 +5,7 @@ import math
 from pathlib import Path
 
 SUMMARY_PATH = Path(__file__).resolve().parents[2] / 'runs' / 'proofpath-summary.json'
+PACKAGED_SUMMARY_PATH = Path(__file__).parent / 'fixtures' / 'visitor_lab_summary.json'
 PRESETS = ('eu_technical', 'us_operations', 'strict_budget')
 
 
@@ -25,7 +26,8 @@ def load_results(path: Path | None = None) -> dict:
     out = {'state': 'unavailable', 'label': 'Recorded offline agent measurement',
            'message': 'No recorded measurement is available. No model calls are started by this page.'}
     try:
-        raw = json.loads((path or SUMMARY_PATH).read_text())
+        selected = path if path is not None else (SUMMARY_PATH if SUMMARY_PATH.is_file() else PACKAGED_SUMMARY_PATH)
+        raw = json.loads(selected.read_text())
         if raw.get('channel') != 'simulated' or type(raw.get('stub_context')) is not bool:
             raise ValueError('Invalid provenance')
         if raw['stub_context']:
