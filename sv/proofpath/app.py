@@ -214,6 +214,25 @@ def home(request: Request):
     return _page("home.html", "FlowBridge", operator=auth.is_operator(request))
 
 
+@app.get("/visitor-lab", response_class=HTMLResponse)
+def visitor_lab_page():
+    from sv.proofpath.visitor_lab import load_results
+    return _page("visitor_lab.html", "Visitor Lab", results=load_results())
+
+
+@app.get("/api/v1/visitor-lab/results")
+def visitor_lab_results():
+    from sv.proofpath.visitor_lab import load_results
+    return ok(load_results())
+
+
+@app.get("/api/v1/evaluations/{evaluation_id}/insights")
+def evaluation_insights(request: Request, evaluation_id: str):
+    _owned_evaluation(request, evaluation_id)
+    from sv.proofpath.insights import build_insights
+    return ok(build_insights(repo, evaluation_id))
+
+
 @app.get("/evaluations/{evaluation_id}", response_class=HTMLResponse)
 def workspace_page(request: Request, evaluation_id: str):
     _owned_evaluation(request, evaluation_id)

@@ -18,6 +18,7 @@
         <p class="fictional-label">Fictional products and evidence; live tests use local mock integrations.</p>
       </div>
       <div class="ws-header-tools">
+        <a class="btn btn-ghost btn-sm" href="/visitor-lab">Visitor Lab</a>
         <span id="hdr-decision" class="hdr-decision" hidden></span>
         <span id="replay-badge" class="badge badge-replay" hidden><i class="ph ph-film-strip" aria-hidden="true"></i>Recorded replay</span>
         <span id="stub-badge" class="badge" hidden title="The API served example payloads because a module has not landed yet"><i class="ph ph-flask" aria-hidden="true"></i>Example data</span>
@@ -38,6 +39,13 @@
     <div id="banners" class="banners"></div>
 
     <div class="panels" id="panels" hidden>
+      <section class="panel panel-full" id="p-insights" data-order-technical="0" data-order-finance="0" aria-labelledby="h-insights">
+        <div class="panel-head"><h2 id="h-insights">Decision progress</h2><p class="panel-sub">What changed, and what needs proof next</p></div>
+        <div class="panel-body insight-grid">
+          <div><h3 class="h3">Decision timeline</h3><ol id="decision-timeline" class="decision-timeline"><li>Loading evidence history</li></ol></div>
+          <div><h3 class="h3">Next steps</h3><div id="decision-next-steps">Loading next steps</div><p id="insight-status" class="small muted" role="status"></p></div>
+        </div>
+      </section>
       <section class="panel panel-half" id="p-brief" data-order-technical="1" data-order-finance="1" aria-labelledby="h-brief">
         <div class="panel-head"><h2 id="h-brief">Confirmed brief</h2><div class="panel-actions" id="brief-actions"></div></div>
         <div class="panel-body" id="brief-body"></div>
@@ -125,4 +133,4 @@
 </div>
 {% endblock %}
 
-{% block scripts %}<script src="/static/workspace.js" defer></script>{% endblock %}
+{% block scripts %}<script src="/static/workspace.js" defer></script><script src="/static/insights.js" defer></script>{% endblock %}

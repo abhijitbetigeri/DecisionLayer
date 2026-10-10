@@ -1,0 +1,18 @@
+{% extends '_base.html' %}
+{% block title %}Visitor Lab — Decision Layer{% endblock %}
+{% block head %}<link rel="stylesheet" href="/static/visitor_lab.css">{% endblock %}
+{% block body %}
+<main class="lab">
+  <nav aria-label="Modules"><a href="/">Decision Layer / FlowBridge</a><a href="/#evaluate">Evaluation Workspace →</a></nav>
+  <header><p class="lab-label">DECISION LAYER · VISITOR LAB</p><h1>Can agents reach the right buying decision?</h1><p>Compare the same buyer requirements against a website and structured evaluation evidence.</p></header>
+  <p class="lab-note">{{ results.label }} · Fictional FlowBridge product · Correctness against predefined expected decisions</p>
+  {% if results.state == 'ready' %}
+  <section class="lab-arms" aria-label="Measured comparison">
+  {% for arm in results.arms %}<article><p class="lab-label">ARM {{ arm.id }}</p><h2>{{ arm.name }}</h2><div class="lab-rate">{{ arm.percent }}<span>% correct</span></div><p>{{ arm.correct }} / {{ arm.n }} decisions correct · {{ arm.errors }} execution errors</p><p>95% Wilson interval: {{ arm.interval[0] }}–{{ arm.interval[1] }}%</p><p class="lab-muted">{% if arm.id == 'A' %}Homepage fetched as text, without JavaScript; agents may follow same-site pages.{% else %}Structured agent context with requirements, claims, and evidence IDs.{% endif %}</p></article>{% endfor %}
+  </section>
+  <section><h2>By buyer scenario</h2><div class="lab-table-wrap"><table><thead><tr><th>Buyer scenario</th><th>Baseline website</th><th>Evidence context</th></tr></thead><tbody>{% for row in results.presets %}<tr><th>{{ row.name }}</th><td>{{ row.a.correct }}/{{ row.a.n }} correct<br><small>95% interval {{ row.a.interval[0] }}–{{ row.a.interval[1] }}%</small></td><td>{{ row.b.correct }}/{{ row.b.n }} correct<br><small>95% interval {{ row.b.interval[0] }}–{{ row.b.interval[1] }}%</small></td></tr>{% endfor %}</tbody></table></div></section>
+  <section class="lab-method"><h2>What this measurement establishes</h2><p>This is a small offline agent evaluation, not a human conversion experiment or a causal lift claim. Repeated runs of the same models and scenarios may be correlated; Wilson intervals describe observed counts and do not establish generalization to other buyers or products. Errors count as incorrect decisions.</p><p>Arm B rejected citation references: <strong>{{ results.invalid_citations }}</strong>. This count does not by itself establish citation completeness or claim accuracy.</p><p>Experiment: {{ results.experiment }} · Recorded: {{ results.created_at }}</p><details><summary>Models in this run</summary><ul>{% for model in results.models %}<li>{{ model }}</li>{% endfor %}</ul></details><p>No paid model sweep is triggered by viewing this page.</p></section>
+  {% else %}<section class="lab-method"><h2>Measurement {{ results.state }}</h2><p>{{ results.message }}</p></section>{% endif %}
+  <a class="lab-cta" href="/#evaluate">Evaluate your use case →</a>
+</main>
+{% endblock %}

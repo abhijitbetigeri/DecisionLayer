@@ -237,3 +237,17 @@ body.drawer-open { overflow: hidden; }
 /* #evidence deep link from the homepage "Review security evidence" button */
 .panel { scroll-margin-top: 88px; transition: box-shadow var(--dur) var(--ease-out); }
 .panel.is-highlight { box-shadow: var(--focus-ring), var(--shadow-1); }
+
+/* Evidence-backed decision progress. Reuses the workspace's existing tokens. */
+.insight-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+.decision-timeline { list-style: none; padding: 0; margin: 0; }
+.decision-entry { padding: 0 0 1.25rem 1.25rem; border-left: 2px solid var(--border); overflow-wrap: anywhere; }
+.decision-entry:first-child { border-left-color: var(--accent); }
+.decision-entry p { margin: .4rem 0; }
+.decision-entry time { display: block; margin-top: .5rem; }
+.insight-change { padding: .5rem; background: var(--surface-2); border-radius: var(--radius-sm); }
+.next-step { padding: 1rem 0; border-bottom: 1px solid var(--border); }
+.next-step:first-child { padding-top: 0; }
+.next-step textarea { width: 100%; padding: .65rem; margin: .5rem 0; resize: vertical; font: inherit; font-size: .85rem; color: var(--text); background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); }
+.next-step button { margin-right: .5rem; }
+@media (max-width: 720px) { .insight-grid { grid-template-columns: 1fr; gap: 1.25rem; } }
