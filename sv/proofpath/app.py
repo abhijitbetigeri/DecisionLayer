@@ -238,10 +238,18 @@ def llms_txt():
 
 @app.post("/operator/login")
 async def operator_login(request: Request):
-    form = await request.form() if "form" in request.headers.get("content-type", "") else await request.json()
-    if not auth.check_token(form.get("token")):
+    is_form = "form" in request.headers.get("content-type", "")
+    if is_form:   # parse urlencoded by hand: avoids a python-multipart dependency
+        from urllib.parse import parse_qs
+        token = (parse_qs((await request.body()).decode()).get("token") or [None])[0]
+    else:
+        try:
+            token = (await request.json()).get("token")
+        except Exception:
+            token = None
+    if not auth.check_token(token):
         raise HTTPException(403, "invalid operator token")
-    resp = RedirectResponse("/", status_code=303) if "form" in request.headers.get("content-type", "") else ok({"operator": True})
+    resp = RedirectResponse(request.headers.get("referer") or "/", status_code=303) if is_form else ok({"operator": True})
     resp.set_cookie(auth.OPERATOR_COOKIE, auth.grant_operator(), httponly=True, samesite="strict",
                     secure=DEMO_MODE == "public")
     return resp

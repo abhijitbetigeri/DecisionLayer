@@ -102,6 +102,8 @@
     return el;
   }
   const $ = (id) => document.getElementById(id);
+  /* replaceChildren() would stringify null; drop empty slots first */
+  const fill = (el, ...kids) => el.replaceChildren(...kids.flat().filter((k) => k !== null && k !== undefined && k !== false));
   const icon = (name) => h("i", { class: "ph " + name, "aria-hidden": "true" });
   function badge(map, key) {
     const [cls, ic, label] = map[key] || ["unknown", "ph-question", "Unknown"];
@@ -207,7 +209,7 @@
   function renderHeader() {
     const d = state.ws.flowbridge_decision;
     const el = $("hdr-decision");
-    el.replaceChildren();
+    fill(el);
     if (d) { el.append(h("span", { class: "small muted" }, "FlowBridge"), badge(DECISION, d)); el.hidden = false; }
     else el.hidden = true;
     $("replay-badge").hidden = !state.replay;
@@ -215,7 +217,7 @@
 
   function renderBanners() {
     const box = $("banners");
-    box.replaceChildren();
+    fill(box);
     const ws = state.ws;
     const pu = ws.pending_update;
     if (pu) {
@@ -284,9 +286,9 @@
   function renderBrief() {
     const b = state.pendingConfirm || state.ws.brief;
     const body = $("brief-body"), actions = $("brief-actions");
-    actions.replaceChildren(h("button", { type: "button", class: "btn btn-ghost btn-sm", onclick: startEdit }, icon("ph-pencil-simple"), "Edit requirements"));
+    fill(actions, h("button", { type: "button", class: "btn btn-ghost btn-sm", onclick: startEdit }, icon("ph-pencil-simple"), "Edit requirements"));
     const confirmed = b.confirmed_at && !state.pendingConfirm;
-    body.replaceChildren(
+    fill(body,
       h("p", { class: "brief-goal" }, b.goal),
       h("p", { class: "small muted" }, `Version ${b.version}. `, confirmed ? "Confirmed." : "Not confirmed yet.",
         ` Parsed by ${b.parsed_by === "preset" ? "preset" : b.parsed_by === "manual" ? "manual entry" : b.parsed_by}.`),
@@ -307,7 +309,7 @@
   function renderBriefEditor() {
     const d = state.draft;
     const body = $("brief-body");
-    $("brief-actions").replaceChildren();
+    fill($("brief-actions"));
     const rows = d.requirements.map((q, i) => h("li", { class: "req-edit" },
       h("span", { class: "req-edit-label" }, q.label),
       h("label", { class: "field-inline" }, h("span", { class: "sr-only" }, "Type for " + q.label),
@@ -324,7 +326,7 @@
       h("select", { onchange: (e) => { if (!e.target.value) return; const k = e.target.value;
         d.requirements.push({ key: k, label: REQ_CATALOG[k], hard: true, weight: 0, expected: k === "budget_monthly_usd" ? 900 : null, acceptance_criteria: "" }); renderBriefEditor(); } },
         h("option", { value: "" }, "Choose a requirement"), missing.map((k) => h("option", { value: k }, REQ_CATALOG[k])))) : null;
-    body.replaceChildren(
+    fill(body,
       h("p", { class: "brief-goal" }, d.goal),
       h("ul", { class: "req-list" }, rows), adder,
       h("div", { class: "row-actions" },
@@ -372,22 +374,24 @@
     const run = state.run;
     const runLine = run ? (run.outcome ? `Last POC: ${(OUTCOME[run.outcome] || [, , run.outcome])[2]}` : `POC: ${RUN_STATE[run.state] || run.state}`) : "No POC run yet";
     const nodes = [
-      { t: "Mock CRM", sub: `Stand-in for ${src}`, cls: "wf-ext" },
-      { t: "FlowBridge sync", sub: runLine, cls: "wf-core" },
-      { t: "Mock warehouse", sub: `Stand-in for ${dst}`, cls: "wf-ext" },
+      { t: "Mock CRM", sub: "Stand-in for", sub2: src, cls: "wf-ext" },
+      { t: "FlowBridge sync", sub: runLine, sub2: "Fictional vendor", cls: "wf-core" },
+      { t: "Mock warehouse", sub: "Stand-in for", sub2: dst, cls: "wf-ext" },
     ];
+    const clip = (t) => (t.length > 26 ? t.slice(0, 25) + "..." : t);
     function build(vertical) {
-      const W = vertical ? 300 : 760, H = vertical ? 330 : 130, bw = vertical ? 260 : 210, bh = 76;
+      const W = vertical ? 300 : 600, H = vertical ? 350 : 120, bw = vertical ? 240 : 172, bh = 90;
       const svg = s("svg", { viewBox: `0 0 ${W} ${H}`, class: "wf-svg " + (vertical ? "wf-v" : "wf-h"), role: "img",
-        "aria-label": `Workflow: ${nodes.map((n) => n.t + " (" + n.sub + ")").join(", then ")}` });
+        "aria-label": `Workflow: ${nodes.map((n) => n.t + " (" + n.sub + " " + n.sub2 + ")").join(", then ")}` });
       svg.append(s("defs", {}, s("marker", { id: "wf-arrow" + (vertical ? "v" : "h"), viewBox: "0 0 10 10", refX: "9", refY: "5", markerWidth: "7", markerHeight: "7", orient: "auto-start-reverse" },
         s("path", { d: "M0,0 L10,5 L0,10 z", class: "wf-arrowhead" }))));
       nodes.forEach((n, i) => {
         const x = vertical ? (W - bw) / 2 : 10 + i * ((W - 20 - bw) / 2), y = vertical ? 10 + i * ((H - 20 - bh) / 2) : (H - bh) / 2;
         const g = s("g", { class: "wf-node " + n.cls });
         g.append(s("rect", { x, y, width: bw, height: bh, rx: 10 }),
-          s("text", { x: x + bw / 2, y: y + 32, "text-anchor": "middle", class: "wf-title" }, n.t),
-          s("text", { x: x + bw / 2, y: y + 54, "text-anchor": "middle", class: "wf-sub" }, n.sub.length > 34 ? n.sub.slice(0, 33) + "..." : n.sub));
+          s("text", { x: x + bw / 2, y: y + 30, "text-anchor": "middle", class: "wf-title" }, n.t),
+          s("text", { x: x + bw / 2, y: y + 52, "text-anchor": "middle", class: "wf-sub" }, clip(n.sub)),
+          s("text", { x: x + bw / 2, y: y + 70, "text-anchor": "middle", class: "wf-sub" }, clip(n.sub2)));
         svg.append(g);
         if (i < nodes.length - 1) {
           const line = vertical
@@ -398,7 +402,7 @@
       });
       return svg;
     }
-    $("workflow-body").replaceChildren(build(false), build(true),
+    fill($("workflow-body"), build(false), build(true),
       h("p", { class: "small muted" }, "Mock CRM and warehouse are local stand-ins. No real Salesforce or Snowflake is contacted."));
   }
 
@@ -413,8 +417,8 @@
     const body = $("matrix-body");
     const fb = product("flowbridge");
     $("matrix-sub").textContent = "FlowBridge against your confirmed requirements";
-    if (!state.ws.comparison) { body.replaceChildren(stateBox("empty", "ph-list-checks", "No findings yet. Confirm the brief to evaluate the evidence.")); return; }
-    if (!fb) { body.replaceChildren(stateBox("empty", "ph-list-checks", "No FlowBridge findings in this comparison.")); return; }
+    if (!state.ws.comparison) { fill(body, stateBox("empty", "ph-list-checks", "No findings yet. Confirm the brief to evaluate the evidence.")); return; }
+    if (!fb) { fill(body, stateBox("empty", "ph-list-checks", "No FlowBridge findings in this comparison.")); return; }
     const rows = state.ws.brief.requirements.map((q) => {
       const f = fb.findings.find((x) => x.requirement_key === q.key);
       return h("tr", {},
@@ -427,7 +431,7 @@
         h("td", { "data-label": "Plan" }, f ? planText(f.applicable_plan) : null),
         h("td", { "data-label": "Citations" }, f ? citationLinks(f) : null));
     });
-    body.replaceChildren(
+    fill(body,
       invalidated() ? h("p", { class: "invalid-note" }, icon("ph-hourglass"), " Invalidated: these conclusions predate your latest brief or evidence.") : null,
       h("div", { class: "table-wrap" }, h("table", { class: "matrix stack" + (invalidated() ? " is-invalid" : "") },
         h("thead", {}, h("tr", {}, ["Requirement", "Status", "Evidence", "Plan", "Citations"].map((t) => h("th", { scope: "col" }, t)))),
@@ -437,7 +441,7 @@
   /* ------------------------------------------------------------ citations side panel */
   function openDrawer(title, content) {
     $("drawer-title").textContent = title;
-    $("drawer-body").replaceChildren(content);
+    fill($("drawer-body"), content);
     $("drawer").hidden = false; $("drawer-scrim").hidden = false;
     document.body.classList.add("drawer-open");
     $("drawer-close").focus();
@@ -519,9 +523,9 @@
     else if (run.state === "failed" || (run.outcome && run.outcome !== "passed")) kids.push(stateBox("failed", "ph-warning-octagon", `Run ${(OUTCOME[run.outcome] || [, , "failed"])[2].toLowerCase()}${run.error ? ": " + run.error : "."}`));
     else kids.push(h("div", { class: "run-summary" }, badge(OUTCOME, run.outcome || "passed"), h("span", { class: "small muted" }, ` Run ${run.id.slice(0, 8)}, ${run.attempts} delivery attempts`)));
     if (state.runError) kids.push(stateBox("failed", "ph-warning-octagon", state.runError, run && !runActive() ? null : retryBtn(() => { state.runError = ""; pollRun(run.id); })));
-    rs.replaceChildren(...kids);
+    fill(rs, ...kids);
 
-    $("assertions").replaceChildren(...PLAN_STEPS.map(([key, text]) => {
+    fill($("assertions"), ...PLAN_STEPS.map(([key, text]) => {
       const tr = state.results.find((r) => r.test_key === key);
       return h("li", { class: "assertion" },
         h("div", { class: "assertion-head" }, badge(TEST, tr ? tr.status : "pending"), h("span", {}, text)),
@@ -619,7 +623,7 @@
   function renderEvents() {
     const list = $("events");
     const evs = state.events.slice(-60).reverse();
-    list.replaceChildren(...evs.map((ev) => {
+    fill(list, ...evs.map((ev) => {
       const fail = ev.type === "poc_attempt" && ev.payload && ev.payload.ok === false;
       return h("li", { class: "event" + (fail ? " event-fail" : "") },
         h("span", { class: "event-time mono" }, fmtTime(ev.created_at)),
@@ -628,7 +632,7 @@
         h("span", { class: "event-sum small muted" }, eventSummary(ev)));
     }));
     const st = $("events-state");
-    st.replaceChildren();
+    fill(st);
     if (state.eventsPaused) st.append(stateBox("failed", "ph-wifi-slash", "Live updates paused after repeated errors.", retryBtn(() => { state.eventsPaused = false; state.eventErrors = 0; startEvents(true); })));
     else if (!state.events.length) st.append(stateBox("empty", "ph-broadcast", "No events yet."));
   }
@@ -654,7 +658,7 @@
   function renderComparison() {
     const body = $("comparison-body");
     const c = state.ws.comparison;
-    if (!c) { $("comparison-sub").textContent = ""; body.replaceChildren(stateBox("empty", "ph-table", "No comparison yet. Confirm the brief to compare products.")); return; }
+    if (!c) { $("comparison-sub").textContent = ""; fill(body, stateBox("empty", "ph-table", "No comparison yet. Confirm the brief to compare products.")); return; }
     $("comparison-sub").textContent = `Snapshot ${c.id.slice(0, 8)}, ${c.rubric_version}. Hard requirements decide fit; preferences only affect score.`;
     const pu = state.ws.pending_update;
     const puProduct = pu ? pu.source_version.product_id : null;
@@ -673,7 +677,7 @@
       })));
     const metric = (label, fn, cls) => h("tr", { class: "metric " + (cls || "") }, h("th", { scope: "row" }, label), c.products.map((p) => h("td", {}, fn(p))));
     const nee = () => h("span", { class: "nee" }, icon("ph-question"), "Not enough evaluated evidence");
-    body.replaceChildren(
+    fill(body,
       invalidated() ? h("p", { class: "invalid-note" }, icon("ph-hourglass"), " Invalidated until the edited brief is confirmed.") : null,
       h("div", { class: "table-wrap" }, h("table", { class: "compare" + (invalidated() ? " is-invalid" : "") },
         h("thead", {}, head),
@@ -689,10 +693,10 @@
   function renderFinance() {
     const body = $("finance-body");
     const c = state.ws.comparison;
-    if (!c) { body.replaceChildren(stateBox("empty", "ph-currency-dollar", "Plan assumptions appear once a comparison exists.")); return; }
+    if (!c) { fill(body, stateBox("empty", "ph-currency-dollar", "Plan assumptions appear once a comparison exists.")); return; }
     const budget = state.ws.brief.requirements.find((q) => q.key === "budget_monthly_usd");
     const quotes = c.products.filter((p) => p.cheapest_qualifying_plan && (p.monthly_price_usd === null || p.monthly_price_usd === undefined));
-    body.replaceChildren(
+    fill(body,
       h("ul", { class: "fin-list" }, c.products.map((p) => h("li", {},
         h("strong", {}, p.product_name), " ",
         p.cheapest_qualifying_plan ? `needs ${planText(p.cheapest_qualifying_plan)} at ${money(p.monthly_price_usd)}` : "has no plan that meets every capability requirement"))),
@@ -709,7 +713,7 @@
     const btn = $("btn-report");
     btn.disabled = !c || !!state.pendingConfirm;
     btn.title = !c ? "Needs a comparison" : state.pendingConfirm ? "Confirm the edited brief first" : "";
-    body.replaceChildren(
+    fill(body,
       h("p", { class: "small muted" }, "A report freezes the current brief version, comparison snapshot and run ids. Later evidence updates never change it."),
       state.reportIds.length ? h("ul", { class: "report-list" }, state.reportIds.map((id, i) => h("li", {},
         h("a", { href: `/reports/${encodeURIComponent(id)}` }, icon("ph-file-lock"), ` Report ${id.slice(0, 8)}`), i === 0 ? h("span", { class: "tag" }, "Latest") : null)))
@@ -748,7 +752,7 @@
         h("p", { class: "small muted" }, `Input version ${a.input_version}, ${a.turns} turns. A model never decides pass or fail.`)));
     }
     if (state.agentError) kids.push(stateBox("failed", "ph-warning-octagon", state.agentError, retryBtn(runAgent)));
-    body.replaceChildren(...kids);
+    fill(body, ...kids);
   }
   async function runAgent() {
     state.agentBusy = true; state.agentError = ""; renderAgent();
