@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block main %}
+<h1>Understand every user. Ship what matters.</h1>
+<p>{{ facts.company.tagline }}.</p>
+<ul>
+  <li>Plans from ${{ facts.plans[0].price_per_seat_annual }} per seat per month (billed annually). <a href="{{ base }}/pricing">Full pricing</a></li>
+  <li>SAML SSO on {{ plans_with('saml_sso') }}. EU data residency on {{ plans_with('eu_data_residency') }}.</li>
+  <li>SOC 2 Type I certified; SOC 2 Type II {{ 'certified' if facts.compliance.soc2_type2.status == 'certified' else 'audit in progress' }}. <a href="{{ base }}/security">Details</a></li>
+</ul>
+<a class="cta" href="{{ base }}/pricing">See plans</a>
+{% endblock %}

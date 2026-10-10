@@ -1,0 +1,26 @@
+[project]
+name = "decision-layer"
+version = "0.1.0"
+description = "Decision Layer: evidence-driven enterprise software evaluation through Visitor Lab and Evaluation Workspace."
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn>=0.30",
+    "jinja2>=3.1",
+    "pyyaml>=6.0",
+    "httpx>=0.27",
+    "openai>=1.50",
+    "beautifulsoup4>=4.12",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["sv"]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+]

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+<rect width="100%" height="100%" fill="#f7f8fa"/>
+<text x="90" y="107.0" font-family="system-ui, sans-serif" font-size="52" font-weight="600" fill="#14161b">Decision Layer | Living evaluation architecture</text>
+<text x="90" y="173.0" font-family="system-ui, sans-serif" font-size="28" font-weight="400" fill="#565c69">Presentation can change. Facts, test outcomes, and decisions remain grounded.</text>
+<rect x="90" y="300" width="540" height="370" rx="12" fill="#ffffff"/>
+<rect x="90" y="300" width="540" height="8" rx="12" fill="#2346d8"/>
+<text x="118" y="374.0" font-family="system-ui, sans-serif" font-size="34" font-weight="600" fill="#14161b">Optimization loop</text>
+<text x="118" y="462.0" font-family="system-ui, sans-serif" font-size="27" font-weight="400" fill="#14161b">Approved presentation</text>
+<text x="118" y="497.1" font-family="system-ui, sans-serif" font-size="27" font-weight="400" fill="#14161b">Experiment &gt; measure &gt; refine</text>
+<text x="118" y="532.2" font-family="system-ui, sans-serif" font-size="27" font-weight="400" fill="#14161b">Coframe-style, not integrated</text>
+<rect x="690" y="300" width="540" height="370" rx="12" fill="#ffffff"/>
+<rect x="690" y="300" width="540" height="8" rx="12" fill="#2346d8"/>
+<text x="718" y="374.0" font-family="system-ui, sans-serif" font-size="34" font-weight="600" fill="#14161b">Evaluation Workspace</text>
+<text x="718" y="462.0" font-family="system-ui, sans-serif" font-size="27" font-weight="400" fill="#14161b">Brief &gt; walkthrough &gt; POC</text>
+<text x="718" y="497.1" font-family="system-ui, sans-serif" font-size="27" font-weight="400" fill="#14161b">Compare &gt; versioned report</text>
+<text x="718" y="532.2" font-family="system-ui, sans-serif" font-size="27" font-weight="400" fill="#14161b">Review changes before approval</text>
+<rect x="1290" y="300" width="540" height="370" rx="12" fill="#ffffff"/>
+<rect x="1290" y="300" width="540" height="8" rx="12" fill="#2346d8"/>
+<text x="1318" y="374.0" font-family="system-ui, sans-serif" font-size="34" font-weight="600" fill="#14161b">Visitor Lab</text>
+<text x="1318" y="462.0" font-family="system-ui, sans-serif" font-size="27" font-weight="400" fill="#14161b">Buyer simulator</text>
+<text x="1318" y="497.1" font-family="system-ui, sans-serif" font-size="27" font-weight="400" fill="#14161b">Claim guard + deterministic oracle</text>
+<text x="1318" y="532.2" font-family="system-ui, sans-serif" font-size="27" font-weight="400" fill="#14161b">Open-weight models on cloud</text>
+<text x="645" y="480.0" font-family="system-ui, sans-serif" font-size="45" font-weight="400" fill="#14161b">&gt;</text>
+<text x="1245" y="480.0" font-family="system-ui, sans-serif" font-size="45" font-weight="400" fill="#14161b">&gt;</text>
+<rect x="200" y="750" width="1520" height="130" rx="12" fill="#e8edff"/>
+<text x="230" y="815.0" font-family="system-ui, sans-serif" font-size="30" font-weight="400" fill="#14161b">Measured correctness and qualified evaluation outcomes feed the optimization loop</text>
+<text x="90" y="990.0" font-family="system-ui, sans-serif" font-size="25" font-weight="400" fill="#565c69">Fictional evidence | local mock POC | cloud inference is optional and requires configuration</text>
+</svg>

@@ -1,0 +1,308 @@
+{% extends "_base.html" %}
+{#
+  FlowBridge homepage (WS3).
+  Design read: B2B SaaS landing for enterprise technical buyers and their agents, trust-first,
+  Linear-clean, Tailwind v4 utilities + Geist + restrained motion. Dials 6 / 4 / 4.
+  Plans and capabilities below mirror proofpath/plan/shared-truth.md section 3 exactly.
+  FlowBridge has NO SSO claim: never render SSO as included and never render a SOC 2 badge.
+#}
+{% set example_id = "11111111-1111-4111-8111-111111111111" %}
+{% set plans = [
+  {"id": "team", "name": "Team", "price": "$299", "unit": "per month",
+   "summary": "For one team syncing a CRM into a warehouse.",
+   "caps": ["US deployment"]},
+  {"id": "business", "name": "Business", "price": "$999", "unit": "per month",
+   "summary": "For production syncs that need EU data residency.",
+   "caps": ["US deployment", "EU deployment", "Automatic retries with idempotency keys"]},
+  {"id": "enterprise", "name": "Enterprise", "price": "Talk to us", "unit": "quote only",
+   "summary": "For larger rollouts with procurement review.",
+   "caps": ["US deployment", "EU deployment", "Automatic retries with idempotency keys"]},
+] %}
+
+{% block title %}FlowBridge: connect your systems, automate your business{% endblock %}
+
+{% block head %}
+  <link rel="alternate" type="application/json" href="/api/v1/evaluations/{{ example_id }}/agent-context" title="Agent context for the example evaluation">
+  <link rel="stylesheet" href="/static/home.css">
+  <script>document.documentElement.classList.add("js");</script>
+{% endblock %}
+
+{% block body_class %}home{% endblock %}
+
+{% block body %}
+<header class="site-nav sticky top-0 border-b border-line">
+  <nav class="mx-auto max-w-7xl h-16 px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-6" aria-label="Primary">
+    <a href="/" class="flex items-center gap-2.5 font-semibold tracking-tight text-ink no-underline">
+      <span class="brand-mark" aria-hidden="true"><span></span><span></span></span>
+      FlowBridge
+    </a>
+    <ul class="hidden md:flex items-center gap-8 list-none m-0 p-0 text-sm text-muted">
+      <li><a class="nav-link" href="#product">Product</a></li>
+      <li><a class="nav-link" href="#integrations">Integrations</a></li>
+      <li><a class="nav-link" href="#enterprise">Enterprise</a></li>
+      <li><a class="nav-link" href="#pricing">Pricing</a></li>
+    </ul>
+    <a href="#demo" class="btn btn-ghost btn-sm whitespace-nowrap">Book a demo</a>
+  </nav>
+</header>
+
+<main>
+  {# ---------------------------------------------------------------- HERO #}
+  <section class="hero mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-10 md:pt-16 lg:pt-20 pb-14 md:pb-20" id="product">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+      <div class="lg:col-span-5 reveal-load">
+        <div data-cf-slot="hero-copy">
+          <h1 class="text-4xl md:text-5xl lg:text-[3.5rem] font-semibold tracking-tighter leading-[1.04] text-ink m-0">
+            Connect your systems. Automate your business.
+          </h1>
+          <p class="mt-6 text-lg text-muted leading-relaxed max-w-[44ch]">
+            FlowBridge syncs your CRM and warehouse with retries you can audit. Test it against your requirements first.
+          </p>
+        </div>
+        <div class="mt-8 flex flex-wrap items-center gap-3">
+          <a href="#evaluate" class="btn btn-primary" data-cf-slot="primary-cta" data-action="focus-brief">
+            Evaluate my use case <i class="ph ph-arrow-down-right" aria-hidden="true"></i>
+          </a>
+          <a href="#demo" class="btn btn-ghost">Book a demo</a>
+        </div>
+      </div>
+
+      {# Real component preview: rendered by home.js from the example evaluation payload. #}
+      <div class="lg:col-span-7 reveal-load reveal-delay">
+        <figure class="preview m-0" id="hero-preview" aria-labelledby="preview-title" aria-busy="true">
+          <div class="preview-head">
+            <div class="min-w-0">
+              <p class="preview-kicker">Evaluation Workspace by Decision Layer</p>
+              <p class="preview-title" id="preview-title" data-preview="goal">Loading example evaluation</p>
+            </div>
+            <span class="preview-decision" data-preview="decision"></span>
+          </div>
+
+          <div class="preview-body">
+            <ul class="preview-matrix" data-preview="matrix" role="list">
+              {% for _ in range(4) %}
+              <li class="matrix-row skeleton-row" aria-hidden="true">
+                <span class="sk sk-label"></span><span class="sk sk-badge"></span>
+              </li>
+              {% endfor %}
+            </ul>
+
+            <div class="preview-citation" data-preview="citation" hidden></div>
+
+            <div class="preview-error" data-preview="error" hidden role="status">
+              <i class="ph ph-warning-circle" aria-hidden="true"></i>
+              <span>The example evaluation could not be loaded. Start your own below.</span>
+            </div>
+          </div>
+
+          <figcaption class="preview-foot">
+            <span><i class="ph ph-info" aria-hidden="true"></i> Live data from the example evaluation. Fictional evidence.</span>
+            <a href="#evaluate" class="preview-link" data-action="focus-brief">Run yours</a>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  {# ---------------------------------------------------------------- EVALUATION INPUT #}
+  <section class="evaluate-band border-y border-line" id="evaluate">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-16 md:py-20 reveal">
+      <p class="eyebrow">Evaluation Workspace by Decision Layer</p>
+      <div data-cf-slot="entry-point">
+        <h2 class="mt-3 text-3xl md:text-4xl font-semibold tracking-tight text-ink m-0">Tell us what you need to connect.</h2>
+        <p class="mt-4 text-muted leading-relaxed max-w-[60ch]" data-cf-slot="walkthrough-intro">
+          We turn your brief into requirements, check each one against cited evidence, and run a live test on mock systems.
+        </p>
+      </div>
+
+      <form class="eval-form mt-8" id="eval-form" novalidate>
+        <label for="brief" class="field-label">Your use case</label>
+        <textarea id="brief" name="brief_text" rows="4" class="field-input" aria-describedby="brief-help brief-error" required>We need to sync Salesforce opportunities into Snowflake, require EU hosting and SSO, and need failed syncs to recover without duplicate records.</textarea>
+        <p id="brief-help" class="field-help">Plain language is fine. You confirm the requirements before anything runs.</p>
+
+        <fieldset class="mt-5 border-0 p-0 m-0">
+          <legend class="field-label">Or start from a preset</legend>
+          <div class="flex flex-wrap gap-2 mt-2" role="radiogroup" aria-label="Presets">
+            <button type="button" class="chip" role="radio" aria-checked="true" data-preset="eu_technical"
+              data-brief="We need to sync Salesforce opportunities into Snowflake, require EU hosting and SSO, and need failed syncs to recover without duplicate records.">
+              <i class="ph ph-globe-hemisphere-east" aria-hidden="true"></i> EU technical
+            </button>
+            <button type="button" class="chip" role="radio" aria-checked="false" data-preset="us_operations"
+              data-brief="We need to sync Salesforce opportunities into Snowflake with US hosting, and failed syncs must recover without duplicate records. SSO is a nice to have.">
+              <i class="ph ph-globe-hemisphere-west" aria-hidden="true"></i> US operations
+            </button>
+            <button type="button" class="chip" role="radio" aria-checked="false" data-preset="strict_budget"
+              data-brief="We need EU hosting for under $900 per month, and failed Salesforce to Snowflake syncs must recover without duplicate records.">
+              <i class="ph ph-currency-dollar" aria-hidden="true"></i> Strict budget
+            </button>
+          </div>
+        </fieldset>
+
+        <div class="mt-7 flex flex-col sm:flex-row sm:items-center gap-4">
+          <button type="submit" class="btn btn-primary btn-lg" id="eval-submit">
+            <span class="btn-label">Evaluate my use case</span>
+            <span class="btn-loading" aria-hidden="true"><i class="ph ph-circle-notch spin"></i> Building workspace</span>
+          </button>
+          <p class="text-sm text-muted m-0">No account needed. Results stay in this browser session.</p>
+        </div>
+        <p id="brief-error" class="field-error" role="alert" hidden></p>
+      </form>
+    </div>
+  </section>
+
+  {# ---------------------------------------------------------------- FEATURES (4-cell bento) #}
+  <section class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 md:py-24" id="integrations">
+    <h2 class="text-3xl md:text-4xl font-semibold tracking-tight text-ink m-0 max-w-[22ch] reveal">Everything a sync needs to survive production.</h2>
+
+    <div class="bento mt-10 grid grid-cols-1 md:grid-cols-6 gap-4">
+      <article class="bento-cell md:col-span-4 reveal">
+        <div class="bento-copy">
+          <h3>Prebuilt connectors</h3>
+          <p>Point FlowBridge at your CRM and your warehouse, then map the fields you want to keep in sync.</p>
+        </div>
+        <div class="connector-pair" aria-label="Systems in the example evaluation">
+          <div class="connector">
+            <span class="connector-icon"><i class="ph ph-address-book" aria-hidden="true"></i></span>
+            <span><strong data-preview="system-0">Salesforce</strong><small>CRM source</small></span>
+          </div>
+          <span class="connector-link" aria-hidden="true"><i class="ph ph-arrows-left-right"></i></span>
+          <div class="connector">
+            <span class="connector-icon"><i class="ph ph-database" aria-hidden="true"></i></span>
+            <span><strong data-preview="system-1">Snowflake</strong><small>Warehouse destination</small></span>
+          </div>
+        </div>
+      </article>
+
+      <article class="bento-cell bento-accent md:col-span-2 md:row-span-2 reveal">
+        <div class="bento-copy">
+          <h3>Reliable execution</h3>
+          <p>Failed writes retry with the same idempotency key, so a retry never creates a second record.</p>
+        </div>
+        <ol class="run-steps" data-preview="run" aria-label="Steps from the example test run">
+          <li class="run-step"><i class="ph ph-circle-dashed" aria-hidden="true"></i><span>Loading test run</span></li>
+        </ol>
+        <p class="run-note" data-preview="run-note">From the example run on local mock systems.</p>
+      </article>
+
+      <article class="bento-cell bento-grid-bg md:col-span-2 reveal">
+        <div class="bento-copy">
+          <h3>Workflow builder</h3>
+          <p>Source, transform, destination. Every step is visible and versioned.</p>
+        </div>
+        <div class="flow" aria-label="Example workflow: CRM to FlowBridge to warehouse">
+          <span class="flow-node"><i class="ph ph-address-book" aria-hidden="true"></i>CRM</span>
+          <i class="ph ph-arrow-right flow-arrow" aria-hidden="true"></i>
+          <span class="flow-node flow-node-accent"><i class="ph ph-arrows-clockwise" aria-hidden="true"></i>Sync</span>
+          <i class="ph ph-arrow-right flow-arrow" aria-hidden="true"></i>
+          <span class="flow-node"><i class="ph ph-database" aria-hidden="true"></i>Warehouse</span>
+        </div>
+      </article>
+
+      <article class="bento-cell md:col-span-2 reveal" id="enterprise">
+        <div class="bento-copy">
+          <h3>Enterprise controls</h3>
+          <p>EU deployment on Business and Enterprise. US deployment on every plan.</p>
+        </div>
+        <a href="#" class="text-link mt-auto" data-action="security-evidence">
+          Review security evidence <i class="ph ph-arrow-right" aria-hidden="true"></i>
+        </a>
+      </article>
+    </div>
+  </section>
+
+  {# ---------------------------------------------------------------- PRICING #}
+  <section class="pricing-band border-t border-line" id="pricing">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 md:py-24">
+      <h2 class="text-3xl md:text-4xl font-semibold tracking-tight text-ink m-0 reveal">Pricing that matches what we document.</h2>
+      <p class="mt-4 text-muted max-w-[60ch] reveal">Each capability below comes from our published plan sheet. If it is not listed, we have not documented it.</p>
+
+      <div class="plans mt-10 grid grid-cols-1 md:grid-cols-3 reveal">
+        {% for plan in plans %}
+        <div class="plan {% if plan.id == 'business' %}plan-featured{% endif %}" id="plan-{{ plan.id }}">
+          <h3 class="plan-name">{{ plan.name }}</h3>
+          <p class="plan-price"><span class="{% if plan.id == 'enterprise' %}plan-price-quote{% endif %}">{{ plan.price }}</span></p>
+          <p class="plan-unit">{{ plan.unit }}</p>
+          <p class="plan-summary">{{ plan.summary }}</p>
+          <ul class="plan-caps" role="list">
+            {% for cap in plan.caps %}
+            <li><i class="ph ph-check" aria-hidden="true"></i>{{ cap }}</li>
+            {% endfor %}
+          </ul>
+          {% if plan.id == 'enterprise' %}
+          <a href="#demo" class="btn btn-ghost plan-cta">Book a demo</a>
+          {% else %}
+          <a href="#evaluate" class="btn {% if plan.id == 'business' %}btn-primary{% else %}btn-ghost{% endif %} plan-cta" data-action="focus-brief">Evaluate my use case</a>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+
+      <p class="plans-note mt-6">
+        <span class="status status-unknown"><i class="ph ph-question" aria-hidden="true"></i>Unknown</span>
+        <span>SAML single sign-on is not stated in our published documentation.</span>
+        <a href="#" class="text-link" data-action="security-evidence">Review security evidence <i class="ph ph-arrow-right" aria-hidden="true"></i></a>
+      </p>
+    </div>
+  </section>
+
+  {# ---------------------------------------------------------------- TRUST / EVIDENCE #}
+  <section class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 md:py-24" id="security">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+      <div class="lg:col-span-5 reveal">
+        <h2 class="text-3xl md:text-4xl font-semibold tracking-tight text-ink m-0">Check the evidence before you sign.</h2>
+        <p class="mt-4 text-muted leading-relaxed max-w-[52ch]">
+          Every answer in your evaluation points to a source or a test run. Gaps stay marked as gaps.
+        </p>
+        <a href="#" class="btn btn-ghost mt-8" data-action="security-evidence">
+          Review security evidence <i class="ph ph-arrow-right" aria-hidden="true"></i>
+        </a>
+        <p class="text-sm text-muted mt-4">Illustrative. Fictional products and evidence.</p>
+      </div>
+
+      <dl class="legend lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-px m-0 reveal">
+        <div class="legend-item">
+          <dt><span class="status status-documented"><i class="ph ph-file-text" aria-hidden="true"></i>Documented</span></dt>
+          <dd>A published vendor source states it, with the plan it applies to.</dd>
+        </div>
+        <div class="legend-item">
+          <dt><span class="status status-demonstrated"><i class="ph ph-flask" aria-hidden="true"></i>Demonstrated</span></dt>
+          <dd>A live test run showed it, with inspectable artifacts.</dd>
+        </div>
+        <div class="legend-item">
+          <dt><span class="status status-unknown"><i class="ph ph-question" aria-hidden="true"></i>Unknown</span></dt>
+          <dd>No approved source covers it yet. It blocks a confirmed fit.</dd>
+        </div>
+        <div class="legend-item">
+          <dt><span class="status status-contradicted"><i class="ph ph-warning" aria-hidden="true"></i>Contradicted</span></dt>
+          <dd>Sources disagree. You review the change before it counts.</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  {# ---------------------------------------------------------------- DEMO CONTACT (target of "Book a demo") #}
+  <section class="demo-band border-t border-line" id="demo">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-14 flex flex-col md:flex-row md:items-center md:justify-between gap-6 reveal">
+      <h2 class="text-2xl md:text-3xl font-semibold tracking-tight text-ink m-0 max-w-[28ch]">Prefer a walkthrough with our team?</h2>
+      <a href="mailto:demo@flowbridge.example" class="btn btn-primary">Book a demo</a>
+    </div>
+  </section>
+
+  {# ---------------------------------------------------------------- AGENT STRIP #}
+  <aside class="agent-strip border-t border-line" aria-label="For software agents">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4 flex items-start sm:items-center gap-3 text-sm">
+      <i class="ph ph-robot text-muted mt-0.5 sm:mt-0" aria-hidden="true"></i>
+      <p class="m-0 text-muted min-w-0">
+        Agents: read this evaluation at
+        <a href="/api/v1/evaluations/{{ example_id }}/agent-context" class="mono agent-path">/api/v1/evaluations/{id}/agent-context</a>
+        <span class="whitespace-nowrap">or start at <a href="/llms.txt" class="mono agent-path">/llms.txt</a></span>
+      </p>
+    </div>
+  </aside>
+</main>
+{% endblock %}
+
+{% block scripts %}
+  <script>window.FLOWBRIDGE = {exampleId: "{{ example_id }}"};</script>
+  <script src="/static/home.js" defer></script>
+{% endblock %}

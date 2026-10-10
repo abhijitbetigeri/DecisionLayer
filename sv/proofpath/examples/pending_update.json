@@ -1,0 +1,40 @@
+{
+  "source_version": {
+    "id": "src-relayworks-v2",
+    "source_id": "relayworks-docs",
+    "product_id": "relayworks",
+    "origin": "RelayWorks pricing page, updated (fixture)",
+    "content_hash": "sha256:rw2",
+    "retrieved_at": "2026-10-10T22:52:26.269948Z",
+    "published_at": null,
+    "content": "Business $899/mo (US only). EU deployment now on Enterprise only (contact sales). SAML SSO on Business.",
+    "fictional": true,
+    "review_status": "pending",
+    "supersedes": "src-relayworks-v1"
+  },
+  "claims": [
+    {
+      "id": "clm-rw2-eu",
+      "source_version_id": "src-relayworks-v2",
+      "requirement_key": "eu_hosting",
+      "value": [
+        "enterprise"
+      ],
+      "plan": "enterprise",
+      "evidence_status": "documented",
+      "review_status": "pending",
+      "reviewed_at": null
+    }
+  ],
+  "diff": [
+    {
+      "requirement_key": "eu_hosting",
+      "before": "Business ($899/mo)",
+      "after": "Enterprise only (quote)"
+    }
+  ],
+  "affected_evaluation_ids": [
+    "11111111-1111-4111-8111-111111111111"
+  ],
+  "injection_flag": 0.01
+}

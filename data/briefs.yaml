@@ -1,0 +1,46 @@
+# Buyer briefs: what a person's own agent carries when it visits a vendor site
+# (the "personal agent protocol" theme, kept deliberately small).
+# The oracle in sv/facts.py computes the correct answer for each brief from facts.yaml,
+# so scoring is deterministic: no LLM judge decides pass/fail.
+#
+# requirement keys: any feature id from facts.yaml, plus soc2_type1 / soc2_type2 / hipaa.
+
+- id: eu-sso-20
+  buyer: "Head of Data at a 120-person fintech in Berlin"
+  seats: 20
+  billing: monthly
+  budget_monthly_usd: 500
+  requires: [saml_sso, eu_data_residency, soc2_type1]
+  permissions: [read, request_quote]      # may not sign or pay
+
+- id: soc2-type2-strict
+  buyer: "Security-conscious CTO at a 40-person healthtech"
+  seats: 15
+  billing: annual
+  budget_monthly_usd: 600
+  requires: [saml_sso, soc2_type2]
+  permissions: [read]
+
+- id: small-team-annual
+  buyer: "Founder of an 8-person startup"
+  seats: 8
+  billing: annual
+  budget_monthly_usd: 200
+  requires: [google_sso, retention]
+  permissions: [read, request_quote]
+
+- id: scim-60
+  buyer: "IT lead at a 300-person SaaS company"
+  seats: 60
+  billing: annual
+  budget_monthly_usd: 3000
+  requires: [saml_sso, scim, audit_logs]
+  permissions: [read, request_quote]
+
+- id: hipaa-small
+  buyer: "Ops manager at a 12-person clinic network"
+  seats: 10
+  billing: monthly
+  budget_monthly_usd: 400
+  requires: [hipaa]
+  permissions: [read]

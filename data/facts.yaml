@@ -1,0 +1,63 @@
+# Source of truth for "Pulse", a fictional product-analytics SaaS.
+# Every surface (human page, JSON-LD, llms.txt, seller agent) is rendered from this file,
+# and the guard checks every claim on every surface against it.
+as_of: 2026-10-10
+
+company:
+  name: Pulse
+  tagline: Product analytics for teams that ship fast
+
+plans:
+  - id: starter
+    name: Starter
+    price_per_seat_monthly: 10      # USD, billed monthly
+    price_per_seat_annual: 8        # USD per seat per month, billed annually
+    max_seats: 5
+    features: [dashboards, funnels, google_sso]
+  - id: team
+    name: Team
+    price_per_seat_monthly: 20
+    price_per_seat_annual: 16
+    max_seats: 50
+    features: [dashboards, funnels, retention, google_sso, api_access]
+  - id: business
+    name: Business
+    price_per_seat_monthly: 24
+    price_per_seat_annual: 20
+    max_seats: 200
+    features: [dashboards, funnels, retention, google_sso, api_access, saml_sso, audit_logs, eu_data_residency]
+  - id: enterprise
+    name: Enterprise
+    price_per_seat_monthly: null    # custom pricing, contact sales
+    price_per_seat_annual: null
+    max_seats: null
+    features: [dashboards, funnels, retention, google_sso, api_access, saml_sso, scim, audit_logs, eu_data_residency, hipaa_baa]
+
+compliance:
+  soc2_type1: {status: certified, date: 2026-03-14}
+  soc2_type2: {status: in_progress, expected: 2027-Q1}
+  gdpr: {status: compliant}
+  hipaa: {status: enterprise_only, note: BAA available on Enterprise only}
+
+currency: USD
+pricing_unit: per seat per month (annual prices are the per-month rate when billed annually)
+enterprise_seats: unlimited
+
+regions: [us, eu]   # eu requires eu_data_residency (Business and Enterprise)
+default_region: us
+
+trust_center:
+  public_status_page: security   # compliance status is public on /security
+  audit_reports: shared under NDA on request
+
+feature_labels:
+  dashboards: Dashboards
+  funnels: Funnels
+  retention: Retention analysis
+  google_sso: Google sign-in (OAuth)
+  api_access: API access
+  saml_sso: SAML single sign-on (SSO)
+  scim: SCIM user provisioning
+  audit_logs: Audit logs
+  eu_data_residency: EU data residency
+  hipaa_baa: HIPAA BAA

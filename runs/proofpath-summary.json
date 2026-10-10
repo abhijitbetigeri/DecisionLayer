@@ -1,0 +1,82 @@
+{
+  "experiment": "ws5-smoke",
+  "created_at": "2026-10-10T23:02:09Z",
+  "channel": "simulated",
+  "log": "runs/proofpath-ws5-smoke.jsonl",
+  "arms": {
+    "A": "FlowBridge homepage as fetched text (GET /, no JS)",
+    "B": "GET /api/v1/evaluations/{id}/agent-context"
+  },
+  "presets": [
+    "eu_technical"
+  ],
+  "models": [
+    "openrouter/openai/gpt-oss-120b"
+  ],
+  "n_per_cell": 1,
+  "stub_context": false,
+  "metric": "correct-decision rate vs shared-truth \u00a74 (FlowBridge), 95% Wilson interval",
+  "results": {
+    "A": {
+      "correct": 0,
+      "n": 1,
+      "rate": 0.0,
+      "wilson95": [
+        0.0,
+        0.793
+      ],
+      "errors": 0
+    },
+    "A|eu_technical": {
+      "correct": 0,
+      "n": 1,
+      "rate": 0.0,
+      "wilson95": [
+        0.0,
+        0.793
+      ],
+      "errors": 0
+    },
+    "A|openrouter/openai/gpt-oss-120b": {
+      "correct": 0,
+      "n": 1,
+      "rate": 0.0,
+      "wilson95": [
+        0.0,
+        0.793
+      ],
+      "errors": 0
+    },
+    "B": {
+      "correct": 1,
+      "n": 1,
+      "rate": 1.0,
+      "wilson95": [
+        0.207,
+        1.0
+      ],
+      "errors": 0
+    },
+    "B|eu_technical": {
+      "correct": 1,
+      "n": 1,
+      "rate": 1.0,
+      "wilson95": [
+        0.207,
+        1.0
+      ],
+      "errors": 0
+    },
+    "B|openrouter/openai/gpt-oss-120b": {
+      "correct": 1,
+      "n": 1,
+      "rate": 1.0,
+      "wilson95": [
+        0.207,
+        1.0
+      ],
+      "errors": 0
+    }
+  },
+  "invalid_citations_arm_b": 0
+}

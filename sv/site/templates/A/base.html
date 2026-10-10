@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{% block title %}Pulse{% endblock %}</title>
+<style>
+  body{font-family:system-ui,sans-serif;margin:0;color:#1a1a2e;background:#fafafa}
+  nav,footer{display:flex;gap:20px;padding:16px 32px;background:#fff;border-bottom:1px solid #eee}
+  footer{border-top:1px solid #eee;margin-top:48px;font-size:13px}
+  main{max-width:1000px;margin:0 auto;padding:32px}
+  .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .card{background:#fff;border:1px solid #e5e5e5;border-radius:12px;padding:20px}
+  .cta{display:inline-block;background:#5b5bd6;color:#fff;padding:8px 14px;border-radius:8px;cursor:pointer}
+  .tip{border-bottom:1px dotted #999;cursor:help}
+</style>
+</head>
+<body>
+<nav><b>Pulse</b><a href="{{ base }}/">Product</a><a href="{{ base }}/pricing">Pricing</a><a href="{{ base }}/security">Security</a></nav>
+<main>{% block main %}{% endblock %}</main>
+<footer><a href="{{ base }}/docs/faq">Docs</a><a href="{{ base }}/trust">Trust Center</a><span>© 2026 Pulse</span></footer>
+</body>
+</html>

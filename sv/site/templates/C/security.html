@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Security & compliance · Pulse{% endblock %}
+{% block main %}
+{% set c = facts.compliance %}
+<h1>Security &amp; compliance</h1>
+<table>
+  <tr><th>Standard</th><th>Status</th></tr>
+  <tr><td>SOC 2 Type I</td><td>Certified ({{ c.soc2_type1.date }})</td></tr>
+  <tr><td>SOC 2 Type II</td><td>{% if c.soc2_type2.status == 'certified' %}Certified ({{ c.soc2_type2.date }}){% else %}Audit in progress, expected {{ c.soc2_type2.expected }}{% endif %}</td></tr>
+  <tr><td>GDPR</td><td>Compliant</td></tr>
+  <tr><td>HIPAA</td><td>{{ c.hipaa.note }}</td></tr>
+</table>
+<h2>Data residency</h2>
+<p>US by default. EU data residency is available on {{ plans_with('eu_data_residency') }}.</p>
+<h2>Access control</h2>
+<p>Google sign-in on {{ plans_with('google_sso') }}. SAML SSO on {{ plans_with('saml_sso') }}. Audit logs on {{ plans_with('audit_logs') }}. SCIM provisioning on {{ plans_with('scim') }}.</p>
+<p>Full reports are available under NDA in the Trust Center.</p>
+{% endblock %}

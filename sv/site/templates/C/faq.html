@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Docs · FAQ · Pulse{% endblock %}
+{% block main %}
+<h1>Frequently asked questions</h1>
+<h3>How do I install the tracking snippet?</h3>
+<p>Copy the snippet from Settings → Project and paste it before the closing head tag.</p>
+<h3>Where is my data stored?</h3>
+<p>US by default. EU data residency is available on {{ plans_with('eu_data_residency') }}.</p>
+<h3>Which plans include SSO?</h3>
+<p>Google sign-in on {{ plans_with('google_sso') }}. SAML SSO on {{ plans_with('saml_sso') }}.</p>
+{% endblock %}

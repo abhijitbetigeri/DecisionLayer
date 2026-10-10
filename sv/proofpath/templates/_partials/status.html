@@ -1,0 +1,29 @@
+{# Status badges: always icon + text, never colour alone. Mirrors STATUS maps in static/workspace.js. #}
+{% macro finding(status) -%}
+{%- set m = {"met": ("met", "ph-check-circle", "Met"), "unmet": ("unmet", "ph-x-circle", "Unmet"),
+             "unknown": ("unknown", "ph-question", "Unknown")} -%}
+{%- set s = m.get(status, ("unknown", "ph-question", "Unknown")) -%}
+<span class="status status-{{ s[0] }}"><i class="ph {{ s[1] }}" aria-hidden="true"></i>{{ s[2] }}</span>
+{%- endmacro %}
+
+{% macro evidence(basis) -%}
+{%- set m = {"documented": ("documented", "ph-file-text", "Documented"),
+             "demonstrated": ("demonstrated", "ph-flask", "Demonstrated"),
+             "unknown": ("unknown", "ph-question", "Unknown"),
+             "contradicted": ("contradicted", "ph-warning", "Contradicted")} -%}
+{%- set s = m.get(basis, ("unknown", "ph-question", "Unknown")) -%}
+<span class="status status-{{ s[0] }}"><i class="ph {{ s[1] }}" aria-hidden="true"></i>{{ s[2] }}</span>
+{%- endmacro %}
+
+{% macro decision(d) -%}
+{%- set m = {"fit": ("met", "ph-check-circle", "Fit"), "not_fit": ("unmet", "ph-x-circle", "Not a fit"),
+             "needs_verification": ("unknown", "ph-magnifying-glass", "Needs verification")} -%}
+{%- set s = m.get(d, ("unknown", "ph-question", "Unknown")) -%}
+<span class="status status-{{ s[0] }}"><i class="ph {{ s[1] }}" aria-hidden="true"></i>{{ s[2] }}</span>
+{%- endmacro %}
+
+{% macro plan(p) -%}{{ p|capitalize if p else "No applicable plan" }}{%- endmacro %}
+
+{% macro money(v) -%}{{ ("$%d/mo"|format(v)) if v is not none else "Quote only (price unknown)" }}{%- endmacro %}
+
+{% macro pct(v) -%}{{ ("%d%%"|format((v * 100)|round)) if v is not none else "Not enough evaluated evidence" }}{%- endmacro %}

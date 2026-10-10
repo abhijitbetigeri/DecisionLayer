@@ -1,0 +1,101 @@
+{% extends "_base.html" %}
+{% import "_partials/status.html" as st %}
+{# Renders ONLY from the frozen `report` dict (ReportVersion). Never read live data here. #}
+
+{% block title %}Evaluation report {{ report.id[:8] }} | Evaluation Workspace by Decision Layer{% endblock %}
+{% block head %}<link rel="stylesheet" href="/static/workspace.css">{% endblock %}
+
+{% block body %}
+{% set r = report %}
+{% set labels = {} %}
+{% for q in r.brief.requirements %}{% set _ = labels.update({q.key: q.label}) %}{% endfor %}
+<div class="ws report">
+  <header class="ws-header">
+    <div class="ws-brand">
+      <span class="ws-brand-name">Evaluation Workspace <span class="ws-by">by Decision Layer</span></span>
+      <p class="fictional-label">{{ "Fictional products and evidence; live tests use local mock integrations." }}</p>
+    </div>
+    <a class="btn btn-ghost" href="/evaluations/{{ r.evaluation_id }}"><i class="ph ph-arrow-left" aria-hidden="true"></i>Back to workspace</a>
+  </header>
+
+  <main class="ws-main">
+    <section class="panel report-head" aria-labelledby="report-title">
+      <p class="eyebrow"><i class="ph ph-lock-simple" aria-hidden="true"></i>Frozen report version</p>
+      <h1 id="report-title">Evaluation report</h1>
+      <p class="muted">This report is an immutable copy taken on <time datetime="{{ r.created_at }}">{{ r.created_at[:19]|replace("T", " ") }} UTC</time>. Later evidence changes do not alter it; create a new report to capture them.</p>
+      <div class="report-decision">
+        <span class="muted">FlowBridge decision</span>
+        {{ st.decision(r.decision) }}
+      </div>
+      <p class="mock-label"><i class="ph ph-info" aria-hidden="true"></i>Demo sandbox: mock CRM and warehouse stand-ins, no real Salesforce or Snowflake.</p>
+    </section>
+
+    <section class="panel" aria-labelledby="brief-h">
+      <h2 id="brief-h">Confirmed brief, version {{ r.brief.version }}</h2>
+      <p>{{ r.brief.goal }}</p>
+      <p class="muted">Systems: {{ r.brief.systems|join(", ") }}</p>
+      <ul class="req-list">
+        {% for q in r.brief.requirements %}
+        <li><span class="tag">{{ "Hard requirement" if q.hard else "Preference, weight %s"|format(q.weight) }}</span> {{ q.label }}
+          {% if q.acceptance_criteria %}<span class="muted small">{{ q.acceptance_criteria }}</span>{% endif %}</li>
+        {% endfor %}
+      </ul>
+    </section>
+
+    <section class="panel" aria-labelledby="findings-h">
+      <h2 id="findings-h">FlowBridge findings</h2>
+      <div class="table-wrap">
+        <table class="matrix stack">
+          <thead><tr><th scope="col">Requirement</th><th scope="col">Status</th><th scope="col">Evidence</th><th scope="col">Plan</th><th scope="col">Citations</th></tr></thead>
+          <tbody>
+          {% for f in r.findings %}
+            <tr>
+              <th scope="row">{{ labels.get(f.requirement_key, f.requirement_key) }}<div class="muted small">{{ f.reason }}</div>
+                {% if f.limitations %}<div class="limit small"><i class="ph ph-warning-circle" aria-hidden="true"></i>{{ f.limitations }}</div>{% endif %}</th>
+              <td data-label="Status">{{ st.finding(f.status) }}</td>
+              <td data-label="Evidence">{{ st.evidence(f.basis) }}</td>
+              <td data-label="Plan">{{ st.plan(f.applicable_plan) }}</td>
+              <td data-label="Citations" class="mono small">{{ (f.claim_ids + f.test_result_ids)|join(", ") or "None" }}</td>
+            </tr>
+          {% else %}
+            <tr><td colspan="5" class="muted">No findings were recorded in this snapshot.</td></tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="cmp-h">
+      <h2 id="cmp-h">Comparison at report time</h2>
+      <div class="table-wrap">
+        <table class="matrix compare">
+          <thead><tr><th scope="col">Product</th><th scope="col">Decision</th><th scope="col">Plan and price</th><th scope="col">Score</th><th scope="col">Coverage</th><th scope="col">Gaps</th></tr></thead>
+          <tbody>
+          {% for p in r.snapshot.products %}
+            <tr>
+              <th scope="row">{{ p.product_name }}</th>
+              <td data-label="Decision">{{ st.decision(p.decision) }}</td>
+              <td data-label="Plan and price">{{ st.plan(p.cheapest_qualifying_plan) }}, {{ st.money(p.monthly_price_usd) }}</td>
+              <td data-label="Score">{{ ("%.2f"|format(p.evaluated_score)) if p.evaluated_score is not none else "Not enough evaluated evidence" }}</td>
+              <td data-label="Coverage">{{ st.pct(p.coverage) }}</td>
+              <td data-label="Gaps">{{ p.gaps|join("; ") or "None listed" }}</td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="prov-h">
+      <h2 id="prov-h">Provenance</h2>
+      <dl class="prov">
+        <dt>Report version</dt><dd class="mono">{{ r.id }}</dd>
+        <dt>Brief version</dt><dd class="mono">{{ r.brief_version_id }} (parsed by {{ r.brief.parsed_by }})</dd>
+        <dt>Comparison snapshot</dt><dd class="mono">{{ r.comparison_snapshot_id }} ({{ r.snapshot.rubric_version }})</dd>
+        <dt>Source versions</dt><dd class="mono">{{ r.snapshot.source_version_ids|join(", ") or "None" }}</dd>
+        <dt>POC runs</dt><dd class="mono">{{ r.run_ids|join(", ") or "No POC run" }}</dd>
+      </dl>
+    </section>
+  </main>
+</div>
+{% endblock %}

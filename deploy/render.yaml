@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: decision-layer
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    plan: starter
+    healthCheckPath: /health
+    envVars:
+      - key: PROOFPATH_DATA_DIR
+        value: /data
+      - key: PROOFPATH_DEMO_MODE
+        value: public
+      - key: PROOFPATH_MODEL_HOURLY_CAP
+        value: "60"
+      - key: RESPAN_BASE_URL
+        value: https://api.respan.ai
+      - key: RESPAN_API_KEY
+        sync: false
+      - key: AI_GATEWAY_API_KEY
+        sync: false
+      - key: PROOFPATH_OPERATOR_TOKEN
+        sync: false
+    disk:
+      name: demo-data
+      mountPath: /data
+      sizeGB: 1

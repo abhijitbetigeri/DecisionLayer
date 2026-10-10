@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{% block title %}Pulse{% endblock %}</title>
+<link rel="alternate" type="text/plain" href="{{ base }}/llms.txt" title="llms.txt">
+<script type="application/ld+json">{{ json_ld | safe }}</script>
+<style>
+  body{font-family:system-ui,sans-serif;margin:0;color:#1a1a2e;background:#fafafa}
+  nav,footer{display:flex;gap:20px;padding:16px 32px;background:#fff;border-bottom:1px solid #eee}
+  footer{border-top:1px solid #eee;margin-top:48px;font-size:13px}
+  main{max-width:1000px;margin:0 auto;padding:32px}
+  table{border-collapse:collapse;width:100%;background:#fff;margin:12px 0}
+  th,td{border:1px solid #e5e5e5;padding:8px 10px;text-align:left}
+  .claims{background:#eef;padding:10px 14px;border-radius:8px}
+  a.cta,button{background:#5b5bd6;color:#fff;padding:8px 14px;border-radius:8px;border:0;text-decoration:none}
+</style>
+</head>
+<body>
+<nav><b>Pulse</b><a href="{{ base }}/">Product</a><a href="{{ base }}/pricing">Pricing</a><a href="{{ base }}/security">Security</a><a href="{{ base }}/docs/faq">Docs</a></nav>
+<main>
+{% if extra_claims %}<div class="claims">{% for c in extra_claims %}<p>✓ {{ c }}</p>{% endfor %}</div>{% endif %}
+{% block main %}{% endblock %}
+</main>
+<footer><a href="{{ base }}/llms.txt">llms.txt</a><a href="{{ base }}/security">Security &amp; compliance</a><span>Facts as of {{ facts.as_of }} · © 2026 Pulse</span></footer>
+</body>
+</html>

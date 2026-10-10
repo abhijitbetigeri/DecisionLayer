@@ -1,0 +1,185 @@
+/*
+ * Decision Layer / FlowBridge design tokens (WS3 owns this file, WS4 consumes it).
+ * Names are frozen by proofpath/plan/shared-truth.md section 6.
+ * Theme: auto (prefers-color-scheme), locked at page level. Force a mode with
+ * <html data-theme="light"> or <html data-theme="dark">.
+ * Accent: cobalt. Neutrals: cool zinc. Status colours always ship with an icon + text label.
+ */
+
+@font-face {
+  font-family: "Geist";
+  src: url("https://cdn.jsdelivr.net/npm/geist@1.3.1/dist/fonts/geist-sans/Geist-Variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Geist Mono";
+  src: url("https://cdn.jsdelivr.net/npm/geist@1.3.1/dist/fonts/geist-mono/GeistMono-Variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: light;
+
+  --bg: #f7f8fa;
+  --surface: #ffffff;
+  --surface-2: #eef0f4;
+  --text: #14161b;
+  --text-muted: #565c69;          /* 6.6:1 on --bg */
+  --border: #dde0e7;
+  --border-strong: #c3c8d2;
+
+  --accent: #2346d8;              /* cobalt, 6.9:1 against white text */
+  --accent-hover: #1b38b4;
+  --accent-text: #ffffff;
+  --accent-soft: #e8edff;         /* tinted fills, focus halos */
+  --accent-ink: #1d3bb8;          /* accent used as text on --bg / --surface */
+
+  /* Status: text-safe foregrounds (>= 4.5:1 on --surface) + soft fills */
+  --status-met: #13703f;
+  --status-met-bg: #e5f4ea;
+  --status-unmet: #b42318;
+  --status-unmet-bg: #fdecea;
+  --status-unknown: #8a5300;
+  --status-unknown-bg: #fdf1dc;
+  --status-demonstrated: #0b6e7a;
+  --status-demonstrated-bg: #e0f3f5;
+  --status-contradicted: #a1306a;
+  --status-contradicted-bg: #fbe9f2;
+
+  --radius: 12px;                 /* cards, panels */
+  --radius-sm: 8px;               /* inputs, chips, small controls */
+  --radius-pill: 999px;           /* status badges only */
+
+  --shadow-1: 0 1px 2px rgb(20 28 48 / 0.06), 0 8px 24px -12px rgb(20 28 48 / 0.14);
+  --shadow-2: 0 2px 4px rgb(20 28 48 / 0.06), 0 24px 48px -20px rgb(20 28 48 / 0.22);
+
+  --focus-ring: 0 0 0 3px var(--accent-soft), 0 0 0 1px var(--accent);
+
+  --font-sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur: 220ms;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+
+    --bg: #0d0f13;
+    --surface: #15181e;
+    --surface-2: #1c2028;
+    --text: #e9ebef;
+    --text-muted: #9aa1ae;        /* 7.1:1 on --bg */
+    --border: #262b35;
+    --border-strong: #363c48;
+
+    --accent: #6f8cff;
+    --accent-hover: #8aa1ff;
+    --accent-text: #0b1026;       /* dark ink on light cobalt, 6.4:1 */
+    --accent-soft: #1b2552;
+    --accent-ink: #9db0ff;
+
+    --status-met: #5fd08c;
+    --status-met-bg: #10291b;
+    --status-unmet: #ff8a80;
+    --status-unmet-bg: #33140f;
+    --status-unknown: #f2b84b;
+    --status-unknown-bg: #2e2209;
+    --status-demonstrated: #4fd1de;
+    --status-demonstrated-bg: #0b2a2e;
+    --status-contradicted: #f08cc0;
+    --status-contradicted-bg: #321424;
+
+    --shadow-1: 0 1px 2px rgb(0 0 0 / 0.4), 0 8px 24px -12px rgb(0 0 0 / 0.6);
+    --shadow-2: 0 2px 4px rgb(0 0 0 / 0.4), 0 24px 48px -20px rgb(0 0 0 / 0.7);
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg: #0d0f13;
+  --surface: #15181e;
+  --surface-2: #1c2028;
+  --text: #e9ebef;
+  --text-muted: #9aa1ae;
+  --border: #262b35;
+  --border-strong: #363c48;
+
+  --accent: #6f8cff;
+  --accent-hover: #8aa1ff;
+  --accent-text: #0b1026;
+  --accent-soft: #1b2552;
+  --accent-ink: #9db0ff;
+
+  --status-met: #5fd08c;
+  --status-met-bg: #10291b;
+  --status-unmet: #ff8a80;
+  --status-unmet-bg: #33140f;
+  --status-unknown: #f2b84b;
+  --status-unknown-bg: #2e2209;
+  --status-demonstrated: #4fd1de;
+  --status-demonstrated-bg: #0b2a2e;
+  --status-contradicted: #f08cc0;
+  --status-contradicted-bg: #321424;
+
+  --shadow-1: 0 1px 2px rgb(0 0 0 / 0.4), 0 8px 24px -12px rgb(0 0 0 / 0.6);
+  --shadow-2: 0 2px 4px rgb(0 0 0 / 0.4), 0 24px 48px -20px rgb(0 0 0 / 0.7);
+}
+
+/* Base, shared by every template that extends _base.html */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+:focus-visible { outline: none; box-shadow: var(--focus-ring); border-radius: var(--radius-sm); }
+
+.mono, code, kbd, samp { font-family: var(--font-mono); }
+
+/* Status badge primitive: icon + text, never colour alone.
+   <span class="status status-met"><i class="ph ph-check-circle" aria-hidden="true"></i>Met</span> */
+.status {
+  display: inline-flex; align-items: center; gap: 0.35em;
+  padding: 0.15em 0.6em 0.15em 0.45em;
+  border-radius: var(--radius-pill);
+  font-size: 0.8125rem; font-weight: 550; line-height: 1.5; white-space: nowrap;
+  border: 1px solid transparent;
+}
+.status i { font-size: 1.05em; }
+.status-met { color: var(--status-met); background: var(--status-met-bg); }
+.status-unmet { color: var(--status-unmet); background: var(--status-unmet-bg); }
+.status-unknown { color: var(--status-unknown); background: var(--status-unknown-bg); }
+.status-demonstrated { color: var(--status-demonstrated); background: var(--status-demonstrated-bg); }
+.status-contradicted { color: var(--status-contradicted); background: var(--status-contradicted-bg); }
+.status-documented { color: var(--text); background: var(--surface-2); border-color: var(--border); }
+
+/* Site footer label (shared-truth section 1) */
+.fictional-label {
+  font-size: 0.8125rem; color: var(--text-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

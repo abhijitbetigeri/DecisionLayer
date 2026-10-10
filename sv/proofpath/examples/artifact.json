@@ -1,0 +1,30 @@
+{
+  "id": "art-1",
+  "run_id": "run-1",
+  "name": "delivery_log.json",
+  "media_type": "application/json",
+  "content": {
+    "attempts": [
+      {
+        "record": "opp-001",
+        "attempt": 1,
+        "ok": true
+      },
+      {
+        "record": "opp-002",
+        "attempt": 1,
+        "ok": false,
+        "error": "transient: warehouse timeout (injected)"
+      },
+      {
+        "record": "opp-002",
+        "attempt": 2,
+        "ok": true
+      }
+    ],
+    "destination_count": {
+      "opp-001": 1,
+      "opp-002": 1
+    }
+  }
+}

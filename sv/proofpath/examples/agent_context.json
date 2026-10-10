@@ -1,0 +1,364 @@
+{
+  "evaluation_id": "11111111-1111-4111-8111-111111111111",
+  "brief": {
+    "id": "brief-v1",
+    "evaluation_id": "11111111-1111-4111-8111-111111111111",
+    "version": 1,
+    "goal": "Sync Salesforce opportunities into Snowflake with EU hosting, SSO and duplicate-free recovery",
+    "systems": [
+      "Salesforce (CRM)",
+      "Snowflake (warehouse)"
+    ],
+    "persona": "technical",
+    "requirements": [
+      {
+        "id": "req-eu_hosting",
+        "key": "eu_hosting",
+        "label": "EU deployment",
+        "hard": true,
+        "weight": 0.0,
+        "expected": null,
+        "acceptance_criteria": "Documented EU deployment option on a purchasable plan"
+      },
+      {
+        "id": "req-sso",
+        "key": "sso",
+        "label": "Single sign-on (SAML)",
+        "hard": true,
+        "weight": 0.0,
+        "expected": null,
+        "acceptance_criteria": "Documented SAML SSO on a purchasable plan"
+      },
+      {
+        "id": "req-recovery_demonstrated",
+        "key": "recovery_demonstrated",
+        "label": "Failed syncs recover without duplicates (demonstrated)",
+        "hard": true,
+        "weight": 0.0,
+        "expected": null,
+        "acceptance_criteria": "Passing crm_warehouse_sync/v1 run linked to this brief version"
+      },
+      {
+        "id": "req-idempotent_delivery",
+        "key": "idempotent_delivery",
+        "label": "No duplicate records on retry (documented)",
+        "hard": false,
+        "weight": 1.0,
+        "expected": null,
+        "acceptance_criteria": ""
+      }
+    ],
+    "confirmed_at": "2026-10-10T22:52:26.269618Z",
+    "created_at": "2026-10-10T22:52:26.269805Z",
+    "parsed_by": "openrouter/google/gemma-4-31b-it",
+    "input_hash": "sha256:demo",
+    "dropped_terms": []
+  },
+  "products": [
+    {
+      "product_id": "flowbridge",
+      "product_name": "FlowBridge",
+      "decision": "needs_verification",
+      "findings": [
+        {
+          "requirement_id": "req-eu_hosting",
+          "requirement_key": "eu_hosting",
+          "product_id": "flowbridge",
+          "status": "met",
+          "basis": "documented",
+          "claim_ids": [
+            "clm-fb-eu"
+          ],
+          "test_result_ids": [],
+          "applicable_plan": "business",
+          "reason": "EU deployment documented on Business and Enterprise",
+          "limitations": ""
+        },
+        {
+          "requirement_id": "req-sso",
+          "requirement_key": "sso",
+          "product_id": "flowbridge",
+          "status": "unknown",
+          "basis": "unknown",
+          "claim_ids": [],
+          "test_result_ids": [],
+          "applicable_plan": null,
+          "reason": "No FlowBridge source states SAML SSO",
+          "limitations": "Needs vendor evidence before a fit can be confirmed"
+        },
+        {
+          "requirement_id": "req-recovery_demonstrated",
+          "requirement_key": "recovery_demonstrated",
+          "product_id": "flowbridge",
+          "status": "met",
+          "basis": "demonstrated",
+          "claim_ids": [],
+          "test_result_ids": [
+            "tr-2",
+            "tr-3",
+            "tr-4"
+          ],
+          "applicable_plan": null,
+          "reason": "Demonstrated by run-1: injected failure, bounded retry, exactly one record",
+          "limitations": "Local mock integrations; tested failure mode only"
+        },
+        {
+          "requirement_id": "req-idempotent_delivery",
+          "requirement_key": "idempotent_delivery",
+          "product_id": "flowbridge",
+          "status": "met",
+          "basis": "documented",
+          "claim_ids": [
+            "clm-fb-idem"
+          ],
+          "test_result_ids": [],
+          "applicable_plan": "business",
+          "reason": "Idempotency keys documented on Business+",
+          "limitations": ""
+        }
+      ],
+      "cheapest_qualifying_plan": "business",
+      "monthly_price_usd": 999.0,
+      "evaluated_score": 1.0,
+      "coverage": 1.0,
+      "gaps": [
+        "SSO: no evidence"
+      ]
+    },
+    {
+      "product_id": "relayworks",
+      "product_name": "RelayWorks",
+      "decision": "needs_verification",
+      "findings": [
+        {
+          "requirement_id": "req-eu_hosting",
+          "requirement_key": "eu_hosting",
+          "product_id": "relayworks",
+          "status": "met",
+          "basis": "documented",
+          "claim_ids": [
+            "clm-rw-eu"
+          ],
+          "test_result_ids": [],
+          "applicable_plan": "business",
+          "reason": "EU on Business",
+          "limitations": ""
+        },
+        {
+          "requirement_id": "req-sso",
+          "requirement_key": "sso",
+          "product_id": "relayworks",
+          "status": "met",
+          "basis": "documented",
+          "claim_ids": [
+            "clm-rw-sso"
+          ],
+          "test_result_ids": [],
+          "applicable_plan": "business",
+          "reason": "SAML SSO on Business",
+          "limitations": ""
+        },
+        {
+          "requirement_id": "req-recovery_demonstrated",
+          "requirement_key": "recovery_demonstrated",
+          "product_id": "relayworks",
+          "status": "unknown",
+          "basis": "documented",
+          "claim_ids": [],
+          "test_result_ids": [],
+          "applicable_plan": null,
+          "reason": "Recovery documented only; no independent run",
+          "limitations": "Demonstration required by this brief"
+        }
+      ],
+      "cheapest_qualifying_plan": "business",
+      "monthly_price_usd": 899.0,
+      "evaluated_score": null,
+      "coverage": 0.0,
+      "gaps": [
+        "Recovery not demonstrated"
+      ]
+    },
+    {
+      "product_id": "pipestack",
+      "product_name": "PipeStack",
+      "decision": "not_fit",
+      "findings": [
+        {
+          "requirement_id": "req-eu_hosting",
+          "requirement_key": "eu_hosting",
+          "product_id": "pipestack",
+          "status": "unmet",
+          "basis": "documented",
+          "claim_ids": [
+            "clm-ps-eu"
+          ],
+          "test_result_ids": [],
+          "applicable_plan": null,
+          "reason": "Documented US-only",
+          "limitations": ""
+        },
+        {
+          "requirement_id": "req-sso",
+          "requirement_key": "sso",
+          "product_id": "pipestack",
+          "status": "met",
+          "basis": "documented",
+          "claim_ids": [
+            "clm-ps-sso"
+          ],
+          "test_result_ids": [],
+          "applicable_plan": "business",
+          "reason": "SAML SSO documented",
+          "limitations": ""
+        },
+        {
+          "requirement_id": "req-recovery_demonstrated",
+          "requirement_key": "recovery_demonstrated",
+          "product_id": "pipestack",
+          "status": "unknown",
+          "basis": "unknown",
+          "claim_ids": [],
+          "test_result_ids": [],
+          "applicable_plan": null,
+          "reason": "No recovery claim",
+          "limitations": ""
+        }
+      ],
+      "cheapest_qualifying_plan": null,
+      "monthly_price_usd": 699.0,
+      "evaluated_score": null,
+      "coverage": 0.0,
+      "gaps": [
+        "EU deployment unavailable (documented US-only)"
+      ]
+    }
+  ],
+  "claims": [
+    {
+      "id": "clm-fb-eu",
+      "source_version_id": "src-flowbridge-v1",
+      "requirement_key": "eu_hosting",
+      "value": [
+        "business",
+        "enterprise"
+      ],
+      "plan": "business",
+      "evidence_status": "documented",
+      "review_status": "approved",
+      "reviewed_at": null
+    },
+    {
+      "id": "clm-fb-idem",
+      "source_version_id": "src-flowbridge-v1",
+      "requirement_key": "idempotent_delivery",
+      "value": true,
+      "plan": "business",
+      "evidence_status": "documented",
+      "review_status": "approved",
+      "reviewed_at": null
+    },
+    {
+      "id": "clm-rw-eu",
+      "source_version_id": "src-relayworks-v1",
+      "requirement_key": "eu_hosting",
+      "value": [
+        "business"
+      ],
+      "plan": "business",
+      "evidence_status": "documented",
+      "review_status": "approved",
+      "reviewed_at": null
+    },
+    {
+      "id": "clm-rw-sso",
+      "source_version_id": "src-relayworks-v1",
+      "requirement_key": "sso",
+      "value": true,
+      "plan": "business",
+      "evidence_status": "documented",
+      "review_status": "approved",
+      "reviewed_at": null
+    },
+    {
+      "id": "clm-ps-eu",
+      "source_version_id": "src-pipestack-v1",
+      "requirement_key": "eu_hosting",
+      "value": false,
+      "plan": null,
+      "evidence_status": "documented",
+      "review_status": "approved",
+      "reviewed_at": null
+    },
+    {
+      "id": "clm-ps-sso",
+      "source_version_id": "src-pipestack-v1",
+      "requirement_key": "sso",
+      "value": true,
+      "plan": "business",
+      "evidence_status": "documented",
+      "review_status": "approved",
+      "reviewed_at": null
+    }
+  ],
+  "test_results": [
+    {
+      "id": "tr-1",
+      "run_id": "run-1",
+      "test_key": "insert_first",
+      "status": "pass",
+      "expected": {
+        "id": "opp-001",
+        "amount": 48200
+      },
+      "observed": {
+        "id": "opp-001",
+        "amount": 48200
+      },
+      "artifact_ids": [
+        "art-1"
+      ],
+      "limitations": ""
+    },
+    {
+      "id": "tr-2",
+      "run_id": "run-1",
+      "test_key": "transient_failure",
+      "status": "pass",
+      "expected": "failure before commit, retry event",
+      "observed": "TransientError on attempt 1, poc_attempt emitted",
+      "artifact_ids": [
+        "art-1"
+      ],
+      "limitations": ""
+    },
+    {
+      "id": "tr-3",
+      "run_id": "run-1",
+      "test_key": "bounded_retry",
+      "status": "pass",
+      "expected": "success within 3 attempts, same idempotency key",
+      "observed": "success on attempt 2, key reused",
+      "artifact_ids": [
+        "art-1"
+      ],
+      "limitations": ""
+    },
+    {
+      "id": "tr-4",
+      "run_id": "run-1",
+      "test_key": "single_record",
+      "status": "pass",
+      "expected": 1,
+      "observed": 1,
+      "artifact_ids": [
+        "art-1"
+      ],
+      "limitations": "Applies to the tested failure mode on local mocks, not every crash scenario"
+    }
+  ],
+  "decision_rule": "any verified unmet hard requirement -> not_fit; else any unknown hard requirement -> needs_verification; else fit",
+  "limitations": [
+    "Fictional products and evidence; live tests use local mock integrations."
+  ]
+}

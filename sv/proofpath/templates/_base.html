@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en" {% block html_attrs %}{% endblock %}>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}FlowBridge{% endblock %}</title>
+  <meta name="description" content="{% block description %}FlowBridge connects your CRM and warehouse. Fictional product for the Evaluation Workspace by Decision Layer demo.{% endblock %}">
+  <link rel="alternate" type="text/plain" href="/llms.txt" title="Agent instructions">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="/static/tokens.css">
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+  {# Map design tokens into Tailwind so templates can use bg-surface, text-muted, border-line, etc. #}
+  <style type="text/tailwindcss">
+    @theme inline {
+      --color-bg: var(--bg);
+      --color-surface: var(--surface);
+      --color-surface-2: var(--surface-2);
+      --color-ink: var(--text);
+      --color-muted: var(--text-muted);
+      --color-line: var(--border);
+      --color-line-strong: var(--border-strong);
+      --color-accent: var(--accent);
+      --color-accent-hover: var(--accent-hover);
+      --color-accent-text: var(--accent-text);
+      --color-accent-soft: var(--accent-soft);
+      --color-accent-ink: var(--accent-ink);
+      --color-met: var(--status-met);
+      --color-unmet: var(--status-unmet);
+      --color-unknown: var(--status-unknown);
+      --color-demonstrated: var(--status-demonstrated);
+      --font-sans: var(--font-sans);
+      --font-mono: var(--font-mono);
+      --radius-card: var(--radius);
+      --radius-control: var(--radius-sm);
+    }
+  </style>
+  {% block head %}{% endblock %}
+</head>
+<body class="{% block body_class %}{% endblock %}">
+  {% block body %}{% endblock %}
+
+  {% block footer %}
+  <footer class="site-footer border-t border-line">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <p class="fictional-label m-0">Fictional products and evidence; live tests use local mock integrations.</p>
+      <p class="m-0 text-sm text-muted">Evaluation Workspace by Decision Layer</p>
+    </div>
+  </footer>
+  {% endblock %}
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>

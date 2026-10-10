@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Pricing · Pulse{% endblock %}
+{% block main %}
+<h1>Pricing</h1>
+<p>All prices in USD per seat per month.</p>
+<table>
+  <tr><th>Plan</th><th>Billed monthly</th><th>Billed annually</th><th>Max seats</th></tr>
+  {% for p in facts.plans %}
+  <tr><td>{{ p.name }}</td>
+    {% if p.price_per_seat_monthly is none %}<td colspan="2">Custom pricing (contact sales)</td><td>Unlimited</td>
+    {% else %}<td>${{ p.price_per_seat_monthly }}</td><td>${{ p.price_per_seat_annual }}</td><td>{{ p.max_seats }}</td>{% endif %}
+  </tr>
+  {% endfor %}
+</table>
+
+<h2>Monthly cost for common team sizes</h2>
+<table>
+  <tr><th>Plan</th>{% for n in [10, 20, 50] %}<th>{{ n }} seats, monthly billing</th><th>{{ n }} seats, annual billing</th>{% endfor %}</tr>
+  {% for p in facts.plans if p.price_per_seat_monthly is not none %}
+  <tr><td>{{ p.name }}</td>
+    {% for n in [10, 20, 50] %}
+      {% if n <= p.max_seats %}<td>${{ p.price_per_seat_monthly * n }}/mo</td><td>${{ p.price_per_seat_annual * n }}/mo</td>
+      {% else %}<td colspan="2">over seat limit</td>{% endif %}
+    {% endfor %}
+  </tr>
+  {% endfor %}
+</table>
+
+<h2>Features by plan</h2>
+<table>
+  <tr><th>Feature</th>{% for p in facts.plans %}<th>{{ p.name }}</th>{% endfor %}</tr>
+  {% for fid, label in facts.feature_labels.items() %}
+  <tr><td>{{ label }}</td>{% for p in facts.plans %}<td>{{ "Yes" if fid in p.features else "No" }}</td>{% endfor %}</tr>
+  {% endfor %}
+</table>
+<p><a class="cta" href="{{ base }}/pricing#trial">Start free trial</a> <a class="cta" href="{{ base }}/pricing#sales">Contact sales</a></p>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Pricing · Pulse{% endblock %}
+{% block main %}
+<h1>Simple pricing that scales with you</h1>
+<p>
+  <label><input type="checkbox" id="annual" checked> Billed annually (save 20%)</label>
+  &nbsp; Seats: <input type="range" id="seats" min="1" max="200" value="10"> <span id="seatcount">10</span>
+</p>
+<div class="cards">
+  <div class="card"><h3>Starter</h3><p class="price" data-plan="starter"></p>
+    <p>For individuals getting started.</p><ul><li>Dashboards</li><li>Funnels</li></ul>
+    <div class="cta">Start free trial</div></div>
+  <div class="card"><h3>Team</h3><p class="price" data-plan="team"></p>
+    <p>Everything in Starter, plus:</p><ul><li>Retention</li><li>API access</li></ul>
+    <div class="cta">Start free trial</div></div>
+  <div class="card"><h3>Business</h3><p class="price" data-plan="business"></p>
+    <p>Everything in Team, plus:</p><ul><li>Advanced security &amp; governance</li><li>Data residency options</li></ul>
+    <div class="cta">Start free trial</div></div>
+  <div class="card"><h3>Enterprise</h3><p>Let's talk</p>
+    <p>For organizations at scale.</p><ul><li>SSO &amp; SCIM</li><li>HIPAA</li><li>Dedicated support</li></ul>
+    <div class="cta">Contact sales</div></div>
+</div>
+<script>
+  const PLANS = {{ pricing_json | safe }};
+  function update(){
+    const annual = document.getElementById('annual').checked;
+    const seats = +document.getElementById('seats').value;
+    document.getElementById('seatcount').textContent = seats;
+    document.querySelectorAll('.price').forEach(el => {
+      const p = PLANS.find(x => x.id === el.dataset.plan);
+      const per = annual ? p.price_per_seat_annual : p.price_per_seat_monthly;
+      el.textContent = '$' + (per * seats) + '/mo';
+    });
+  }
+  document.querySelectorAll('input').forEach(i => i.addEventListener('input', update)); update();
+</script>
+{% endblock %}

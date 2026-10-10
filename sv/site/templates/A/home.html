@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block main %}
+<h1>Understand every user. Ship what matters.</h1>
+<p>{{ facts.company.tagline }}. Loved by 4,000+ product teams.</p>
+<div class="cta" onclick="location.href='{{ base }}/pricing'">See plans</div>
+<h2>Why teams switch to Pulse</h2>
+<ul>
+  <li>Funnels and retention in seconds, not sprints</li>
+  <li>Enterprise-grade security <span class="tip" title="See our Trust Center">ⓘ</span></li>
+  <li>Your data, where you need it <span class="tip" title="Ask us about data residency">ⓘ</span></li>
+</ul>
+{% endblock %}

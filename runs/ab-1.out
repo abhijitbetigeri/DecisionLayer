@@ -1,0 +1,51 @@
+45 runs -> runs/ab-1.jsonl
+  ✗ A eu-sso-20            openrouter/google/gemini-2.5-flash
+  ✗ A small-team-annual    openrouter/google/gemini-2.5-flash
+  ✗ A soc2-type2-strict    openrouter/google/gemini-2.5-flash
+  ✓ A scim-60              openrouter/google/gemini-2.5-flash
+  ✓ A scim-60              claude-haiku-4-5-20251001
+  ✗ A eu-sso-20            claude-haiku-4-5-20251001
+  ✗ A small-team-annual    claude-haiku-4-5-20251001
+  ✗ A small-team-annual    gpt-5-mini
+  ✗ A eu-sso-20            gpt-5-mini
+  ✓ A soc2-type2-strict    gpt-5-mini
+  ✓ A hipaa-small          claude-haiku-4-5-20251001
+  ✗ A soc2-type2-strict    claude-haiku-4-5-20251001
+  ✓ A hipaa-small          gpt-5-mini
+  ✓ C eu-sso-20            gpt-5-mini
+  ✗ A hipaa-small          openrouter/google/gemini-2.5-flash
+  ✓ C eu-sso-20            claude-haiku-4-5-20251001
+  ✗ C eu-sso-20            openrouter/google/gemini-2.5-flash
+  ✓ C soc2-type2-strict    claude-haiku-4-5-20251001
+  ✓ C soc2-type2-strict    openrouter/google/gemini-2.5-flash
+  ✓ C soc2-type2-strict    gpt-5-mini
+  ✓ C small-team-annual    claude-haiku-4-5-20251001
+  ✓ C small-team-annual    gpt-5-mini
+  ✗ A scim-60              gpt-5-mini
+  ✗ C small-team-annual    openrouter/google/gemini-2.5-flash
+  ✗ C scim-60              openrouter/google/gemini-2.5-flash
+  ✓ C scim-60              gpt-5-mini
+  ✓ C hipaa-small          gpt-5-mini
+  ✓ C scim-60              claude-haiku-4-5-20251001
+  ✓ C hipaa-small          claude-haiku-4-5-20251001
+  ✗ C hipaa-small          openrouter/google/gemini-2.5-flash
+  ✗ D eu-sso-20            openrouter/google/gemini-2.5-flash
+  ✓ D small-team-annual    openrouter/google/gemini-2.5-flash
+  ✓ D soc2-type2-strict    openrouter/google/gemini-2.5-flash
+  ✓ D eu-sso-20            claude-haiku-4-5-20251001
+  ✓ D small-team-annual    gpt-5-mini
+  ✓ D eu-sso-20            gpt-5-mini
+  ✓ D soc2-type2-strict    claude-haiku-4-5-20251001
+  ✓ D scim-60              claude-haiku-4-5-20251001
+  ✓ D small-team-annual    claude-haiku-4-5-20251001
+  ✓ D scim-60              gpt-5-mini
+  ✗ D scim-60              openrouter/google/gemini-2.5-flash
+  ✓ D soc2-type2-strict    gpt-5-mini
+  ✓ D hipaa-small          claude-haiku-4-5-20251001
+  ✓ D hipaa-small          gpt-5-mini
+  ✗ D hipaa-small          openrouter/google/gemini-2.5-flash
+
+variant    n                 correct             shortlisted  errors
+A         15     33% [15%-58%]           67% [42%-85%]        0
+C         15     73% [48%-89%]           53% [30%-75%]        0
+D         15     80% [55%-93%]           60% [36%-80%]        0

@@ -1,0 +1,118 @@
+{% extends "_base.html" %}
+{# Evaluation Workspace (WS4). Server passes only {evaluation_id, operator, demo_mode}; workspace.js loads
+   everything else from the API. Panel order follows proofpath/README.md "Homepage and workspace". #}
+
+{% block title %}Evaluation Workspace by Decision Layer{% endblock %}
+{% block description %}Evaluation Workspace by Decision Layer: requirements, evidence, live proof of concept and comparison for a fictional vendor.{% endblock %}
+{% block head %}<link rel="stylesheet" href="/static/workspace.css">{% endblock %}
+{% block body_class %}ws-body{% endblock %}
+
+{% block body %}
+<div class="ws" id="ws" data-persona="technical"
+     data-evaluation-id="{{ evaluation_id }}" data-operator="{{ 'true' if operator else 'false' }}" data-demo-mode="{{ demo_mode }}">
+
+  <header class="ws-header">
+    <div class="ws-header-inner">
+      <div class="ws-brand">
+        <a class="ws-brand-name" href="/">Evaluation Workspace <span class="ws-by">by Decision Layer</span></a>
+        <p class="fictional-label">Fictional products and evidence; live tests use local mock integrations.</p>
+      </div>
+      <div class="ws-header-tools">
+        <span id="hdr-decision" class="hdr-decision" hidden></span>
+        <span id="replay-badge" class="badge badge-replay" hidden><i class="ph ph-film-strip" aria-hidden="true"></i>Recorded replay</span>
+        <span id="stub-badge" class="badge" hidden title="The API served example payloads because a module has not landed yet"><i class="ph ph-flask" aria-hidden="true"></i>Example data</span>
+        {% if operator %}<span class="badge badge-operator"><i class="ph ph-shield-check" aria-hidden="true"></i>Operator session</span>{% endif %}
+        <div class="seg" role="group" aria-label="View">
+          <button type="button" class="seg-btn" data-persona-btn="technical" aria-pressed="true"><i class="ph ph-wrench" aria-hidden="true"></i>Technical</button>
+          <button type="button" class="seg-btn" data-persona-btn="finance" aria-pressed="false"><i class="ph ph-currency-dollar" aria-hidden="true"></i>Finance</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="ws-main" id="ws-main" aria-live="polite">
+    <div id="ws-global" class="state state-loading" role="status">
+      <i class="ph ph-hourglass-medium" aria-hidden="true"></i><span>Loading workspace</span>
+    </div>
+
+    <div id="banners" class="banners"></div>
+
+    <div class="panels" id="panels" hidden>
+      <section class="panel panel-half" id="p-brief" data-order-technical="1" data-order-finance="1" aria-labelledby="h-brief">
+        <div class="panel-head"><h2 id="h-brief">Confirmed brief</h2><div class="panel-actions" id="brief-actions"></div></div>
+        <div class="panel-body" id="brief-body"></div>
+      </section>
+
+      <section class="panel panel-half" id="p-workflow" data-order-technical="2" data-order-finance="5" aria-labelledby="h-workflow">
+        <div class="panel-head"><h2 id="h-workflow">Workflow</h2></div>
+        <div class="panel-body" id="workflow-body"></div>
+      </section>
+
+      <section class="panel panel-full panel-hero" id="p-matrix" data-order-technical="3" data-order-finance="4" aria-labelledby="h-matrix">
+        <div class="panel-head"><h2 id="h-matrix">Requirement matrix</h2><p class="panel-sub" id="matrix-sub"></p></div>
+        <div class="panel-body" id="matrix-body"></div>
+      </section>
+
+      <section class="panel panel-full" id="p-poc" data-order-technical="4" data-order-finance="6" aria-labelledby="h-poc">
+        <div class="panel-head">
+          <h2 id="h-poc">Proof of concept</h2>
+          <div class="panel-actions">
+            <button type="button" class="btn btn-primary" id="btn-prove"><i class="ph ph-play" aria-hidden="true"></i>Prove it</button>
+            <button type="button" class="btn btn-ghost" id="btn-cancel" hidden><i class="ph ph-stop" aria-hidden="true"></i>Cancel</button>
+          </div>
+        </div>
+        <p class="mock-label"><i class="ph ph-info" aria-hidden="true"></i>Demo sandbox: mock CRM and warehouse stand-ins, no real Salesforce or Snowflake.</p>
+        <div class="panel-body poc-grid">
+          <div>
+            <div id="run-state" class="run-state"></div>
+            <h3 class="h3">Test plan, <span class="mono">crm_warehouse_sync/v1</span></h3>
+            <ol class="assertions" id="assertions"></ol>
+          </div>
+          <div>
+            <h3 class="h3">Live events</h3>
+            <div id="events-state" class="small muted"></div>
+            <ol class="events" id="events"></ol>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel panel-full" id="p-comparison" data-order-technical="5" data-order-finance="3" aria-labelledby="h-comparison">
+        <div class="panel-head"><h2 id="h-comparison">Comparison</h2><p class="panel-sub" id="comparison-sub"></p></div>
+        <div class="panel-body" id="comparison-body"></div>
+      </section>
+
+      <section class="panel panel-half" id="p-finance" data-order-technical="6" data-order-finance="2" aria-labelledby="h-finance">
+        <div class="panel-head"><h2 id="h-finance">Plan and cost assumptions</h2></div>
+        <div class="panel-body" id="finance-body"></div>
+      </section>
+
+      <section class="panel panel-half" id="p-report" data-order-technical="7" data-order-finance="7" aria-labelledby="h-report">
+        <div class="panel-head">
+          <h2 id="h-report">Reports</h2>
+          <div class="panel-actions"><button type="button" class="btn btn-secondary" id="btn-report"><i class="ph ph-file-lock" aria-hidden="true"></i>Create report</button></div>
+        </div>
+        <div class="panel-body" id="report-body"></div>
+      </section>
+
+      <section class="panel panel-half" id="p-agent" data-order-technical="8" data-order-finance="8" aria-labelledby="h-agent">
+        <div class="panel-head">
+          <h2 id="h-agent">Buyer agent result</h2>
+          <div class="panel-actions"><button type="button" class="btn btn-secondary" id="btn-agent"><i class="ph ph-robot" aria-hidden="true"></i>Run buyer agent</button></div>
+        </div>
+        <div class="panel-body" id="agent-body"></div>
+      </section>
+    </div>
+  </main>
+
+  <div class="drawer-scrim" id="drawer-scrim" hidden></div>
+  <aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title" hidden>
+    <div class="drawer-head">
+      <h2 id="drawer-title">Source</h2>
+      <button type="button" class="btn btn-ghost btn-icon" id="drawer-close" aria-label="Close panel"><i class="ph ph-x" aria-hidden="true"></i></button>
+    </div>
+    <div class="drawer-body" id="drawer-body"></div>
+  </aside>
+</div>
+{% endblock %}
+
+{% block scripts %}<script src="/static/workspace.js" defer></script>{% endblock %}
