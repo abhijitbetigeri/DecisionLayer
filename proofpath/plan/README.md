@@ -115,5 +115,5 @@ report. **Cut first:** Coframe, simulator chart, finance view polish, landing-pa
 | WS6 deploy | artifacts complete; release pending | Container/config/scripts and quota middleware verified; Docker daemon unavailable, InsForge access unknown, no public deployment |
 | WS7 demo assets | complete | Slides, architecture, 1080p cards, narration/captions, real-results chart generator; recording/team/URL inputs pending |
 | WS8 QA | complete | 10 new QA tests; full suite 59 passed; temporary-data smoke and acceptance mapping supplied |
-| Integration C1-C4 | **C1 + C2 pass** (real app, worker, reports frozen, isolation); C3/C4 after WS3/WS4 | coordinator |
+| Integration C1-C4 | **C1, C2, C4 pass**; C3 browser walkthrough after WS4. Visitor Lab: homepage 15/24 (62%) vs agent-context 24/24 (100%) | coordinator |
 | Video recording + edit | not started | coordinator + user, after build freeze |

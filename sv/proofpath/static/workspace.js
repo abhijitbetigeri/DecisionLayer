@@ -203,7 +203,8 @@
     renderWorkflow(); renderMatrix(); renderPoc(); renderComparison(); renderFinance(); renderReports(); renderAgent();
   }
 
-  function invalidated() { return !!(state.pendingConfirm || (state.ws && state.ws.stale)); }
+  /* A pending evidence update only marks affected cells ("Requires review"); it never greys out conclusions. */
+  function invalidated() { return !!(state.ws && state.ws.comparison && (state.pendingConfirm || (state.ws.stale && !state.ws.pending_update))); }
 
   /* ------------------------------------------------------------ header + banners */
   function renderHeader() {
@@ -685,7 +686,7 @@
     const metric = (label, fn, cls) => h("tr", { class: "metric " + (cls || "") }, h("th", { scope: "row" }, label), c.products.map((p) => h("td", {}, fn(p))));
     const nee = () => h("span", { class: "nee" }, icon("ph-question"), "Not enough evaluated evidence");
     fill(body,
-      invalidated() ? h("p", { class: "invalid-note" }, icon("ph-hourglass"), " Invalidated until the edited brief is confirmed.") : null,
+      invalidated() ? h("p", { class: "invalid-note" }, icon("ph-hourglass"), " Invalidated: these conclusions predate your latest brief or evidence.") : null,
       h("div", { class: "table-wrap" }, h("table", { class: "compare" + (invalidated() ? " is-invalid" : "") },
         h("thead", {}, head),
         h("tbody", {}, rows,

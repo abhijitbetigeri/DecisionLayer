@@ -3,3 +3,51 @@
   arm B eu_technical   gpt-oss-120b             needs_verification  expected needs_verification  OK  
   arm A eu_technical   gpt-oss-120b             needs_verification  expected needs_verification  OK  
   arm B eu_technical   kimi-k2                  needs_verification  expected needs_verification  OK  
+  arm B eu_technical   qwen3-235b-a22b-2507     needs_verification  expected needs_verification  OK  
+  arm B eu_technical   qwen3-235b-a22b-2507     needs_verification  expected needs_verification  OK  
+  arm A eu_technical   gemma-4-31b-it           not_fit             expected needs_verification  MISS 
+  arm A eu_technical   qwen3-235b-a22b-2507     not_fit             expected needs_verification  MISS 
+  arm B eu_technical   gemma-4-31b-it           needs_verification  expected needs_verification  OK  
+  arm A eu_technical   qwen3-235b-a22b-2507     not_fit             expected needs_verification  MISS 
+  arm A eu_technical   gemma-4-31b-it           not_fit             expected needs_verification  MISS 
+  arm B us_operations  gpt-oss-120b             needs_verification  expected needs_verification  OK  
+  arm B eu_technical   gemma-4-31b-it           needs_verification  expected needs_verification  OK  
+  arm B eu_technical   kimi-k2                  needs_verification  expected needs_verification  OK  
+  arm A us_operations  gpt-oss-120b             needs_verification  expected needs_verification  OK  
+  arm B us_operations  gpt-oss-120b             needs_verification  expected needs_verification  OK  
+  arm B us_operations  qwen3-235b-a22b-2507     needs_verification  expected needs_verification  OK  
+  arm A us_operations  gpt-oss-120b             fit                 expected needs_verification  MISS 
+  arm B us_operations  kimi-k2                  needs_verification  expected needs_verification  OK  
+  arm A us_operations  kimi-k2                  needs_verification  expected needs_verification  OK  
+  arm B us_operations  kimi-k2                  needs_verification  expected needs_verification  OK  
+  arm B us_operations  gemma-4-31b-it           needs_verification  expected needs_verification  OK  
+  arm A us_operations  kimi-k2                  needs_verification  expected needs_verification  OK  
+  arm A us_operations  gemma-4-31b-it           needs_verification  expected needs_verification  OK  
+  arm B us_operations  gemma-4-31b-it           needs_verification  expected needs_verification  OK  
+  arm A us_operations  qwen3-235b-a22b-2507     needs_verification  expected needs_verification  OK  
+  arm B us_operations  qwen3-235b-a22b-2507     needs_verification  expected needs_verification  OK  
+  arm A us_operations  gemma-4-31b-it           needs_verification  expected needs_verification  OK  
+  arm B strict_budget  gpt-oss-120b             not_fit             expected not_fit             OK  
+  arm A eu_technical   kimi-k2                  None                expected needs_verification  MISS time limit 60s reached
+  arm A us_operations  qwen3-235b-a22b-2507     fit                 expected needs_verification  MISS 
+  arm A strict_budget  gpt-oss-120b             not_fit             expected not_fit             OK  
+  arm A eu_technical   kimi-k2                  None                expected needs_verification  MISS APITimeoutError: Request timed out.
+  arm A strict_budget  gpt-oss-120b             not_fit             expected not_fit             OK  
+  arm B strict_budget  gpt-oss-120b             not_fit             expected not_fit             OK  
+  arm A strict_budget  qwen3-235b-a22b-2507     None                expected not_fit             MISS no decision within 6 turns
+  arm A strict_budget  gemma-4-31b-it           not_fit             expected not_fit             OK  
+  arm B strict_budget  kimi-k2                  not_fit             expected not_fit             OK  
+  arm A strict_budget  gemma-4-31b-it           not_fit             expected not_fit             OK  
+  arm B strict_budget  kimi-k2                  not_fit             expected not_fit             OK  
+  arm A strict_budget  kimi-k2                  not_fit             expected not_fit             OK  
+  arm B strict_budget  gemma-4-31b-it           not_fit             expected not_fit             OK  
+  arm B strict_budget  gemma-4-31b-it           not_fit             expected not_fit             OK  
+  arm B strict_budget  qwen3-235b-a22b-2507     not_fit             expected not_fit             OK  
+  arm A strict_budget  kimi-k2                  not_fit             expected not_fit             OK  
+  arm B strict_budget  qwen3-235b-a22b-2507     not_fit             expected not_fit             OK  
+  arm A strict_budget  qwen3-235b-a22b-2507     not_fit             expected not_fit             OK  
+
+Arm  correct/n  rate   95% Wilson
+  A   15/24      0.62   [0.43, 0.79]   errors=3
+  B   24/24      1.00   [0.86, 1.00]   errors=0
+log: runs/proofpath-final.jsonl  summary: runs/proofpath-summary.json

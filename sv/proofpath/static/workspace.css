@@ -150,8 +150,8 @@
 .diff caption { text-align: left; font-size: 0.75rem; color: var(--text-muted); padding-bottom: 4px; }
 .diff del { color: var(--status-unmet); }
 .diff ins { color: var(--status-met); text-decoration: none; font-weight: 600; }
-.diff del::before { content: "Was: "; color: var(--text-muted); text-decoration: none; display: inline-block; }
-.diff ins::before { content: "Now: "; color: var(--text-muted); font-weight: 400; }
+.diff del::before { content: "Was:\00a0"; color: var(--text-muted); text-decoration: none; display: inline-block; }
+.diff ins::before { content: "Now:\00a0"; color: var(--text-muted); font-weight: 400; }
 
 /* ---------------------------------------------------------------- POC */
 .mock-label { display: flex; gap: 6px; align-items: flex-start; font-size: 0.8125rem; color: var(--text); background: var(--surface-2);
