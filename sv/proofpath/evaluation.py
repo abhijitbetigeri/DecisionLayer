@@ -13,7 +13,8 @@ from sv.proofpath import comparison, evidence, fixtures
 from sv.proofpath.contracts import (SCENARIO_VERSION, BriefVersion, Claim, ComparisonSnapshot,
                                     EvidenceStatus, Evaluation, Event, EventType, Finding,
                                     FindingStatus, FitDecision, POCRun, ProductComparison,
-                                    RunOutcome, SourceVersion, TestResult, TestStatus, Workspace)
+                                    ReviewStatus, RunOutcome, SourceVersion, TestResult, TestStatus,
+                                    Workspace)
 
 POC_PRODUCT = "flowbridge"            # the crm_warehouse_sync/v1 sandbox runs FlowBridge
 CAPABILITY_KEYS = ("eu_hosting", "us_hosting", "sso", "idempotent_delivery")
@@ -274,10 +275,12 @@ def _snapshot_outdated(repo, snap: ComparisonSnapshot, brief: BriefVersion) -> b
 def workspace(repo, evaluation_id: str) -> Workspace:
     ev: Evaluation = repo.get_evaluation(evaluation_id)
     brief = repo.get_brief(ev.current_brief_version_id)
-    snap = repo.latest_comparison(evaluation_id)
-    # A finished POC or an approved update makes the projection outdated: rebuild it once.
-    if snap is not None and brief.confirmed_at is not None and _snapshot_outdated(repo, snap, brief):
-        snap = recompute(repo, evaluation_id, emit=True)
+    # A finished POC or an approved update makes the projection outdated: rebuild it once
+    # (inside a transaction so concurrent polls do not each append a snapshot).
+    with repo.transaction():
+        snap = repo.latest_comparison(evaluation_id)
+        if snap is not None and brief.confirmed_at is not None and _snapshot_outdated(repo, snap, brief):
+            snap = recompute(repo, evaluation_id, emit=True)
     pending = evidence.pending_update(repo)
     if pending is not None and evaluation_id not in pending.affected_evaluation_ids:
         pending = None
@@ -285,7 +288,7 @@ def workspace(repo, evaluation_id: str) -> Workspace:
     current = evidence.current_sources(repo)
     current_ids = {s.id for s in current}
     history = [s for s in repo.list_source_versions()
-               if s.review_status.value == "approved" and s.id not in current_ids]
+               if s.review_status == ReviewStatus.approved and s.id not in current_ids]
     fb = None
     if snap is not None and not brief_stale:
         fb = next((p.decision for p in snap.products if p.product_id == POC_PRODUCT), None)
@@ -303,7 +306,6 @@ def workspace(repo, evaluation_id: str) -> Workspace:
 # ------------------------------------------------------------------ pure helper for the decision matrix
 def decision_for(preset_id: str, product_id: str, *, poc_passed: bool, relayworks_v2: bool) -> FitDecision:
     """Runs the real fixtures and the real rule end to end on an in-memory repository."""
-    from sv.proofpath.contracts import POCRun, RunState
     from sv.proofpath.repository import Repository
     from sv.proofpath.requirements import preset_brief
 
@@ -318,7 +320,7 @@ def decision_for(preset_id: str, product_id: str, *, poc_passed: bool, relaywork
         add_passing_run(repo, ev.id, brief.id)
     if relayworks_v2:
         upd = evidence.simulate_update(repo, "relayworks_v2", screen=False)
-        evidence.review(repo, upd.source_version.id, evidence.ReviewStatus.approved)
+        evidence.review(repo, upd.source_version.id, ReviewStatus.approved)
     snap = recompute(repo, ev.id)
     return next(p.decision for p in snap.products if p.product_id == product_id)
 

@@ -58,8 +58,9 @@ flowchart LR
    or the repository interface with an in-memory fake (logic). Never invent a payload shape.
 4. **Shared truth is one file.** Expected decisions, requirement keys, prices and design tokens
    live in [shared-truth.md](shared-truth.md). If code disagrees with it, the code is wrong.
-5. **Same working tree, no commits.** Agents work in the one local checkout (the user has asked
-   for no commits yet), and exclusive file ownership replaces branches. `uv.lock`,
+5. **Same working tree; only the coordinator commits.** Agents work in the one local checkout and never
+   commit or push. The coordinator commits and pushes to github.com/abhijitbetigeri/DecisionLayer
+   (main) at checkpoints. Exclusive file ownership replaces branches. `uv.lock`,
    `pyproject.toml` and `app.py` belong to the coordinator only.
 6. **Report format** when a workstream finishes: files changed, how it was verified (commands
    and output), assumptions not covered by the plan, and integration needs.
@@ -106,13 +107,13 @@ report. **Cut first:** Coframe, simulator chart, finance view polish, landing-pa
 | Workstream | State | Notes |
 |---|---|---|
 | WS0 freeze | **done** | contracts, repository, app + stubs, examples, auth, worker, decision tests |
-| WS1 evidence | building | subagent |
+| WS1 evidence | **done** | 81 tests; 14/14 expected decisions |
 | WS2 POC | **done** | 10/10 tests; real worker path verified; UI notes relayed to WS4 |
 | WS3 landing | building | tokens.css shipped (relayed to WS4); _base.html next |
 | WS4 workspace | building | subagent |
-| WS5 agent | building | subagent |
+| WS5 agent | **done** | live gpt-oss-120b cited needs_verification; telemetry wired |
 | WS6 deploy | artifacts complete; release pending | Container/config/scripts and quota middleware verified; Docker daemon unavailable, InsForge access unknown, no public deployment |
 | WS7 demo assets | complete | Slides, architecture, 1080p cards, narration/captions, real-results chart generator; recording/team/URL inputs pending |
 | WS8 QA | complete | 10 new QA tests; full suite 59 passed; temporary-data smoke and acceptance mapping supplied |
-| Integration C1-C4 | not started | coordinator (main session) |
+| Integration C1-C4 | **C1 + C2 pass** (real app, worker, reports frozen, isolation); C3/C4 after WS3/WS4 | coordinator |
 | Video recording + edit | not started | coordinator + user, after build freeze |

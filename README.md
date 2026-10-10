@@ -1,4 +1,8 @@
-# Second Visitor
+# Decision Layer
+
+Repository: [abhijitbetigeri/DecisionLayer](https://github.com/abhijitbetigeri/DecisionLayer)
+
+Modules: **Visitor Lab** (Second Visitor engine) and **Evaluation Workspace**. See the [product and implementation plan](proofpath/README.md).
 
 **Coframe makes websites better for human visitors. Second Visitor makes them work for the
 other visitor, AI agents, without letting them lie.**

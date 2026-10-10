@@ -1,5 +1,7 @@
 # Decision Layer — Enterprise Software Evaluation Platform
 
+Repository: [abhijitbetigeri/DecisionLayer](https://github.com/abhijitbetigeri/DecisionLayer)
+
 ## Platform name and modules
 
 **Decision Layer** is the platform name. Tagline: **Evidence-driven enterprise software evaluation.**

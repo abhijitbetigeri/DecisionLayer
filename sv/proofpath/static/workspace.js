@@ -159,6 +159,8 @@
     try {
       const ws = await api("GET", `/evaluations/${EVAL_ID}/workspace`);
       state.ws = ws;
+      if (!ws.brief.confirmed_at) state.pendingConfirm = ws.brief;          // fresh brief: must be confirmed first
+      else if (state.pendingConfirm && state.pendingConfirm.id === ws.brief.id) state.pendingConfirm = null;
       if (initial) {
         let saved = null;
         try { saved = localStorage.getItem("dl-ws-persona"); } catch (_) { /* ignore */ }
@@ -239,9 +241,10 @@
     }
     if (state.pendingConfirm) {
       box.append(h("section", { class: "banner banner-stale" },
-        h("div", { class: "banner-title" }, icon("ph-pencil-simple-line"), h("strong", {}, "Brief edited")),
-        h("p", {}, "Current conclusions are invalidated until you confirm the edited brief."),
-        h("button", { type: "button", class: "btn btn-primary btn-sm", onclick: confirmBrief }, icon("ph-check"), "Confirm to re-evaluate")));
+        h("div", { class: "banner-title" }, icon("ph-pencil-simple-line"), h("strong", {}, ws.comparison ? "Brief edited" : "Confirm your requirements")),
+        h("p", {}, ws.comparison ? "Current conclusions are invalidated until you confirm the edited brief."
+          : "Check the requirements below, then confirm. Evidence is evaluated only against a confirmed brief."),
+        h("button", { type: "button", class: "btn btn-primary btn-sm", onclick: confirmBrief }, icon("ph-check"), ws.comparison ? "Confirm to re-evaluate" : "Confirm requirements")));
     } else if (ws.stale && !pu) {
       box.append(h("section", { class: "banner banner-stale" },
         h("div", { class: "banner-title" }, icon("ph-hourglass"), h("strong", {}, "Stale")),
