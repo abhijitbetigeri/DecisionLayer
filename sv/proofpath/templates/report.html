@@ -75,7 +75,7 @@
             <tr>
               <th scope="row">{{ p.product_name }}</th>
               <td data-label="Decision">{{ st.decision(p.decision) }}</td>
-              <td data-label="Plan and price">{{ st.plan(p.cheapest_qualifying_plan) }}, {{ st.money(p.monthly_price_usd) }}</td>
+              <td data-label="Plan and price">{% if p.cheapest_qualifying_plan %}{{ st.plan(p.cheapest_qualifying_plan) }}, {{ st.money(p.monthly_price_usd) }}{% else %}No qualifying plan{% endif %}</td>
               <td data-label="Score">{{ ("%.2f"|format(p.evaluated_score)) if p.evaluated_score is not none else "Not enough evaluated evidence" }}</td>
               <td data-label="Coverage">{{ st.pct(p.coverage) }}</td>
               <td data-label="Gaps">{{ p.gaps|join("; ") or "None listed" }}</td>

@@ -408,10 +408,17 @@
 
   /* ------------------------------------------------------------ 3. requirement matrix */
   function product(id) { const c = state.ws.comparison; return c ? c.products.find((p) => p.product_id === id) : null; }
+  function findResult(id) { return state.results.find((r) => r.id === id) || ((state.ws && state.ws.latest_results) || []).find((r) => r.id === id); }
+  function citeBtn(id) {
+    const tr = findResult(id);
+    const isTest = !!tr || id.startsWith("tr-");
+    const label = tr ? "Test: " + tr.test_key.replace(/_/g, " ") : id;
+    return h("button", { type: "button", class: "cite", title: id, onclick: () => openCitation(id) }, icon(isTest ? "ph-flask" : "ph-file-text"), label);
+  }
   function citationLinks(f) {
     const ids = [...(f.claim_ids || []), ...(f.test_result_ids || [])];
     if (!ids.length) return h("span", { class: "muted small" }, "No citation");
-    return h("span", { class: "cites" }, ids.map((id) => h("button", { type: "button", class: "cite", onclick: () => openCitation(id) }, icon(id.startsWith("tr") || (f.test_result_ids || []).includes(id) ? "ph-flask" : "ph-file-text"), id)));
+    return h("span", { class: "cites" }, ids.map(citeBtn));
   }
   function renderMatrix() {
     const body = $("matrix-body");
@@ -475,7 +482,7 @@
           : stateBox("failed", "ph-warning-octagon", "The source version for this claim is not available.")));
       return;
     }
-    const tr = state.results.find((r) => r.id === id) || (state.ws.latest_results || []).find((r) => r.id === id);
+    const tr = findResult(id);
     if (tr) { openTestResult(tr); return; }
     openDrawer("Citation " + id, stateBox("failed", "ph-warning-octagon", "This citation is not in the current workspace."));
   }
@@ -516,10 +523,10 @@
     $("btn-prove").title = state.pendingConfirm ? "Confirm the edited brief first" : "";
     $("btn-cancel").hidden = !runActive();
     const kids = [];
-    if (state.sandboxLabel) kids.push(h("p", { class: "small muted" }, icon("ph-cube"), " ", state.sandboxLabel));
+    if (state.sandboxLabel && !/^Demo sandbox: mock CRM and warehouse stand-ins/.test(state.sandboxLabel)) kids.push(h("p", { class: "small muted" }, icon("ph-cube"), " ", state.sandboxLabel));
     if (!run) kids.push(stateBox("empty", "ph-play-circle", "No POC run yet. Prove it runs the four assertions below against local mocks."));
     else if (runActive()) kids.push(stateBox("loading", "ph-hourglass-medium", `${RUN_STATE[run.state] || run.state}. Attempts so far: ${run.attempts}.`));
-    else if (run.state === "cancelled" || run.outcome === "cancelled") kids.push(stateBox("cancelled", "ph-stop-circle", "Run cancelled. Assertions that did not finish are shown as blocked; nothing was marked as passing."));
+    else if (run.state === "cancelled" || run.outcome === "cancelled") kids.push(stateBox("cancelled", "ph-stop-circle", "Run cancelled. Assertions that did not finish are shown as blocked, never as passed."));
     else if (run.state === "failed" || (run.outcome && run.outcome !== "passed")) kids.push(stateBox("failed", "ph-warning-octagon", `Run ${(OUTCOME[run.outcome] || [, , "failed"])[2].toLowerCase()}${run.error ? ": " + run.error : "."}`));
     else kids.push(h("div", { class: "run-summary" }, badge(OUTCOME, run.outcome || "passed"), h("span", { class: "small muted" }, ` Run ${run.id.slice(0, 8)}, ${run.attempts} delivery attempts`)));
     if (state.runError) kids.push(stateBox("failed", "ph-warning-octagon", state.runError, run && !runActive() ? null : retryBtn(() => { state.runError = ""; pollRun(run.id); })));
@@ -699,7 +706,7 @@
     fill(body,
       h("ul", { class: "fin-list" }, c.products.map((p) => h("li", {},
         h("strong", {}, p.product_name), " ",
-        p.cheapest_qualifying_plan ? `needs ${planText(p.cheapest_qualifying_plan)} at ${money(p.monthly_price_usd)}` : "has no plan that meets every capability requirement"))),
+        p.cheapest_qualifying_plan ? (p.monthly_price_usd == null ? `needs ${planText(p.cheapest_qualifying_plan)}, quote only (price unknown)` : `needs ${planText(p.cheapest_qualifying_plan)} at ${money(p.monthly_price_usd)}`) : "has no plan that meets every capability requirement"))),
       h("p", { class: "small" }, budget ? `Budget ceiling in the brief: $${budget.expected}/mo.` : "No budget ceiling in the brief."),
       quotes.length ? h("p", { class: "small notice" }, icon("ph-question"), ` Quote unknowns: ${quotes.map((p) => p.product_name).join(", ")}. A quote-only plan is never treated as within budget.`)
         : h("p", { class: "small muted" }, "No quote-only plans among qualifying options."),
@@ -747,7 +754,7 @@
         h("div", { class: "agent-row" }, h("span", { class: "small muted" }, "Decision"), badge(DECISION, a.decision),
           a.correct === true ? h("span", { class: "small" }, icon("ph-check"), " Matches the evidence rule") : a.correct === false ? h("span", { class: "small" }, icon("ph-x"), ` Differs from the evidence rule (${(DECISION[a.expected_decision] || [, , a.expected_decision])[2]})`) : null),
         h("ul", { class: "agent-reqs" }, Object.entries(a.requirement_statuses || {}).map(([k, v]) => h("li", {}, h("span", {}, reqLabel(k)), badge(FINDING, v)))),
-        h("div", {}, h("div", { class: "small muted" }, "Citations"), a.citations.length ? h("span", { class: "cites" }, a.citations.map((id) => h("button", { type: "button", class: "cite", onclick: () => openCitation(id) }, icon(id.startsWith("tr") ? "ph-flask" : "ph-file-text"), id))) : h("span", { class: "small muted" }, "None")),
+        h("div", {}, h("div", { class: "small muted" }, "Citations"), a.citations.length ? h("span", { class: "cites" }, a.citations.map(citeBtn)) : h("span", { class: "small muted" }, "None")),
         a.rejected_citations && a.rejected_citations.length ? h("p", { class: "small limit" }, icon("ph-warning-circle"), ` Rejected citations (not found in evidence): ${a.rejected_citations.join(", ")}`) : null,
         h("p", { class: "small muted" }, `Input version ${a.input_version}, ${a.turns} turns. A model never decides pass or fail.`)));
     }
@@ -763,5 +770,14 @@
   $("btn-agent").addEventListener("click", runAgent);
 
   /* ------------------------------------------------------------ boot */
-  loadWorkspace(true).then(() => { if (state.ws) startEvents(true); });
+  function focusAnchor() {
+    if (location.hash !== "#evidence") return;
+    const el = $("p-matrix");
+    if (!el || $("panels").hidden) return;
+    el.scrollIntoView({ block: "start", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+    el.classList.add("is-highlight");
+    setTimeout(() => el.classList.remove("is-highlight"), 2400);
+  }
+  window.addEventListener("hashchange", focusAnchor);
+  loadWorkspace(true).then(() => { if (state.ws) { startEvents(true); requestAnimationFrame(focusAnchor); } });
 })();

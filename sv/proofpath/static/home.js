@@ -59,6 +59,19 @@
     });
   }
 
+  // Quote only the source sentences relevant to the cited requirement (verbatim, never rewritten).
+  var KEY_TERMS = {
+    eu_hosting: /\bEU\b/, us_hosting: /\bUS\b/, sso: /sign-on|SSO|SAML/i,
+    idempotent_delivery: /idempot|duplicate/i, recovery_demonstrated: /retr|duplicate/i, budget_monthly_usd: /\$/
+  };
+  function excerpt(text, key) {
+    var re = KEY_TERMS[key];
+    var sentences = text.match(/[^.]+\.?/g) || [text];
+    var hits = re ? sentences.filter(function (s) { return re.test(s); }) : [];
+    var out = (hits.length ? hits.slice(0, 2) : sentences.slice(0, 2)).join(" ").replace(/\s+/g, " ").trim();
+    return hits.length && hits.length < sentences.length ? "… " + out + " …" : out;
+  }
+
   function renderPreview(ws) {
     var fig = $("#hero-preview");
     if (!fig) return;
@@ -108,7 +121,7 @@
       citeBox.appendChild(el("div", { class: "cite-head" }, [
         icon("ph-quotes"), el("span", { text: "Citation for " + ((reqs[cited.requirement_id] || {}).label || cited.requirement_key) }),
       ]));
-      citeBox.appendChild(el("blockquote", { text: "“" + (src.content || "") + "”" }));
+      citeBox.appendChild(el("blockquote", { text: "“" + excerpt(src.content || "", cited.requirement_key) + "”" }));
       citeBox.appendChild(el("code", { text: (src.origin || "source") + "  |  " + claim.id }));
       citeBox.hidden = false;
     }

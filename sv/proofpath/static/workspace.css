@@ -227,3 +227,13 @@ body.drawer-open { overflow: hidden; }
   .diff tr { border-bottom: 1px solid var(--border); padding: 6px 0; }
   .ws-header { position: static; }
 }
+
+/* operator sign in (only rendered outside an operator session) */
+.op-login { margin-top: 24px; }
+.op-login summary { cursor: pointer; width: max-content; }
+.op-login-form { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 8px; }
+.op-login-form input { width: 200px; }
+
+/* #evidence deep link from the homepage "Review security evidence" button */
+.panel { scroll-margin-top: 88px; transition: box-shadow var(--dur) var(--ease-out); }
+.panel.is-highlight { box-shadow: var(--focus-ring), var(--shadow-1); }

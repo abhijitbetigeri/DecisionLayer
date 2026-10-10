@@ -109,7 +109,7 @@ report. **Cut first:** Coframe, simulator chart, finance view polish, landing-pa
 | WS0 freeze | **done** | contracts, repository, app + stubs, examples, auth, worker, decision tests |
 | WS1 evidence | **done** | 81 tests; 14/14 expected decisions |
 | WS2 POC | **done** | 10/10 tests; real worker path verified; UI notes relayed to WS4 |
-| WS3 landing | building | tokens.css shipped (relayed to WS4); _base.html next |
+| WS3 landing | **done** | taste-skill pre-flight passes; hero renders live showcase data |
 | WS4 workspace | building | subagent |
 | WS5 agent | **done** | live gpt-oss-120b cited needs_verification; telemetry wired |
 | WS6 deploy | artifacts complete; release pending | Container/config/scripts and quota middleware verified; Docker daemon unavailable, InsForge access unknown, no public deployment |

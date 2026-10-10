@@ -1,0 +1,5 @@
+  arm A eu_technical   gpt-oss-120b             needs_verification  expected needs_verification  OK  
+  arm B eu_technical   gpt-oss-120b             needs_verification  expected needs_verification  OK  
+  arm B eu_technical   gpt-oss-120b             needs_verification  expected needs_verification  OK  
+  arm A eu_technical   gpt-oss-120b             needs_verification  expected needs_verification  OK  
+  arm B eu_technical   kimi-k2                  needs_verification  expected needs_verification  OK  

@@ -291,6 +291,16 @@ def showcase():
         return ok(_example("workspace"), stub=True)
 
 
+@app.get(f"{API}/showcase/agent-context")
+def showcase_agent_context():
+    """Public, read-only agent view of the showcase evaluation (what the homepage advertises to agents)."""
+    showcase()                                        # ensures the showcase evaluation exists
+    ev_id, ctx = repo.get_meta("showcase_evaluation_id"), _impl("agent", "agent_context")
+    if not (ev_id and ctx):
+        return ok(_example("agent_context"), stub=True)
+    return ok(ctx(repo, ev_id))
+
+
 @app.post(f"{API}/evaluations")
 def create_evaluation(request: Request, body: CreateEvaluation):
     parse = _impl("requirements", "parse_brief")

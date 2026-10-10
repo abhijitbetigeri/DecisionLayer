@@ -102,6 +102,16 @@
         <div class="panel-body" id="agent-body"></div>
       </section>
     </div>
+
+    {% if not operator %}
+    <details class="op-login">
+      <summary class="small muted">Operator sign in</summary>
+      <form method="post" action="/operator/login" class="op-login-form">
+        <label class="field-inline"><span>Operator token</span><input name="token" type="password" autocomplete="off" required></label>
+        <button type="submit" class="btn btn-ghost btn-sm">Sign in</button>
+      </form>
+    </details>
+    {% endif %}
   </main>
 
   <div class="drawer-scrim" id="drawer-scrim" hidden></div>

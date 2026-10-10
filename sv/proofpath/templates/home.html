@@ -22,7 +22,7 @@
 {% block title %}FlowBridge: connect your systems, automate your business{% endblock %}
 
 {% block head %}
-  <link rel="alternate" type="application/json" href="/api/v1/evaluations/{{ example_id }}/agent-context" title="Agent context for the example evaluation">
+  <link rel="alternate" type="application/json" href="/api/v1/showcase/agent-context" title="Agent context for the showcase evaluation">
   <link rel="stylesheet" href="/static/home.css">
   <script>document.documentElement.classList.add("js");</script>
 {% endblock %}
@@ -108,12 +108,10 @@
   <section class="evaluate-band border-y border-line" id="evaluate">
     <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-16 md:py-20 reveal">
       <p class="eyebrow">Evaluation Workspace by Decision Layer</p>
-      <div data-cf-slot="entry-point">
-        <h2 class="mt-3 text-3xl md:text-4xl font-semibold tracking-tight text-ink m-0">Tell us what you need to connect.</h2>
-        <p class="mt-4 text-muted leading-relaxed max-w-[60ch]" data-cf-slot="walkthrough-intro">
-          We turn your brief into requirements, check each one against cited evidence, and run a live test on mock systems.
-        </p>
-      </div>
+      <h2 class="mt-3 text-3xl md:text-4xl font-semibold tracking-tight text-ink m-0" data-cf-slot="entry-point">Tell us what you need to connect.</h2>
+      <p class="mt-4 text-muted leading-relaxed max-w-[60ch]" data-cf-slot="walkthrough-intro">
+        We turn your brief into requirements, check each one against cited evidence, and run a live test on mock systems.
+      </p>
 
       <form class="eval-form mt-8" id="eval-form" novalidate>
         <label for="brief" class="field-label">Your use case</label>
@@ -154,8 +152,8 @@
   <section class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 md:py-24" id="integrations">
     <h2 class="text-3xl md:text-4xl font-semibold tracking-tight text-ink m-0 max-w-[22ch] reveal">Everything a sync needs to survive production.</h2>
 
-    <div class="bento mt-10 grid grid-cols-1 md:grid-cols-6 gap-4">
-      <article class="bento-cell md:col-span-4 reveal">
+    <div class="bento mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4">
+      <article class="bento-cell md:col-span-2 lg:col-span-4 reveal">
         <div class="bento-copy">
           <h3>Prebuilt connectors</h3>
           <p>Point FlowBridge at your CRM and your warehouse, then map the fields you want to keep in sync.</p>
@@ -173,7 +171,7 @@
         </div>
       </article>
 
-      <article class="bento-cell bento-accent md:col-span-2 md:row-span-2 reveal">
+      <article class="bento-cell bento-accent md:col-span-2 lg:row-span-2 reveal">
         <div class="bento-copy">
           <h3>Reliable execution</h3>
           <p>Failed writes retry with the same idempotency key, so a retry never creates a second record.</p>
@@ -184,7 +182,7 @@
         <p class="run-note" data-preview="run-note">From the example run on local mock systems.</p>
       </article>
 
-      <article class="bento-cell bento-grid-bg md:col-span-2 reveal">
+      <article class="bento-cell bento-grid-bg lg:col-span-2 reveal">
         <div class="bento-copy">
           <h3>Workflow builder</h3>
           <p>Source, transform, destination. Every step is visible and versioned.</p>
@@ -198,7 +196,7 @@
         </div>
       </article>
 
-      <article class="bento-cell md:col-span-2 reveal" id="enterprise">
+      <article class="bento-cell lg:col-span-2 reveal" id="enterprise">
         <div class="bento-copy">
           <h3>Enterprise controls</h3>
           <p>EU deployment on Business and Enterprise. US deployment on every plan.</p>
@@ -294,7 +292,7 @@
       <i class="ph ph-robot text-muted mt-0.5 sm:mt-0" aria-hidden="true"></i>
       <p class="m-0 text-muted min-w-0">
         Agents: read this evaluation at
-        <a href="/api/v1/evaluations/{{ example_id }}/agent-context" class="mono agent-path">/api/v1/evaluations/{id}/agent-context</a>
+        <a href="/api/v1/showcase/agent-context" class="mono agent-path">/api/v1/evaluations/{id}/agent-context</a>
         <span class="whitespace-nowrap">or start at <a href="/llms.txt" class="mono agent-path">/llms.txt</a></span>
       </p>
     </div>

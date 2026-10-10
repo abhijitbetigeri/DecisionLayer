@@ -210,6 +210,14 @@ a { color: inherit; }
 .run-step strong { display: block; font-weight: 600; }
 .run-step small { display: block; color: var(--text-muted); font-size: 0.78rem; line-height: 1.4; }
 .run-note { margin: auto 0 0; font-size: 0.78rem; color: var(--text-muted); }
+/* tablet: reliable-execution cell spans full width, so lay the steps out in two columns */
+@media (min-width: 768px) and (max-width: 1023px) { .run-steps { grid-template-columns: 1fr 1fr; } }
+/* phone: decision badge drops under the preview title */
+@media (max-width: 520px) {
+  .preview-head { flex-direction: column; gap: 0.6rem; }
+  .preview-body, .preview-head, .preview-foot { padding-left: 1rem; padding-right: 1rem; }
+  .preview-foot { flex-wrap: wrap; }
+}
 
 .flow { margin-top: auto; display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
 .flow-node {
