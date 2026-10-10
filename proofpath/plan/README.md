@@ -108,7 +108,9 @@ report. **Cut first:** Coframe, simulator chart, finance view polish, landing-pa
 
 Implemented decision history from stored snapshots, actionable owner-assigned evidence requests, historical source links with evaluation access checks, and a Visitor Lab results page at `/visitor-lab`. Recorded A/B measurements retain counts, intervals, provenance, and limitations. Missing/stub/invalid measurements are withheld.
 
-Verification: **91 automated tests passed**. Real Chrome acceptance passed US fit and EU uncertainty paths, live POCs, timelines, next steps, report generation, approved evidence change with frozen report history, desktop/mobile layouts, Visitor Lab results, and no page JavaScript errors. Run `uv run --with playwright python scripts/browser_acceptance.py` to reproduce. See [final rehearsal instructions](../demo/FINAL_DEMO.md). Actual video/audio recording and public deployment remain release work.
+Verification: **91 automated tests passed**. Real Chrome acceptance passed US fit and EU uncertainty paths, live POCs, timelines, next steps, report generation, approved evidence change with frozen report history, desktop/mobile layouts, Visitor Lab results, and no page JavaScript errors. Run `uv run --with playwright python scripts/browser_acceptance.py` to reproduce. See [final rehearsal instructions](../demo/FINAL_DEMO.md). Final narration/video editing and public deployment remain release work.
+
+Recording support is now implemented and exercised: add `--record` to capture a labeled real walkthrough and screenshots in `proofpath/demo/recordings/` (ignored generated artifacts). The final narrated edit and public deployment remain release work.
 
 | Workstream | State | Notes |
 |---|---|---|

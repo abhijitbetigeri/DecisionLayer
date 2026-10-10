@@ -34,7 +34,9 @@ Verification at completion: **91 automated tests passed**. Real Chrome acceptanc
 
 Reproduce browser checks with `uv run --with playwright python scripts/browser_acceptance.py`; it uses installed Chrome, temporary data, port 8021, and disabled model calls. Follow [the final four-minute demo script](demo/FINAL_DEMO.md). See [acceptance evidence](ACCEPTANCE.md) for the scope of checks.
 
-Remaining release work: record the screen and narration, insert final team names and public URL into assets, rehearse within four minutes, and verify deployment once Docker/host access is available. Real-model availability and production readiness remain separate checks. Preserve the working local journey instead of adding new connectors or broad crawling before submission.
+The repeatable recording command is implemented: `uv run --with playwright python scripts/browser_acceptance.py --record`. It captures a labeled real Chrome walkthrough and screenshots to `proofpath/demo/recordings/`, using temporary synthetic data and rule-based evaluation. Generated media is excluded from Git; see `demo/FINAL_DEMO.md` for encoder setup and output options.
+
+Remaining release work: record narration and edit the final submission, insert final team names and public URL into assets, rehearse within four minutes, and verify deployment once Docker/host access is available. Real-model availability and production readiness remain separate checks. Preserve the working local journey instead of adding new connectors or broad crawling before submission.
 
 ## Product in one sentence
 

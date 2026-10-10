@@ -22,6 +22,8 @@ Second Visitor is a multi-agent wind tunnel for a website:
 
 See [ARCHITECTURE.md](ARCHITECTURE.md) for the design and current results.
 
+**Live demo:** https://decision-layer.onrender.com (fictional products; models off in the public build, so the buyer agent shows a labeled rule-based evaluation; the free instance sleeps when idle, first load takes about a minute).
+
 ## Quick start
 
 ```bash
