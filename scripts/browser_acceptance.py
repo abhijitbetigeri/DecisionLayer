@@ -61,9 +61,21 @@ with tempfile.TemporaryDirectory(prefix="decision-layer-browser-") as temp:
                 page = context.new_page()
                 errors = []
                 page.on("pageerror", lambda err: errors.append(str(err)))
+                page.goto(BASE)
+                assert page.title().startswith("Decision Layer")
+                page.locator('[data-stage="1"]').click()
+                assert "Test the claim" in page.locator("#stage-title").inner_text()
+                for width in (1280, 375):
+                    page.set_viewport_size({"width": width, "height": 900})
+                    assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+                    page.wait_for_timeout(250)
+                    page.screenshot(path=f"/tmp/decision-layer-landing-{width}.png")
+                page.emulate_media(color_scheme="dark", reduced_motion="reduce")
+                assert page.locator(".dl-button").first.is_visible()
+                page.emulate_media(color_scheme="light", reduced_motion="no-preference")
                 for preset in ("us_operations", "eu_technical"):
                     page.set_viewport_size({"width": 1280, "height": 900})
-                    page.goto(BASE)
+                    page.goto(BASE + "/demo")
                     capture(page, "homepage-" + preset)
                     page.locator(f'[data-preset="{preset}"]').click()
                     page.locator("#eval-submit").click()

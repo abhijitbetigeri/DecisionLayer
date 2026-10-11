@@ -149,3 +149,13 @@ browser session cannot read the evaluation. Preset previews do not claim a POC r
 
 Implementation: `templates/home.html`, `static/home.js`, workspace return link.
 Browser acceptance covers post-POC US/EU headline, context and action changes.
+
+## Decision Layer landing page — implemented
+
+`/` now introduces Decision Layer, Visitor Lab and Evaluation Workspace. It has
+an interactive, explicitly illustrative Understand / Verify / Decide walkthrough,
+an actual recorded application screenshot, and links into both modules.
+The FlowBridge demo is at `/demo`; `/?evaluation=<id>` remains compatible with
+workspace adaptive-homepage links. Generic homepage reset now returns to `/demo`.
+The landing uses existing Geist/cobalt tokens, responsive native CSS, dark theme
+and reduced-motion support. No customer logos or unmeasured conversion claims.

@@ -1,0 +1,33 @@
+{% extends "_base.html" %}
+{% block title %}Decision Layer — Turn product claims into buying confidence{% endblock %}
+{% block description %}An adaptive website and evaluation workspace for complex enterprise software. Understand requirements, inspect evidence, and test the workflow before deciding.{% endblock %}
+{% block head %}<link rel="stylesheet" href="/static/landing.css">{% endblock %}
+{% block body_class %}dl-landing{% endblock %}
+{% block body %}
+<header class="dl-nav dl-wrap">
+  <a class="dl-brand" href="/" aria-label="Decision Layer home"><i class="ph ph-stack" aria-hidden="true"></i> Decision Layer</a>
+  <nav aria-label="Primary"><a href="#modules">The platform</a><a href="/visitor-lab">Visitor Lab</a><a href="/demo" class="dl-button dl-small">Try the demo <i class="ph ph-arrow-up-right" aria-hidden="true"></i></a></nav>
+</header>
+<main>
+<section class="dl-hero dl-wrap">
+  <div class="dl-intro"><p class="dl-eyebrow">For complex enterprise software</p><h1>A website that helps buyers<br><em>reach a decision.</em></h1><p class="dl-lead">Turn a visitor’s requirements into a personal product experience. Show the evidence. Test the workflow. Make the next step clear.</p><div class="dl-actions"><a class="dl-button" href="/demo">Explore the live demo <i class="ph ph-arrow-right" aria-hidden="true"></i></a><a class="dl-link" href="#how">See how it works</a></div></div>
+  <div class="dl-demo" aria-label="Interactive illustration of the evaluation flow">
+    <div class="dl-demo-top"><span>From interest to evidence</span><span class="dl-example">Illustrative walkthrough</span></div>
+    <div class="dl-stage-selector" role="group" aria-label="Walkthrough stage"><button type="button" data-stage="0" aria-pressed="true">Understand</button><button type="button" data-stage="1" aria-pressed="false">Verify</button><button type="button" data-stage="2" aria-pressed="false">Decide</button></div>
+    <p class="dl-demo-brief">“We need Salesforce → Snowflake, US hosting, and recovery without duplicates.”</p>
+    <div class="dl-demo-result" aria-live="polite"><i id="stage-icon" class="ph ph-list-checks" aria-hidden="true"></i><h2 id="stage-title">Start with the buyer’s requirements.</h2><p id="stage-copy">Separate mandatory needs from preferences, then confirm what the evaluation should check.</p><p class="dl-stage-note" id="stage-note">The homepage adapts to the selected use case.</p></div>
+    <a class="dl-demo-link" href="/demo#evaluate">Run this journey yourself <i class="ph ph-arrow-up-right" aria-hidden="true"></i></a>
+  </div>
+</section>
+<section class="dl-principle dl-wrap"><p>Enterprise buying takes more than a feature list.</p><h2>Give every claim<br>a path to proof.</h2><p>Decision Layer connects an adaptive homepage to a buyer’s actual evaluation. When requirements or evidence change, the experience changes with them.</p></section>
+<section id="modules" class="dl-modules dl-wrap">
+  <div class="dl-section-head"><p class="dl-eyebrow">One platform. Two perspectives.</p><h2>Understand the visitor.<br>Support the decision.</h2></div>
+  <article class="dl-module"><div class="dl-module-icon"><i class="ph ph-flask" aria-hidden="true"></i></div><h3>Visitor Lab</h3><p>See how buyer agents interpret your product. Compare marketing copy with structured evidence and inspect where understanding breaks down.</p><a href="/visitor-lab" class="dl-link">Explore recorded measurements <i class="ph ph-arrow-right" aria-hidden="true"></i></a><small>Simulated agent evaluations, separate from human conversion metrics.</small></article>
+  <article class="dl-module dl-module-blue"><div class="dl-module-icon"><i class="ph ph-check-square" aria-hidden="true"></i></div><h3>Evaluation Workspace</h3><p>Translate a buyer’s brief into requirements. Compare cited evidence, run a mock proof of concept, and freeze the findings in a report.</p><a href="/demo#evaluate" class="dl-link">Start an evaluation <i class="ph ph-arrow-right" aria-hidden="true"></i></a><small>Fictional vendors. Real execution against local mock systems.</small></article>
+</section>
+<section id="how" class="dl-how dl-wrap"><div><p class="dl-eyebrow">The living website, in practice</p><h2>New evidence.<br>A better next step.</h2><p class="dl-lead">A recovery test changes the buyer’s evaluation—and the homepage they return to.</p><ol><li><strong>Describe the job.</strong><span>Select a use case and confirm the requirements.</span></li><li><strong>Make the proof visible.</strong><span>Inject a failure, retry, and inspect the duplicate checks.</span></li><li><strong>Return to an adapted website.</strong><span>See updated evidence and the next action for your evaluation.</span></li></ol></div><figure><img src="/static/images/evaluation-workspace.png" alt="Actual Evaluation Workspace screenshot showing a recovery proof of concept changing FlowBridge from needs verification to fit" loading="lazy" width="1280" height="3391"><figcaption>Recorded application screenshot · example US operations evaluation.</figcaption></figure></section>
+<section class="dl-close dl-wrap"><p class="dl-eyebrow">Experience Decision Layer</p><h2>Let the buyer’s needs<br>shape the website.</h2><a href="/demo" class="dl-button">Try the live journey <i class="ph ph-arrow-right" aria-hidden="true"></i></a><p>The demo runs independently of Coframe. No account required.</p></section>
+</main>
+{% endblock %}
+{% block footer %}<footer class="dl-footer dl-wrap"><a class="dl-brand" href="/">Decision Layer</a><p>Visitor Lab · Evaluation Workspace</p><a href="https://github.com/abhijitbetigeri/DecisionLayer">View source <i class="ph ph-arrow-up-right" aria-hidden="true"></i></a></footer>{% endblock %}
+{% block scripts %}<script src="/static/landing.js" defer></script>{% endblock %}

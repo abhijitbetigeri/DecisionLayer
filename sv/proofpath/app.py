@@ -211,6 +211,13 @@ def _page(template: str, fallback_title: str, **ctx) -> HTMLResponse:
 
 @app.get("/", response_class=HTMLResponse)
 def home(request: Request):
+    if request.query_params.get("evaluation"):
+        return _page("home.html", "FlowBridge", operator=auth.is_operator(request))
+    return _page("landing.html", "Decision Layer")
+
+
+@app.get("/demo", response_class=HTMLResponse)
+def demo_home(request: Request):
     return _page("home.html", "FlowBridge", operator=auth.is_operator(request))
 
 
