@@ -21,7 +21,7 @@
 
 {% block title %}FlowBridge: connect your systems, automate your business{% endblock %}
 
-{% block head %}
+{% block head %}<link rel="stylesheet" href="/static/journey.css">
   <link rel="alternate" type="application/json" href="/api/v1/showcase/agent-context" title="Agent context for the showcase evaluation">
   <link rel="stylesheet" href="/static/home.css">
   <script>document.documentElement.classList.add("js");</script>
@@ -47,6 +47,7 @@
 </header>
 
 <main>
+{% include "_journey.html" %}
 <section class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-6"><p id="experience-status" role="status">Decision Layer adaptive experience · choose a preset to preview relevant messaging.</p><a href="/demo" id="experience-reset" hidden>Show generic homepage</a></section>
   {# ---------------------------------------------------------------- HERO #}
   <section class="hero mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-10 md:pt-16 lg:pt-20 pb-14 md:pb-20" id="product">
@@ -105,6 +106,13 @@
     </div>
   </section>
 
+  <section id="experience-compare" class="experience-compare max-w-7xl" hidden aria-label="Before and after website comparison">
+    <h2>See how the website changed for you.</h2>
+    <div class="compare-columns">
+      <article><h3>Before · generic homepage</h3><strong>Connect your systems. Automate your business.</strong><p>A general product pitch. Your requirements and recovery evidence are not shown.</p><p>Next action: Evaluate my use case</p></article>
+      <article><h3>After · your current evaluation</h3><strong id="compare-headline"></strong><p id="compare-evidence"></p><p id="compare-action"></p></article>
+    </div><p class="compare-note">Generic messaging versus your current evidence. This is a presentation comparison, not an A/B experiment or measured conversion lift.</p>
+  </section>
   {# ---------------------------------------------------------------- EVALUATION INPUT #}
   <section class="evaluate-band border-y border-line" id="evaluate">
     <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-16 md:py-20 reveal">
@@ -302,7 +310,7 @@
 </main>
 {% endblock %}
 
-{% block scripts %}
+{% block scripts %}<script src="/static/journey.js" defer></script>
   <script>window.FLOWBRIDGE = {exampleId: "{{ example_id }}"};</script>
   <script src="/static/home.js" defer></script>
 {% endblock %}

@@ -4,7 +4,7 @@
 
 {% block title %}Evaluation Workspace by Decision Layer{% endblock %}
 {% block description %}Evaluation Workspace by Decision Layer: requirements, evidence, live proof of concept and comparison for a fictional vendor.{% endblock %}
-{% block head %}<link rel="stylesheet" href="/static/workspace.css">{% endblock %}
+{% block head %}<link rel="stylesheet" href="/static/journey.css"><link rel="stylesheet" href="/static/workspace.css">{% endblock %}
 {% block body_class %}ws-body{% endblock %}
 
 {% block body %}
@@ -33,6 +33,7 @@
   </header>
 
   <main class="ws-main" id="ws-main" aria-live="polite">
+    {% include "_journey.html" %}
     <div id="ws-global" class="state state-loading" role="status">
       <i class="ph ph-hourglass-medium" aria-hidden="true"></i><span>Loading workspace</span>
     </div>
@@ -134,4 +135,4 @@
 </div>
 {% endblock %}
 
-{% block scripts %}<script src="/static/workspace.js" defer></script><script src="/static/insights.js" defer></script>{% endblock %}
+{% block scripts %}<script src="/static/journey.js" defer></script><script src="/static/workspace.js" defer></script><script src="/static/insights.js" defer></script>{% endblock %}

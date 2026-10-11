@@ -159,3 +159,12 @@ The FlowBridge demo is at `/demo`; `/?evaluation=<id>` remains compatible with
 workspace adaptive-homepage links. Generic homepage reset now returns to `/demo`.
 The landing uses existing Geist/cobalt tokens, responsive native CSS, dark theme
 and reduced-motion support. No customer logos or unmeasured conversion claims.
+
+## Demo clarity improvements
+
+Adaptive homepage now compares generic messaging with the current evaluation,
+including the changed headline, evidence and CTA. A persistent Requirements →
+Proof → Decision bar links to the next action on homepage and workspace. Its
+plain-language result preserves mandatory versus optional SSO uncertainty and
+stale-brief confirmation. Comparison coverage is labeled Preference evidence
+coverage. Before/after is a presentation comparison, not conversion lift.

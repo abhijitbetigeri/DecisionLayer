@@ -203,6 +203,11 @@
       ws.stale ? "Confirm my requirements" : product.decision === "fit" ? "Create evaluation report" : product.decision === "not_fit" ? "Review fit blockers" : proven ? "Review remaining gaps" : "Test recovery without duplicates",
       href + (ws.stale ? "#p-brief" : product.decision === "fit" ? "#p-report" : product.decision === "not_fit" ? "#p-matrix" : proven ? "#p-matrix" : "#p-poc"));
     $("#experience-status").textContent = "Adapted to your evaluation · brief version " + ws.brief.version + (proven ? " · recovery demonstrated on mock systems" : " · recovery needs verification") + " · Coframe not connected";
+    window.renderDecisionJourney(ws);
+    $("#experience-compare").hidden = false;
+    $("#compare-headline").textContent = $("#adaptive-headline").textContent;
+    $("#compare-evidence").textContent = $("#journey-summary").textContent;
+    $("#compare-action").textContent = "Next action: " + $("#adaptive-cta").textContent;
     $("#experience-reset").hidden = false;
     $("#preview-context").textContent = "Your current evaluation. Fictional evidence; live tests use mock systems.";
     var link = $(".preview-link"); link.textContent = "Open workspace"; link.href = href; link.removeAttribute("data-action");

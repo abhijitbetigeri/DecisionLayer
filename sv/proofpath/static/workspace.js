@@ -693,7 +693,7 @@
           metric("Decision", (p) => badge(DECISION, p.decision), "metric-first"),
           metric("Cheapest qualifying plan", (p) => p.cheapest_qualifying_plan ? `${planText(p.cheapest_qualifying_plan)}, ${money(p.monthly_price_usd)}` : `No qualifying plan${p.monthly_price_usd != null ? " (listed from " + money(p.monthly_price_usd) + ")" : ""}`, "fin"),
           metric("Preference score", (p) => p.evaluated_score === null || p.evaluated_score === undefined ? nee() : p.evaluated_score.toFixed(2)),
-          metric("Coverage", (p) => pct(p.coverage) === null ? nee() : pct(p.coverage)),
+          metric("Preference evidence coverage", (p) => pct(p.coverage) === null ? nee() : pct(p.coverage)),
           metric("Gaps", (p) => p.gaps && p.gaps.length ? h("ul", { class: "gaps" }, p.gaps.map((g) => h("li", {}, g))) : h("span", { class: "muted small" }, "None listed"))))));
   }
 
