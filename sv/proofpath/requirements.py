@@ -47,7 +47,12 @@ Allowed keys (use no others; put anything else under "unrecognized" as plain str
 - idempotent_delivery: no duplicate records on retry, documented (optional, soft)
 - budget_monthly_usd: monthly budget ceiling in USD as "expected"
 "hard" = the buyer says it is required. Nice-to-haves are hard=false.
-Also return "unrecognized": [..] for requested capabilities outside the list."""
+Also return "unrecognized": [..] listing ONLY requested capabilities, certifications or constraints that
+are outside the allowed keys, each as a short noun phrase (e.g. "HIPAA compliance", "on-premise
+deployment", "SCIM provisioning", "99.99% uptime SLA").
+NEVER put these in "unrecognized": the workflow or goal ("sync NetSuite invoices into Snowflake"),
+systems or data objects ("HubSpot deals", "Snowflake destination"), schedules or frequency ("nightly",
+"each night"), team size, or anything already covered by an allowed key. Use [] when nothing is left."""
 
 
 def input_hash(text: str) -> str:

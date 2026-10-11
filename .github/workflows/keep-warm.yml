@@ -1,0 +1,13 @@
+# Keeps the free Render instance awake during judging (it sleeps after ~15 min idle).
+# Disable this workflow in the Actions tab after the event.
+name: keep-warm
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - run: curl -fsS -m 90 https://decision-layer.onrender.com/health > /dev/null
