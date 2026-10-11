@@ -72,6 +72,13 @@ with tempfile.TemporaryDirectory(prefix="decision-layer-browser-") as temp:
                     page.get_by_role("button", name="Confirm requirements", exact=True).click()
                     page.locator("#btn-prove").wait_for()
                     page.wait_for_function("!document.getElementById('btn-prove').disabled")
+                    before_poc_url = page.url
+                    page.get_by_role("link", name="View adaptive homepage", exact=True).click()
+                    page.wait_for_function("document.getElementById('experience-status').innerText.includes('Adapted to your evaluation')")
+                    assert page.locator("#adaptive-cta").inner_text() == "Test recovery without duplicates"
+                    assert "recovery needs verification" in page.locator("#experience-status").inner_text()
+                    page.goto(before_poc_url)
+                    page.wait_for_function("!document.getElementById('btn-prove').disabled")
                     page.locator("#btn-prove").click()
                     page.wait_for_function("document.querySelectorAll('#assertions .status-met').length === 4", timeout=30000)
                     expected = "Fit" if preset == "us_operations" else "Needs verification"
@@ -81,6 +88,15 @@ with tempfile.TemporaryDirectory(prefix="decision-layer-browser-") as temp:
                     capture(page, "decision-" + preset)
                     if preset == "eu_technical":
                         page.wait_for_function("document.getElementById('decision-next-steps').innerText.includes('Verify Single sign-on')", timeout=15000)
+                    workspace_url = page.url
+                    page.get_by_role("link", name="View adaptive homepage", exact=True).click()
+                    page.wait_for_function("document.getElementById('experience-status').innerText.includes('recovery demonstrated')")
+                    assert page.locator("#adaptive-cta").inner_text() == ("Create evaluation report" if preset == "us_operations" else "Review remaining gaps")
+                    assert "Your current evaluation" in page.locator("#preview-context").inner_text()
+                    assert "EU hosting" in page.locator("#adaptive-headline").inner_text() if preset == "eu_technical" else "reliable" in page.locator("#adaptive-headline").inner_text()
+                    capture(page, "adaptive-homepage-" + preset)
+                    page.goto(workspace_url)
+                    page.locator("#btn-report").wait_for()
                     page.locator("#btn-report").click()
                     page.locator("#report-body a").first.wait_for()
                     eid = page.url.rsplit("/", 1)[1]

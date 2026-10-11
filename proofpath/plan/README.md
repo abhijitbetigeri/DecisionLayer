@@ -129,3 +129,23 @@ Recording support is now implemented and exercised: add `--record` to capture a 
 ## Latest release verification
 
 93 automated tests passed; Chrome verified persona switching, edit/reconfirm behavior, frozen reports, and light/dark desktop/mobile layouts. The live Render demo passed its non-operator synthetic buyer journey. Package only the validated aggregate Visitor Lab summary in `sv/proofpath/fixtures/visitor_lab_summary.json`; raw logs remain excluded. Loader prefers actual local measurements, uses bundled measurements only when local files are absent, and withholds invalid local results.
+
+## Adaptive homepage — implemented
+
+The workspace header now includes **View adaptive homepage**, opening
+`/?evaluation=<id>` in the same browser session. The homepage reads the existing
+ownership-checked workspace API and refreshes every five seconds while visible.
+It adapts the headline, relevant plan, requirement evidence, mock test results and
+primary action to the current brief. US operations changes from testing recovery
+to creating a report after a passing POC; EU technical retains the SSO gap and
+points to remaining evidence. Stale requirements point to confirmation; budget
+failures point to fit blockers. No Coframe SDK or optimization is implied.
+
+Demo: select a preset on the homepage (explicit messaging preview), create and
+confirm the evaluation, open the adaptive homepage before testing, run **Prove it**
+in the workspace, then return to the adaptive homepage. Compare the evidence and
+next action before and after. Reset with **Show generic homepage**. A different
+browser session cannot read the evaluation. Preset previews do not claim a POC ran.
+
+Implementation: `templates/home.html`, `static/home.js`, workspace return link.
+Browser acceptance covers post-POC US/EU headline, context and action changes.
