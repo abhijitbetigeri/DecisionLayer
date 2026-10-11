@@ -15,7 +15,14 @@
       <span class="ws-brand-name">Evaluation Workspace <span class="ws-by">by Decision Layer</span></span>
       <p class="fictional-label">{{ "Fictional products and evidence; live tests use local mock integrations." }}</p>
     </div>
-    <a class="btn btn-ghost" href="/evaluations/{{ r.evaluation_id }}"><i class="ph ph-arrow-left" aria-hidden="true"></i>Back to workspace</a>
+    {% if shared %}
+    <span class="btn btn-ghost" aria-label="Shared read-only copy"><i class="ph ph-eye" aria-hidden="true"></i>Shared read-only copy</span>
+    {% else %}
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+      <button type="button" class="btn btn-ghost" id="share-btn" data-report="{{ r.id }}"><i class="ph ph-link" aria-hidden="true"></i><span>Copy share link</span></button>
+      <a class="btn btn-ghost" href="/evaluations/{{ r.evaluation_id }}"><i class="ph ph-arrow-left" aria-hidden="true"></i>Back to workspace</a>
+    </div>
+    {% endif %}
   </header>
 
   <main class="ws-main">
@@ -98,4 +105,33 @@
     </section>
   </main>
 </div>
+{% endblock %}
+
+{% block scripts %}
+{% if not shared %}
+<script>
+  (function () {
+    const btn = document.getElementById("share-btn");
+    if (!btn) return;
+    const label = btn.querySelector("span");
+    btn.addEventListener("click", async () => {
+      btn.disabled = true;
+      label.textContent = "Creating link...";
+      try {
+        const res = await fetch(`/api/v1/reports/${btn.dataset.report}/share`, { method: "POST" });
+        const body = await res.json();
+        if (!res.ok || !body.data) throw new Error((body.error && body.error.message) || "Could not create link");
+        const url = location.origin + body.data.path;
+        try { await navigator.clipboard.writeText(url); label.textContent = "Link copied"; }
+        catch (_) { label.textContent = url; }
+        btn.title = url;
+      } catch (e) {
+        label.textContent = "Share failed, try again";
+      } finally {
+        btn.disabled = false;
+      }
+    });
+  })();
+</script>
+{% endif %}
 {% endblock %}

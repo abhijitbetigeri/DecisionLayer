@@ -29,7 +29,7 @@ what it can, says "unknown" where it can't, and updates when the evidence change
 | 1:15 | Next steps → **Go to proof of concept** → **Prove it** | Live events: sync, injected failure, retry, exactly one record. 4 passes | "This is real code against labeled mock systems. It fails on purpose, retries with the same key, and we check there is exactly one record." |
 | 1:50 | (automatic) | Recovery → **Demonstrated**. Badge → **Fit**. Timeline records it | "Documented became demonstrated, and the decision changed because of evidence, not copy." |
 | 2:10 | **Comparison** section | FlowBridge vs RelayWorks vs PipeStack on the same requirements | "Same requirements for every vendor. PipeStack is US-only, so it's not a fit." |
-| 2:25 | **Create report** | Frozen report link | "This decision record is frozen. You can send it to security or procurement." |
+| 2:25 | **Create report** → open it → **Copy share link** | Frozen report + a public read-only link | "This decision record is frozen. Anyone with this link sees exactly this record, so you can send it to security or procurement." |
 | 2:40 | Bottom → **Operator sign in** (paste token) → **Simulate competitor evidence update** | "Requires review" banner; nothing changes yet | "A competitor just changed their pricing page. Nothing changes until a human approves it." |
 | 3:00 | **Approve** | RelayWorks EU moves to Enterprise (quote); comparison updated; timeline entry | "Approved, so the comparison updates. And the earlier report?" Open it: still Business $899. "Unchanged. History is preserved." |
 | 3:25 | **Run buyer agent** | Open-weight model (gpt-oss-120b) returns a cited decision | "The same evidence is served to AI agents, with citations it must use." |
@@ -64,4 +64,4 @@ what it can, says "unknown" where it can't, and updates when the evidence change
 ## Don't
 
 - Push to GitHub during judging (every push redeploys the site for a few minutes).
-- Share workspace or report links with judges (they only open in your browser). Share the homepage.
+- Share workspace links with judges (they only open in your browser). Share the homepage, or a report's **Copy share link** URL (public, read-only).

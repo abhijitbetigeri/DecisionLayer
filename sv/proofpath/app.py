@@ -263,6 +263,19 @@ def report_page(request: Request, report_id: str):
     return _page("report.html", "Evaluation report", report=dumps(report))
 
 
+SHARE_TOKEN_RE = __import__("re").compile(r"^[A-Za-z0-9_-]{16,64}$")
+
+
+@app.get("/share/{token}", response_class=HTMLResponse)
+def shared_report_page(token: str):
+    """Public read-only view of one frozen report. Only the report is exposed: no workspace, no
+    actions, no other evaluations. Reports are immutable, so the link always shows the same record."""
+    report_id = repo.get_meta(f"share:{token}") if SHARE_TOKEN_RE.match(token) else None
+    if not report_id:
+        raise HTTPException(404, "shared report not found")
+    return _page("report.html", "Evaluation report", report=dumps(repo.get_report(report_id)), shared=True)
+
+
 @app.get("/llms.txt", response_class=PlainTextResponse)
 def llms_txt():
     return ("# FlowBridge (fictional) · Evaluation Workspace by Decision Layer\n"
@@ -468,6 +481,21 @@ def create_report(request: Request, evaluation_id: str, body: CreateReport):
     emit(evaluation_id, EventType.report_created, report_id=report.id)
     track(evaluation_id, "report_created")
     return ok(report, 201)
+
+
+@app.post(f"{API}/reports/{{report_id}}/share")
+def share_report(request: Request, report_id: str):
+    """Owner-only: mint (or return the existing) public read-only link for a frozen report."""
+    import secrets
+    report = repo.get_report(report_id)
+    _owned_evaluation(request, report.evaluation_id)
+    with repo.transaction():
+        token = repo.get_meta(f"report_share:{report_id}")
+        if not token:
+            token = secrets.token_urlsafe(18)
+            repo.set_meta(f"share:{token}", report_id)
+            repo.set_meta(f"report_share:{report_id}", token)
+    return ok({"report_id": report_id, "path": f"/share/{token}"})
 
 
 @app.get(f"{API}/reports/{{report_id}}")
