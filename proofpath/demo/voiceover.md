@@ -1,7 +1,6 @@
 # Decision Layer submission voiceover
 
 Target: 3:00. Record each scene separately. Timings include pauses for the UI.
-Title and module names supersede older ProofPath branding in the original shot list.
 
 | Time | Shot | Voiceover |
 |---|---|---|

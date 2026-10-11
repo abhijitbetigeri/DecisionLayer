@@ -11,7 +11,7 @@ Three layers, in order of reliability for the live demo:
 ## 1. Local
 
 - `uv sync && uv run uvicorn sv.proofpath.app:app --host 127.0.0.1 --port 8001`
-- `scripts/demo_reset.sh` clears only ProofPath demo state (`PROOFPATH_DATA_DIR`) and re-seeds
+- `scripts/demo_reset.sh` clears only Evaluation Workspace demo state (`PROOFPATH_DATA_DIR`) and re-seeds
   fixtures; never touches `runs/` or Pulse.
 - **Pre-demo checklist** (5 minutes before going on):
   - reset

@@ -11,7 +11,7 @@ confirmed brief), agent-to-agent (`agent-evaluation`).
 - `../README.md` (playbook rules)
 - `../shared-truth.md` §1, §4, §5
 - `../../README.md` sections "LLM and deterministic execution boundaries", "Coframe integration plan", "Event contract and replay"
-- `ARCHITECTURE.md` (Second Visitor engine)
+- `ARCHITECTURE.md` (Visitor Lab engine)
 
 ## Files you own
 

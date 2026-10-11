@@ -1,10 +1,10 @@
-# Second Visitor: working notes for agents
+# Decision Layer: working notes for agents
 
 Built for the AGI House × Coframe Living Internet Build Day (2026-10-10). Judges include Coframe
 and the Glasp/Hashiri founder. Organizer themes: multi-agent simulator on the web, personal agent
 protocol, agent-to-agent; also code gen.
 
-**Direction: ProofPath is the product** (proofpath/README.md). Second Visitor (`sv/`) is its engine,
+**Decision Layer = Evaluation Workspace + Visitor Lab** (proofpath/README.md). Visitor Lab (`sv/`) is the engine,
 and the vendor-site optimization loop is the Coframe-style top of funnel. Read PLAN.md first, then
 proofpath/plan/README.md (multi-agent playbook; each workstream has a self-contained brief in
 proofpath/plan/workstreams/), then ARCHITECTURE.md for the engine. The landing page must be built

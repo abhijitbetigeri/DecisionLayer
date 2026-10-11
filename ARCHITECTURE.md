@@ -1,6 +1,6 @@
 # Architecture
 
-Second Visitor is a loop: **simulate → diagnose → fix → guard → ship**. One source-of-truth
+Visitor Lab is a loop: **simulate → diagnose → fix → guard → ship**. One source-of-truth
 file feeds every surface the site shows, a population of buyer agents tests those surfaces,
 and a guard blocks any variant that tells agents something the source of truth doesn't support.
 

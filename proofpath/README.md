@@ -6,14 +6,14 @@ Repository: [abhijitbetigeri/DecisionLayer](https://github.com/abhijitbetigeri/D
 
 **Decision Layer** is the platform name. Tagline: **Evidence-driven enterprise software evaluation.**
 
-- **Visitor Lab:** Tests whether humans and AI agents can understand a vendor's website and reach accurate buying decisions. Builds on Second Visitor's simulated buyer runs, curated facts, correctness checks, and friction diagnostics; human usability validation follows separately.
-- **Evaluation Workspace:** Helps enterprise buyers clarify requirements, explore tailored walkthroughs, execute bounded POCs, and compare products through versioned evidence. This is the module previously called ProofPath in this plan.
+- **Visitor Lab:** Tests whether humans and AI agents can understand a vendor's website and reach accurate buying decisions. Built on simulated buyer runs, curated facts, correctness checks, and friction diagnostics; human usability validation follows separately.
+- **Evaluation Workspace:** Helps enterprise buyers clarify requirements, explore tailored walkthroughs, execute bounded POCs, and compare products through versioned evidence. 
 
 The modules share product facts, buyer requirements, evidence references, and decision rules. Visitor Lab identifies where presentation prevents accurate evaluation; Evaluation Workspace supplies the explanations and proof needed to resolve those gaps.
 
-Use **Decision Layer**, **Visitor Lab**, and **Evaluation Workspace** in user-facing branding. References to Second Visitor and ProofPath below preserve implementation history and technical paths. The repository directory and Python project are named `decision-layer`. The `proofpath/` documentation directory, `sv/proofpath/` package proposal, and `PROOFPATH_*` configuration names retain their existing technical names.
+Use **Decision Layer**, **Visitor Lab**, and **Evaluation Workspace** in user-facing branding. Earlier drafts used the working names Second Visitor (now Visitor Lab) and ProofPath (now Evaluation Workspace). The repository directory and Python project are named `decision-layer`. The `proofpath/` documentation directory, `sv/proofpath/` package proposal, and `PROOFPATH_*` configuration names retain their existing technical names.
 
-Created and updated: October 10, 2026. Status: implementation specification for a one-day hackathon and subsequent pilot; the ProofPath implementation described here is not yet built.
+Created and updated: October 10, 2026. Status: implemented during the hackathon (see TECH_STACK.md and the live demo); this document remains the specification for the pilot.
 
 **Implementation entry point:** Read the product context below, then follow “Hackathon implementation specification” for scope, contracts, work assignments, and acceptance checks. That specification takes precedence over the broader production architecture for the one-day build.
 
@@ -40,7 +40,7 @@ Remaining release work: record narration and edit the final submission, insert f
 
 ## Product in one sentence
 
-ProofPath helps enterprise buyers understand a complex SaaS product, validate it against their environment, and compare alternatives through a guided, evidence-backed evaluation.
+Evaluation Workspace helps enterprise buyers understand a complex SaaS product, validate it against their environment, and compare alternatives through a guided, evidence-backed evaluation.
 
 **Buyer journey:** Describe your problem → see how it works → prove it → compare your options.
 
@@ -62,7 +62,7 @@ Relevant official references, consulted during the discussion:
 - [The Agentic Web Is Closer Than We Think](https://www.coframe.com/post/the-agentic-web-is-closer-than-we-think)
 - [Predicting Website Experiment Winners Before You Spend the Traffic](https://coframe-d4f597.webflow.io/post/predicting-website-experiment-winners-before-you-spend-the-traffic)
 
-These references explain Coframe; they do not establish that Coframe implements the proposed ProofPath capabilities. Product capabilities and integrations should be verified before implementation.
+These references explain Coframe; they do not establish that Coframe implements the proposed Evaluation Workspace capabilities. Product capabilities and integrations should be verified before implementation.
 
 ### Enterprise SaaS opportunities considered
 
@@ -82,13 +82,13 @@ Coframe documents segmentation by location, URL, visitor type, and device/platfo
 
 Initial website pilots could target paid landing pages, enterprise demo pages, and pricing pages. However, measuring form submissions alone can reward low-quality demand. Qualified pipeline per visitor is a stronger commercial outcome, with earlier conversion events used while longer sales outcomes mature.
 
-### The three problems selected for ProofPath
+### The three problems selected for Evaluation Workspace
 
 1. **Complex products are difficult to consume.** Visitors cannot map capabilities to their problem, so vendors spend substantial sales and marketing effort educating and qualifying them.
 2. **Enterprise buyers need proof before they trust the product.** They want a live POC and credible security evidence appropriate to their requirements.
 3. **Buyers need a current competitive evaluation.** They must compare products against their own workflow, constraints, and budget to decide what to buy.
 
-Better messaging can open the conversation. ProofPath carries it through a technical evaluation and a shareable decision record.
+Better messaging can open the conversation. Evaluation Workspace carries it through a technical evaluation and a shareable decision record.
 
 ## Users and commercial model
 
@@ -149,17 +149,17 @@ Unknown is not equivalent to failure. Conflicting and stale evidence remains vis
 
 With authorized sharing, provide sales with the buyer-confirmed brief, completed tests, blockers, and open questions. Give the buyer a useful report regardless of whether the product fits. CRM delivery is an optional later integration, not an assumed existing capability.
 
-## Relationship to Coframe and Second Visitor
+## Relationship to Coframe and Visitor Lab
 
-Coframe's scope extends beyond acquisition: its current product describes copy, visual, and UI generation, experimentation, and personalization. Its blog also discusses an autonomous growth agent. ProofPath applies this direction to enterprise evaluation: understanding requirements, producing evidence through scoped tests, and revising decisions when evidence changes. Coframe can experiment with approved messaging, entry points, and walkthrough presentation; ProofPath owns requirements, evidence, executable validation, and comparison logic. Coframe is optional; the workspace functions without it.
+Coframe's scope extends beyond acquisition: its current product describes copy, visual, and UI generation, experimentation, and personalization. Its blog also discusses an autonomous growth agent. Evaluation Workspace applies this direction to enterprise evaluation: understanding requirements, producing evidence through scoped tests, and revising decisions when evidence changes. Coframe can experiment with approved messaging, entry points, and walkthrough presentation; Evaluation Workspace owns requirements, evidence, executable validation, and comparison logic. Coframe is optional; the workspace functions without it.
 
 The agentic-web article calls for information-rich and action-rich interfaces. Our interpretation is to provide human views and structured agent endpoints backed by the same evidence and permitted actions. The article is a statement of direction, not proof that Coframe ships our proposed evaluation backend.
 
 The generic integration template documents a browser installation configured by project ID, optional antiflicker behavior, conversion tracking, analytics callbacks, tracking-only mode, consent settings, and feature-flag controls. It does not establish a POC provisioning API, competitor research API, or API for constructing our complete workspace. A project-specific installation and current conversion-call contract must be verified before use. `PROJECT_ID` and `__PROJECT_ID__` are placeholders, not working credentials.
 
-Coframe's experiment-prediction research recommends candidate screening rather than replacing live experiments with model predictions. Second Visitor likewise measures correctness on curated synthetic briefs; those results are distinct from actual human conversion or pipeline lift.
+Coframe's experiment-prediction research recommends candidate screening rather than replacing live experiments with model predictions. Visitor Lab likewise measures correctness on curated synthetic briefs; those results are distinct from actual human conversion or pipeline lift.
 
-Second Visitor already provides a useful foundation for testing whether AI visitors can reach correct decisions from website evidence:
+Visitor Lab already provides a useful foundation for testing whether AI visitors can reach correct decisions from website evidence:
 
 | Existing component | Observed behavior | Proposed extension |
 |---|---|---|
@@ -280,7 +280,7 @@ Define each rubric before comparing products. Do not rank a high score with low 
 
 ### Phase 1: Understand and explain
 
-One vendor, one repeatable workflow, manually curated evidence, confirmed requirements, an approved walkthrough, and an exportable fit report. Reuse Second Visitor briefs and simulations to identify confusing presentation. No live competitive crawling is necessary yet.
+One vendor, one repeatable workflow, manually curated evidence, confirmed requirements, an approved walkthrough, and an exportable fit report. Reuse Visitor Lab briefs and simulations to identify confusing presentation. No live competitive crawling is necessary yet.
 
 ### Phase 2: Prove
 
@@ -300,7 +300,7 @@ The first sellable pilot is a vendor-specific guided evaluation with a bounded l
 
 A buyer wants to sync CRM opportunities into a warehouse and trigger an internal approval workflow. They require restricted access, visible audit records, failure recovery, and a specified deployment region.
 
-ProofPath confirms the brief, explains supported connections and any custom work, and runs a synthetic approved scenario. It tests a successful sync, a denied action, an audit event, and a recoverable integration failure. Residency is checked against appropriate deployment and contractual evidence rather than inferred from the demo.
+Evaluation Workspace confirms the brief, explains supported connections and any custom work, and runs a synthetic approved scenario. It tests a successful sync, a denied action, an audit event, and a recoverable integration failure. Residency is checked against appropriate deployment and contractual evidence rather than inferred from the demo.
 
 The report shows observed results and open questions. Alternatives are compared against the same requirements; a competitor's documented feature is not represented as independently tested. If a mandatory requirement remains unknown, the decision is “needs verification.” If a verified gap makes the product unsuitable, the report states that clearly.
 
@@ -504,7 +504,7 @@ If no real project is available, show “Coframe integration not configured” a
 
 New event names: `brief_parsed`, `brief_confirmed`, `workspace_generated`, `poc_queued`, `poc_started`, `poc_attempt`, `poc_test_result`, `poc_finished`, `poc_cleanup_finished`, `source_change_detected`, `source_reviewed`, `comparison_updated`, `report_created`, `agent_evaluation_finished`.
 
-Use SQLite for durable ordered events. Do not rename or change existing `sv/events.py` simulator event contracts. A separate exporter can produce sanitized JSONL recordings. Replay shows an explicit “Recorded replay” badge and never emits live Coframe conversions or fabricates a live POC. A reset action clears only ProofPath demo state, retaining checked-in fixtures and existing Pulse `runs/` files.
+Use SQLite for durable ordered events. Do not rename or change existing `sv/events.py` simulator event contracts. A separate exporter can produce sanitized JSONL recordings. Replay shows an explicit “Recorded replay” badge and never emits live Coframe conversions or fabricates a live POC. A reset action clears only Evaluation Workspace demo state, retaining checked-in fixtures and existing Pulse `runs/` files.
 
 ## Multi-agent implementation work plan
 

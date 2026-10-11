@@ -1,12 +1,12 @@
-# ProofPath: integrated build plan (Living Internet Build Day, 2026-10-10)
+# Decision Layer: integrated build plan (Living Internet Build Day, 2026-10-10)
 
 **Source of truth: [proofpath/README.md](proofpath/README.md), section "Hackathon implementation
 specification".** Where this file and the README disagree, the README wins. **The executable multi-agent
 playbook (workstream briefs, integration, deployment, demo/video) is
-[proofpath/plan/README.md](proofpath/plan/README.md).** This file adds what the README leaves open: how Second Visitor and the Coframe idea plug in, which models run where, and
+[proofpath/plan/README.md](proofpath/plan/README.md).** This file adds what the README leaves open: how Visitor Lab and the Coframe idea plug in, which models run where, and
 the build order.
 
-> *Enterprise software websites make buyers do the translation. ProofPath is a website that builds
+> *Enterprise software websites make buyers do the translation. Evaluation Workspace is a website that builds
 > an evaluation around your problem, runs the proof, and revises the decision when the evidence
 > changes, for humans and their agents alike.*
 
@@ -35,7 +35,7 @@ flowchart LR
     HP[FlowBridge homepage<br/>approved copy, CTAs, entry points]
     CF[Coframe script, if a real project ID exists<br/>or internal experiments]
   end
-  subgraph PP["ProofPath: sv/proofpath (port 8001)"]
+  subgraph PP["Evaluation Workspace: sv/proofpath (port 8001)"]
     BR[Brief → confirm] --> WS[Workspace<br/>requirement matrix · workflow · views]
     WS --> POC[Prove it<br/>crm_warehouse_sync/v1, 4 assertions]
     WS --> CMP[Compare<br/>hard constraints → score + coverage]
@@ -43,7 +43,7 @@ flowchart LR
     CMP --> RPT[Immutable report]
     AG[Agent endpoints<br/>agent-context · agent-evaluation]
   end
-  subgraph SV["Second Visitor engine: sv/ (port 8000)"]
+  subgraph SV["Visitor Lab engine: sv/ (port 8000)"]
     SIM[Multi-agent simulator<br/>open-model buyer population]
     G[Guard + diagnose]
     PUL[Pulse A/C/D benchmark]
@@ -56,17 +56,17 @@ flowchart LR
 ```
 
 **The Coframe idea stays intact, and gets a better metric.** Coframe's loop experiments with
-copy, CTAs and entry points. ProofPath gives it a conversion event worth optimizing:
+copy, CTAs and entry points. Evaluation Workspace gives it a conversion event worth optimizing:
 `qualified_evaluation_completed` (confirmed requirements, no unresolved hard constraints, current
 approved evidence), instead of clicks or form fills. Coframe may only experiment on
 presentation; findings, test outcomes, citations and decisions are rendered by the application.
 If no real Coframe project ID is available, the page shows "Coframe integration not configured"
 (README rule).
 
-**Second Visitor's role:**
+**Visitor Lab's role:**
 1. **Agent and measurement workstream.** The simulator sends open-model buyer agents to the raw
    FlowBridge homepage and to `/agent-context`, and scores their decisions against the fixture
-   expectations. This is the headline: "agents decide correctly N% from the homepage, M% from ProofPath."
+   expectations. This is the headline: "agents decide correctly N% from the homepage, M% from Evaluation Workspace."
 2. **Guard** for the generated parts (summaries, homepage copy), with Jev for fast per-claim
    decisions. The README rule holds: the deterministic tests are the real verification, and the
    guard is never the only check.

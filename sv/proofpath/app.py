@@ -510,7 +510,7 @@ def get_artifact(request: Request, artifact_id: str):
 
 @app.post(f"{API}/demo/reset")
 def demo_reset(request: Request):
-    """Operator-only: clears ProofPath demo state only (never Pulse runs/ or fixtures on disk)."""
+    """Operator-only: clears Evaluation Workspace demo state only (never Pulse runs/ or fixtures on disk)."""
     auth.require_operator(request)
     reset = _impl("evidence", "reset")
     if not reset:
